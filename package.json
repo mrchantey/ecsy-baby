@@ -1,0 +1,21 @@
+{
+	"name": "ecsy-baby",
+	"version": "0.0.0",
+	"description": "An experimental implementation of [ecsy](https://ecsy.io/) in [babylon.js](https://www.babylonjs.com/).",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepublishOnly": "./scripts/publish.ps1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mrchantey/ecsy-baby.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/mrchantey/ecsy-baby/issues"
+	},
+	"homepage": "https://github.com/mrchantey/ecsy-baby#readme"
+}
