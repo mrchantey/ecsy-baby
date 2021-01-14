@@ -1,6 +1,6 @@
 {
 	"name": "ecsy-baby",
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"description": "An experimental implementation of [ecsy](https://ecsy.io/) in [babylon.js](https://www.babylonjs.com/).",
 	"main": "index.js",
 	"scripts": {
