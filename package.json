@@ -1,11 +1,13 @@
 {
 	"name": "ecsy-baby",
 	"version": "0.0.5",
-	"description": "An experimental implementation of [ecsy](https://ecsy.io/) in [babylon.js](https://www.babylonjs.com/).",
+	"description": "A community project for easy implementation of ecsy in babylon.js",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"prepublishOnly": "./scripts/publish.sh"
+		"prepublishOnly": "./scripts/publish.sh",
+		"build-src": "babel src --out-dir dist --extensions \".ts\"",
+		"start": "webpack serve --open"
 	},
 	"repository": {
 		"type": "git",
@@ -17,10 +19,26 @@
 		"baby",
 		"babylon"
 	],
-	"author": "",
+	"author": "mr chantey",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/mrchantey/ecsy-baby/issues"
 	},
-	"homepage": "https://github.com/mrchantey/ecsy-baby#readme"
+	"homepage": "https://github.com/mrchantey/ecsy-baby#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.12.10",
+		"@babel/core": "^7.12.10",
+		"@babel/plugin-transform-modules-commonjs": "^7.12.1",
+		"@babel/preset-typescript": "^7.12.7",
+		"babylonjs": "^4.2.0",
+		"ecsy": "^0.4.2",
+		"ts-loader": "^8.0.14",
+		"webpack": "^5.14.0",
+		"webpack-cli": "^4.3.1",
+		"webpack-dev-server": "^3.11.2"
+	},
+	"peerDependencies": {
+		"babylonjs": "*",
+		"ecsy": "*"
+	}
 }
