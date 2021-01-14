@@ -11,7 +11,12 @@
 		"type": "git",
 		"url": "git+https://github.com/mrchantey/ecsy-baby.git"
 	},
-	"keywords": [],
+	"keywords": [
+		"ecs",
+		"ecsy",
+		"baby",
+		"babylon"
+	],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
