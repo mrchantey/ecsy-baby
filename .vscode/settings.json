@@ -1,11 +1,11 @@
 {
 	"emeraldwalk.runonsave": {
 		"commands": [
-			{
-				"match": "./src/*",
-				"isAsync": true,
-				"cmd": "npm run build-src"
-			}
+			// {
+			// 	"match": "./src/*",
+			// 	"isAsync": true,
+			// 	"cmd": "npm run build-src"
+			// }
 		]
 	}
 }

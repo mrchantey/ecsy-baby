@@ -6,14 +6,14 @@ module.exports = {
 	devtool: 'inline-source-map',
 	devServer: {
 		contentBase: './examples/spinning-cube',
-		historyApiFallback: true
+		// historyApiFallback: true
 	},
 	module: {
 		rules: [
 			{
 				test: /\.tsx?$/,
 				use: 'ts-loader',
-				exclude: /node_modules/,
+				exclude: /node_modules/
 			},
 		],
 	},

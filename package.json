@@ -4,10 +4,13 @@
 	"description": "A community project for easy implementation of ecsy in babylon.js",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"prepublishOnly": "./scripts/publish.sh",
-		"build-src": "babel src --out-dir dist --extensions \".ts\"",
-		"start": "webpack serve --open"
+		"build": "npm run build-src && npm run build-site",
+		"build-src": "tsc --project tsconfig.source.json",
+		"watch-src": "tsc -w --project tsconfig.source.json",
+		"build-site": "webpack",
+		"watch-site": "webpack serve --open",
+		"test-site": "cd ./examples/spinning-cube && live-server"
 	},
 	"repository": {
 		"type": "git",
@@ -32,7 +35,9 @@
 		"@babel/preset-typescript": "^7.12.7",
 		"babylonjs": "^4.2.0",
 		"ecsy": "^0.4.2",
+		"live-server": "^1.2.1",
 		"ts-loader": "^8.0.14",
+		"typescript": "^4.1.3",
 		"webpack": "^5.14.0",
 		"webpack-cli": "^4.3.1",
 		"webpack-dev-server": "^3.11.2"
