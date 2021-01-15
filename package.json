@@ -1,6 +1,6 @@
 {
 	"name": "ecsy-baby",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "A community project for easy implementation of ecsy in babylon.js",
 	"main": "index.js",
 	"scripts": {
