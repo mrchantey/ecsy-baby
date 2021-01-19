@@ -28,3 +28,5 @@ npm run build
 
 - 0.0.5
 	- first spinning cube
+
+	
