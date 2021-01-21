@@ -1,9 +1,9 @@
 
 import { HemisphericLight, MeshBuilder, Vector3 } from "babylonjs";
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-import { BabySystem } from "../../../dist/base-types/system";
-import { EulerRotation } from "../../../dist/components/EulerRotationComponent";
-import { initialize } from "../../../dist/index"
+// import { BabySystem } from "../../../dist/base-types/system";
+import { initialize, EulerRotation } from "../../../src/index"
+
 
 
 class CubeSpinComponent extends Component<CubeSpinComponent>{
@@ -15,12 +15,16 @@ class CubeSpinComponent extends Component<CubeSpinComponent>{
 
 class CubeSpinSystem extends System {
 	execute(delta: number) {
+		// console.log('pow');
+
 
 		this.queries.entities.results.forEach(entity => {
 			const cubeSpin = entity.getComponent(CubeSpinComponent)!
 			const eulerRotation = entity.getComponent(EulerRotation)!
 			eulerRotation.value.x += 0.5 * delta * cubeSpin.speed;
 			eulerRotation.value.y += 0.1 * delta * cubeSpin.speed;
+
+
 		})
 	}
 	static queries: SystemQueries = {
@@ -38,6 +42,8 @@ const { scene, world } = initialize()
 world
 	.registerComponent(CubeSpinComponent)
 	.registerSystem(CubeSpinSystem)
+
+// console.dir(world.hasRegisteredComponent(EulerRotation));
 
 
 const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene)

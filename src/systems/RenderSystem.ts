@@ -1,50 +1,39 @@
 
 import { Attributes, Entity, System, World } from "ecsy";
-import { RenderComponent, EngineComponent } from "../Components";
-import { BabyEntity } from "../base-types/entity";
-import { BabySystem } from "../base-types/system";
-import { SceneComponent } from "../components/SceneComponent";
+import { Render, Engine, WindowEvents } from "../Components";
+import { BabyEntity } from "../types/entity";
+import { BabySystem } from "../types/system";
+import { Scene } from "../components/Scene";
 
 export class RenderSystem extends BabySystem {
-	needsResize: boolean = false
-
-	onResize() {
-		this.needsResize = true;
-	}
 
 	init() {
 
-		const engine = this.world.entity.getComponent(EngineComponent)!.engine
+		const engine = this.world.entity.getComponent(Engine)!.engine
 
 		const startTime = Date.now() * 0.001
 		let lastTime = startTime
+
+		this.world.start()
+
 		engine.runRenderLoop(() => {
 			const time = Date.now() * 0.001
 			const delta = time - lastTime
 			const elapsed = time - startTime
 			lastTime = time
 			this.world.execute(delta, elapsed)
+			this.world.postExecute()
 		})
-
-		this.needsResize = true;
-		this.onResize = this.onResize.bind(this);
-		window.addEventListener("resize", this.onResize, false);
-	}
-
-	dispose() {
-		window.removeEventListener("resize", this.onResize);
 	}
 
 	execute() {
-		if (this.needsResize) {
-			const engine = this.world.entity.getComponent(EngineComponent)!.engine
-			engine.resize()
-			this.needsResize = false;
-		}
+		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
+		if (windowEvents.resize !== null)
+			this.world.entity.getComponent(Engine)!.engine.resize()
 
 		this.queries.scenes.results.forEach(entity => {
 			// console.log('bang');
-			const scene = entity.getComponent(SceneComponent)!.scene
+			const scene = entity.getComponent(Scene)!.scene
 			if (scene.activeCamera)
 				scene.render()
 
@@ -66,13 +55,7 @@ export class RenderSystem extends BabySystem {
 	}
 
 	static queries = {
-		scenes: { components: [SceneComponent] },
+		scenes: { components: [Scene] },
 	}
 
-	// 	renderer.render(scene, camera);
-	// }
-	// 	}
 }
-
-// RenderSystem.queries = {
-// };

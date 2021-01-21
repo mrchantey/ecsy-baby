@@ -2,7 +2,7 @@
 	"name": "ecsy-baby",
 	"version": "0.0.6",
 	"description": "A community project for easy implementation of ecsy in babylon.js",
-	"main": "index.js",
+	"main": "./dist/index.js",
 	"scripts": {
 		"prepublishOnly": "./scripts/publish.sh",
 		"build": "npm run build-src && npm run build-site",
@@ -29,10 +29,6 @@
 	},
 	"homepage": "https://github.com/mrchantey/ecsy-baby#readme",
 	"devDependencies": {
-		"@babel/cli": "^7.12.10",
-		"@babel/core": "^7.12.10",
-		"@babel/plugin-transform-modules-commonjs": "^7.12.1",
-		"@babel/preset-typescript": "^7.12.7",
 		"babylonjs": "^4.2.0",
 		"ecsy": "^0.4.2",
 		"live-server": "^1.2.1",
@@ -45,5 +41,8 @@
 	"peerDependencies": {
 		"babylonjs": "*",
 		"ecsy": "*"
+	},
+	"dependencies": {
+		"auto-bind": "^4.0.0"
 	}
 }

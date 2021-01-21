@@ -1,4 +1,7 @@
-import { RenderSystem } from './systems/RenderSystem';
 
 
-export { RenderSystem }
+//order matters here
+
+export * from './systems/DomEventSystem';
+export * from './systems/InputSystem';
+export * from './systems/RenderSystem';

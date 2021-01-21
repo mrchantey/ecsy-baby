@@ -1,5 +1,5 @@
 import { TagComponent } from "ecsy";
 
-export class CameraTagComponent extends TagComponent {
-	static isObject3DTagComponent = true;
+export class DemoTagComponent extends TagComponent {
+	static isDemoTagComponent = true;
 }

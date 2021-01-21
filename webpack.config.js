@@ -6,13 +6,19 @@ module.exports = {
 	devtool: 'inline-source-map',
 	devServer: {
 		contentBase: './examples/spinning-cube',
+		overlay: true
 		// historyApiFallback: true
 	},
 	module: {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				use: 'ts-loader',
+				use: [{
+					loader: 'ts-loader',
+					options: {
+						configFile: "tsconfig.json"
+					}
+				}],
 				exclude: /node_modules/
 			},
 		],
