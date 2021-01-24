@@ -6,7 +6,8 @@ module.exports = {
 	devtool: 'inline-source-map',
 	devServer: {
 		contentBase: './examples/spinning-cube',
-		overlay: true
+		overlay: true,
+		port: 8080
 		// historyApiFallback: true
 	},
 	module: {

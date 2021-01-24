@@ -4,6 +4,8 @@ export class Mouse extends Component<Mouse> {
 	leftButtonDown: boolean
 	leftButtonHeld: boolean
 	leftButtonUp: boolean
+	xDownNorm: number
+	yDownNorm: number
 	xnorm: number
 	ynorm: number
 	xsign: number
@@ -23,6 +25,14 @@ export class Mouse extends Component<Mouse> {
 		leftButtonUp: {
 			type: Types.Boolean,
 			default: false
+		},
+		xDownNorm: {
+			type: Types.Number,
+			default: 0.5
+		},
+		yDownNorm: {
+			type: Types.Number,
+			default: 0.5
 		},
 		xnorm: {
 			type: Types.Number,

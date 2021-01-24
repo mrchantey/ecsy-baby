@@ -11,14 +11,14 @@ export class InputSystem extends BabySystem {
 
 		// console.dir(windowEvents);
 		// console.dir(windowEvents);
-		if (canvasEvents.mousemove)
-			this.handleMouseMove(canvasEvents.mousemove)
+		if (canvasEvents.pointermove)
+			this.handleMouseMove(canvasEvents.pointermove)
 		if (canvasEvents.wheel)
 			this.handleMouseWheel(canvasEvents.wheel)
-		if (canvasEvents.mousedown)
-			this.handleMouseDown(canvasEvents.mousedown)
-		if (canvasEvents.mouseup)
-			this.handleMouseUp(canvasEvents.mouseup)
+		if (canvasEvents.pointerdown)
+			this.handleMouseDown(canvasEvents.pointerdown)
+		if (canvasEvents.pointerup)
+			this.handleMouseUp(canvasEvents.pointerup)
 		if (windowEvents.keydown)
 			this.handleKeyDown(windowEvents.keydown)
 		if (windowEvents.keyup)
@@ -27,15 +27,29 @@ export class InputSystem extends BabySystem {
 
 	}
 
+	getXYNorm(event: MouseEvent) {
+		const rect = (event.target as HTMLElement).getBoundingClientRect()
+		const elx = event.clientX - Math.round(rect.left);
+		const ely = event.clientY - Math.round(rect.top);
+		return {
+			x: elx / Math.round(rect.width),
+			y: 1 - (ely / Math.round(rect.height))
+		}
+	}
+
+
 	handleMouseMove(event: MouseEvent) {
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
-		const rect = (event.target as HTMLElement).getBoundingClientRect()
-		const x = event.clientX - Math.round(rect.left);
-		const y = event.clientY - Math.round(rect.top);
-		mouseComp.xnorm = x / Math.round(rect.width)
-		mouseComp.ynorm = 1 - (y / Math.round(rect.height))
+		const val = this.getXYNorm(event)
+		mouseComp.xnorm = val.x
+		mouseComp.ynorm = val.y
 		mouseComp.xsign = mouseComp.xnorm * 2 - 1
 		mouseComp.ysign = mouseComp.ynorm * 2 - 1
+		if (mouseComp.leftButtonDown) {
+			console.log('setting');
+			mouseComp.xDownNorm = mouseComp.xnorm
+			mouseComp.yDownNorm = mouseComp.ynorm
+		}
 	}
 
 	handleMouseWheel(event: WheelEvent) {
@@ -46,6 +60,9 @@ export class InputSystem extends BabySystem {
 
 	handleMouseDown(event: MouseEvent) {
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const val = this.getXYNorm(event)
+		mouseComp.xDownNorm = val.x
+		mouseComp.yDownNorm = val.y
 		mouseComp.leftButtonDown = true
 		mouseComp.leftButtonHeld = true
 	}
@@ -68,7 +85,7 @@ export class InputSystem extends BabySystem {
 		keyboard.keysPressed[event.key] = false
 	}
 
-	postExecute() {
+	afterRender() {
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
 		mouseComp.leftButtonDown = false
 		mouseComp.leftButtonUp = false

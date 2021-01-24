@@ -1,3 +1,4 @@
+import { Scene } from "babylonjs";
 import { World, WorldOptions } from "ecsy";
 import { BabyEntity } from "./entity";
 import { BabySystem } from "./system";
@@ -6,8 +7,11 @@ import { BabySystem } from "./system";
 
 export class BabyWorld extends World<BabyEntity> {
 	entity: BabyEntity
+
+	onExecute: (delta: number, time: number) => any = () => { }
 	systemsStart: BabySystem[]
-	systemsPostExecute: BabySystem[]
+	systemsBeforeRender: BabySystem[]
+	systemsAfterRender: BabySystem[]
 	systemsDispose: BabySystem[]
 
 	constructor(options: WorldOptions) {
@@ -21,15 +25,26 @@ export class BabyWorld extends World<BabyEntity> {
 	start() {
 		const systems = this.getSystems() as BabySystem[]
 		this.systemsStart = systems.filter(s => s.start !== undefined)
-		this.systemsPostExecute = systems.filter(s => s.postExecute !== undefined)
+		this.systemsBeforeRender = systems.filter(s => s.beforeRender !== undefined)
+		this.systemsAfterRender = systems.filter(s => s.afterRender !== undefined)
 		this.systemsDispose = systems.filter(s => s.dispose !== undefined)
 
-		// console.dir(this.systemsPostExecute.length);
+		// console.dir(this.systemsAfterRender.length);
 		this.systemsStart.forEach(s => s.start())
 	}
 
-	postExecute() {
-		this.systemsPostExecute.forEach(s => s.postExecute())
+	execute(delta: number, time: number) {
+		super.execute(delta, time)
+		this.onExecute(delta, time)
+	}
+
+	beforeRender() {
+		this.systemsBeforeRender.forEach(s => s.beforeRender())
+	}
+
+
+	afterRender() {
+		this.systemsAfterRender.forEach(s => s.afterRender())
 	}
 	dispose() {
 		this.systemsDispose.forEach(s => s.dispose())

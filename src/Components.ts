@@ -1,5 +1,7 @@
+export * from './components/Camera';
 export * from './components/Canvas';
 export * from './components/CanvasEvents';
+export * from './components/DebugLines';
 export * from './components/Engine';
 export * from './components/EulerRotation';
 export * from './components/Keyboard';

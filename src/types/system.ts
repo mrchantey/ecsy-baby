@@ -1,4 +1,4 @@
-import { Attributes, System } from "ecsy";
+import { Attributes, Component, ComponentConstructor, System } from "ecsy";
 import { BabyEntity } from "./entity";
 import { BabyWorld } from "./world";
 
@@ -11,9 +11,20 @@ export abstract class BabySystem extends System<BabyEntity>  {
 		this.world = world //a little hacky
 	}
 
+	getMutableSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>) {
+		return this.world.entity.getMutableComponent(component)!
+	}
+	getSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>) {
+		return this.world.entity.getComponent(component)!
+	}
+	addSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>, values?: Partial<Omit<C, keyof Component<any>>>) {
+		return this.world.entity.addComponent(component, values)!
+	}
+
 	start() { }
 	execute(delta: number, time: number): void { }
-	postExecute(): void { }
+	beforeRender(): void { }
+	afterRender(): void { }
 	dispose(): void { }
 }
 

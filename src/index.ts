@@ -5,11 +5,13 @@ export { initialize } from "./initialize";
 // export const ThreeTypes = _ThreeTypes;
 export * from "./Components";
 export * from "./Systems";
-export * as BabyTypes from "./Types"
+export * as BabyTypes from "./types/BabyTypes"
 // export * from "./types/entity"
 export * from "./types/world"
+export * from "./types/extensions"
 export * from "./types/system"
-
+export * from "./utility/Math"
+export * from "./reference/KeyValue"
 
 
 // const blaa = window.jdksledws
