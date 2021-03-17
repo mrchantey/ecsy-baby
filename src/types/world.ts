@@ -5,6 +5,16 @@ import { BabySystem } from "./system";
 // import { Object3DComponent } from "./components/Object3DComponent.js";
 
 
+export function createBabyWorld(options: WorldOptions) {
+	const _options = {
+		entityClass: BabyEntity
+	}
+	Object.assign(_options, options as any)
+	return new BabyWorld(_options)
+}
+
+
+
 export class BabyWorld extends World<BabyEntity> {
 	entity: BabyEntity
 
@@ -16,9 +26,6 @@ export class BabyWorld extends World<BabyEntity> {
 
 	constructor(options: WorldOptions) {
 		super(options)
-		// super(
-		// 	Object.assign({ entityClass: BabyWorld, }, options)
-		// );
 		this.entity = this.createEntity("singleton")
 	}
 

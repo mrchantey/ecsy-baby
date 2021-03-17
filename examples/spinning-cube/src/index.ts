@@ -1,9 +1,7 @@
 
 import { HemisphericLight, MeshBuilder, Vector3 } from "babylonjs";
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-// import { BabySystem } from "../../../dist/base-types/system";
-import { initialize, EulerRotation } from "../../../src/index"
-
+import { initialize, EulerRotation, ModuleConstructor, iModule, SystemPriority } from "../../../src/index"
 
 
 class CubeSpinComponent extends Component<CubeSpinComponent>{
@@ -35,20 +33,25 @@ class CubeSpinSystem extends System {
 }
 
 
+const cubeSpinModule: iModule = {
+	components: [CubeSpinComponent],
+	systems: [{
+		priority: SystemPriority.BeforeRender,
+		systems: [CubeSpinSystem]
+	}],
+	onSystemsRegistered: (world, scene) => {
 
-const { scene, world } = initialize()
+		const box = MeshBuilder.CreateBox("box", {}, scene)
+		world.createEntity("box")
+			.addComponent(CubeSpinComponent, { speed: 3 })
+			.addComponent(EulerRotation, { value: box.rotation })
+	}
+}
 
 
-world
-	.registerComponent(CubeSpinComponent)
-	.registerSystem(CubeSpinSystem)
+const { scene, world } = initialize({ modules: [cubeSpinModule] })
+// world
+// 	.registerComponent(CubeSpinComponent)
+// 	.registerSystem(CubeSpinSystem)
 
-// console.dir(world.hasRegisteredComponent(EulerRotation));
 
-
-const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene)
-
-const box = MeshBuilder.CreateBox("box", {}, scene)
-world.createEntity("box")
-	.addComponent(CubeSpinComponent, { speed: 3 })
-	.addComponent(EulerRotation, { value: box.rotation })

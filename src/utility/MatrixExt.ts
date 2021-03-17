@@ -1,5 +1,5 @@
 import { Plane, Vector2, Vector3, Matrix, Quaternion } from "babylonjs";
-import { DebugLines } from "../Components";
+import { DebugLines } from "../";
 
 
 
@@ -92,7 +92,13 @@ export const up = (m: Matrix) => new Vector3(m.m[4], m.m[5], m.m[6])
 export const forward = (m: Matrix) => new Vector3(m.m[8], m.m[9], m.m[10])
 export const position = (m: Matrix) => new Vector3(m.m[12], m.m[13], m.m[14])
 
-
+export const setPosition = (matrix: Matrix, pos: Vector3) => {
+	const m = (matrix as any)._m;
+	m[12] = pos.x
+	m[13] = pos.x
+	m[14] = pos.x
+	matrix._markAsUpdated()
+}
 
 // /**
 //  * Transforms point from local to world coordinates

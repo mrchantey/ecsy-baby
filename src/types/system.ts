@@ -1,6 +1,5 @@
 import { Attributes, Component, ComponentConstructor, System } from "ecsy";
-import { BabyEntity } from "./entity";
-import { BabyWorld } from "./world";
+import { BabyWorld, BabyEntity } from "../";
 
 
 export abstract class BabySystem extends System<BabyEntity>  {
@@ -20,6 +19,10 @@ export abstract class BabySystem extends System<BabyEntity>  {
 	addSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>, values?: Partial<Omit<C, keyof Component<any>>>) {
 		return this.world.entity.addComponent(component, values)!
 	}
+	setSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>, values?: Partial<Omit<C, keyof Component<any>>>) {
+		return this.world.entity.setComponent(component, values)!
+	}
+	// hasSingletonComponent
 
 	start() { }
 	execute(delta: number, time: number): void { }

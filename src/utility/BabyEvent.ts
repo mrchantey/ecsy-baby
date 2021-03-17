@@ -1,9 +1,9 @@
 
-interface Action<T = void> {
+export interface Action<T = void> {
 	(item: T): void;
 }
 
-interface Func<T, TResult> {
+export interface Func<T, TResult> {
 	(item: T): TResult;
 }
 

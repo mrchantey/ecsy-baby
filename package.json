@@ -8,8 +8,8 @@
 		"build": "npm run build-src && npm run build-site",
 		"build-src": "tsc --project tsconfig.source.json",
 		"watch-src": "tsc -w --project tsconfig.source.json",
-		"build-site": "webpack",
-		"watch-site": "webpack serve --open",
+		"build-example": "webpack --config ./examples/spinning-cube/webpack.config.js",
+		"watch-site": "webpack serve --config ./examples/spinning-cube/webpack.config.js",
 		"test-site": "cd ./examples/spinning-cube && live-server"
 	},
 	"repository": {
@@ -32,6 +32,7 @@
 		"babylonjs": "^4.2.0",
 		"ecsy": "^0.4.2",
 		"live-server": "^1.2.1",
+		"madge": "^4.0.2",
 		"ts-loader": "^8.0.14",
 		"typescript": "^4.1.3",
 		"webpack": "^5.14.0",
