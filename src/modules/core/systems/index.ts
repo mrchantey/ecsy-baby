@@ -1,6 +1,4 @@
-
-export * from './DomEventSystem';
-export * from './InputSystem';
-export * from './RenderSystem';
-export * from './DebugSystem';
-
+export * from "./DebugSystem"
+export * from "./DomEventSystem"
+export * from "./InputSystem"
+export * from "./RenderSystem"

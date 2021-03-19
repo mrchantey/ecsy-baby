@@ -1,7 +1,9 @@
 
-import { BabyWorld, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../..";
+// import { BabyWorld, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../..";
 // import { ModuleConstructor, iModule, SystemPriority, SystemPriorityDelta, } from "../../register";
 import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, Vector3 } from 'babylonjs';
+import { ModuleConstructor, SystemPriority, SystemPriorityDelta } from '../../register';
+import { BabyWorld } from '../..';
 import { babylonComponents, Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, Mouse, SceneComp, TargetCameraComp, WindowEvents } from "./components";
 import { DebugSystem, DomEventSystem, InputSystem, RenderSystem } from "./systems";
 

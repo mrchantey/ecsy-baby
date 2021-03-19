@@ -5,9 +5,14 @@ const ignore = [
     './src/modules',
     './src/zz-archive',
     './src/zz-deprecated'
-
 ]
 
+const ases = [
+    'MatrixExt',
+    'QuaternionExt',
+    'Vector2Ext',
+    'Vector3Ext',
+]
 
 
 
@@ -27,17 +32,26 @@ function getDirsRecursive(parentDir, depth = -1, arr = []) {
 }
 
 
-const dirs = getDirsRecursive('./src')
+const parentDir = './src'
+
+const dirs = getDirsRecursive(parentDir, -1, [parentDir])
     .filter(dir => !ignore.includes(dir))
 
 
 
 dirs.forEach(dir => {
     const contents = fs.readdirSync(dir)
-        .map(name => `export * from "./${name.split('.')[0]}"`)
+        .map(name => name.split('.')[0])
+        .filter(name => !ignore.includes(`${dir}/${name}`))
+        .filter(name => name != 'index')
+        .map(name => {
+            if (ases.includes(name))
+                return `export * as ${name} from "./${name}"`
+            return `export * from "./${name}"`
+        })
         .join('\n')
-    console.log(contents);
+    // console.log(contents);
     fs.writeFileSync(`${dir}/index.ts`, contents)
 })
 
-console.dir(dirs);
+// console.dir(dirs);

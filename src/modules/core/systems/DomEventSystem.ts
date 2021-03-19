@@ -1,7 +1,7 @@
 
 // import { BabySystem } from '../../../types/system';
 import { BabySystem } from '../../../types/system';
-import { Action } from '../../../utility/interfaces';
+import { Action } from '../../../utility/BabyEvent';
 import { Canvas, CanvasEvents, WindowEvents } from '../components';
 
 // import { BabySystem } from "../../..";

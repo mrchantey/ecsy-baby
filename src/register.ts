@@ -1,5 +1,4 @@
 import { BabyWorld } from "./types/world";
-import * as TagComponents from "./TagComponents";
 import { ComponentConstructor, SystemConstructor } from "ecsy";
 import { SceneComp } from "./modules/core/components/BabylonComponents";
 import { Scene } from "babylonjs";

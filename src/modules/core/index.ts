@@ -1,6 +1,3 @@
-
-
-
-export * from './components'
-export * from './systems'
-export * from './module'
+export * from "./components"
+export * from "./module"
+export * from "./systems"

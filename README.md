@@ -40,6 +40,7 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 	- Prognosis: Circular Dependencies
 	- Prescription: 
 		- never import from index.js, unless from seperate thing
+		- we're gonna get in trouble because register depends on core and core depends on register
 	- note: npm run check-circular will not find all of them
 	- example 1
 		```ts
