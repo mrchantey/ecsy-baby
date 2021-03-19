@@ -3,7 +3,7 @@ import { HemisphericLight, MeshBuilder, Scene, StandardMaterial, TargetCamera, T
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
 import { BabyWorld, iModule, initialize } from "../../../src";
 import { TransformNodeComp, TargetCameraComp, iCreateCamera, StandardMaterialComp } from "../../../src/modules/core";
-import { Interactable, Interactor, createInteractionModule } from "../../../src/modules/interaction";
+import { Interactable, Interactor, createInteractionModule, ToolEquipper, CurrentTool, MoveItemsTool, Tool } from "../../../src/modules/interaction";
 
 
 function createBox(world: BabyWorld, scene: Scene, position: Vector3) {
@@ -41,6 +41,9 @@ const testModule: iModule = {
         world.createEntity("interactor")
             .addComponent(TransformNodeComp, { value: node })
             .addComponent(Interactor)
+            .addComponent(ToolEquipper)
+
+        world.entity.addComponent(CurrentTool, { tool: Tool.MoveItems })
 
         node.position = new Vector3(0, 0, -5)
     }

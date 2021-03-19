@@ -29,7 +29,7 @@ export class ${c}Comp extends Component<${c}Comp> {
 }`
 })
 
-txt += `\nexport const babylonComponents: ComponentConstructor<any>[] = [${componentsCompStr}]`
+// txt += `\nexport const babylonComponents: ComponentConstructor<any>[] = [${componentsCompStr}]`
 
 
 fs.writeFileSync(path, txt)

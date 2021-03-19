@@ -1,26 +1,26 @@
 import { Color3, Matrix, Mesh, StandardMaterial } from "babylonjs";
 import { Entity, SystemQueries } from "ecsy";
+import { BabyWorld } from "../../../types";
 import { BabySystem } from "../../../types/system";
-import { isEmpty } from "../../../utility/jsUtility";
-import { SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
+import { raycastMouse } from "../../../utility";
+import { Mouse, SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
 import { Interactable } from "../components/Interactable";
 import { Interactor } from "../components/Interactor";
 
-export class InteractionSystem extends BabySystem {
-    execute() {
 
-        const scene = this.getSingletonComponent(SceneComp)!.value
-        const camera = this.getSingletonComponent(TargetCameraComp)!.value
+
+
+export class HoverSystem extends BabySystem {
+    execute() {
+        const mouseStay = this.getSingletonComponent(Mouse).mouseStay
 
         this.queries.interactors.results
             .forEach((entity, index) => {
                 const interactor = entity.getMutableComponent(Interactor)!
-                const ray = scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera)
-                const hit = scene.pickWithRay(ray)
-
-                if (hit && hit.pickedMesh) {
+                const mesh = raycastMouse(this.world)?.pickedMesh
+                if (mesh && mouseStay) {
                     const interactableEntity = this.queries.interactables.results
-                        .find(entity => entity.getComponent(TransformNodeComp)!.value === hit.pickedMesh)
+                        .find(entity => entity.getComponent(TransformNodeComp)!.value === mesh)
                     this.tryStartHover(interactor, interactableEntity)
                 } else {
                     this.tryEndHover(interactor)
@@ -66,3 +66,42 @@ export class InteractionSystem extends BabySystem {
         }
     }
 }
+
+
+
+// void TryStartHover(Interactable interactable)
+// {
+//     if (isSelecting) return;
+//     else if (interactable == currentInteraction)
+//         return;
+//     else
+//     {
+//         TryEndHover();
+//         currentInteraction = interactable;
+//         InvokeInteraction(StartHover, currentInteraction.StartHover);
+//         isHovering = true;
+//     }
+// }
+
+
+// void InvokeInteraction(InteractionFunc interactorEvent, InteractionFunc interactableEvent)
+// {
+//     var info = new InteractionInfo(this, currentInteraction);
+//     interactorEvent(info);
+//     interactableEvent(info);
+// }
+
+// void TryEndHover(Interactable interactable)
+// {
+//     if (interactable == currentInteraction)
+//         TryEndHover();
+// }
+
+// void TryEndHover()
+// {
+//     if (!isHovering) return;
+//     InvokeInteraction(EndHover, currentInteraction.EndHover);
+//     isHovering = false;
+
+//     currentInteraction = null;
+// }

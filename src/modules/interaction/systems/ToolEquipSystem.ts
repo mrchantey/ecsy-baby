@@ -1,33 +1,25 @@
-import { SystemQueries } from "ecsy";
+import { Entity, SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
 import { isEmpty } from "../../../utility/jsUtility";
 import { CurrentTool } from "../components/CurrentTool";
 import { ToolEquipper } from "../components/ToolEquipper";
-import { toolComponentLookup } from "../utility/tools";
+import { Tool, toolComponentLookup } from "../utility/tools";
 
 export class ToolEquipSystem extends BabySystem {
     execute() {
         const currentTool = this.getSingletonComponent(CurrentTool)?.tool
-        if (isEmpty(currentTool))
-            return
-
-
         this.queries.toolEquippers.results
-            .forEach((entity, index) => {
-
-                const supposedCurrentTool = entity.getComponent(toolComponentLookup[currentTool])
-                if (isEmpty(supposedCurrentTool)) {
-                    toolComponentLookup
-                        .filter((val, i) => i !== currentTool)
-                        .forEach((val, index) => entity.removeComponent(val))
-                    entity.addComponent(toolComponentLookup[currentTool])
-                }
+            .filter(equipper => equipper.getComponent(toolComponentLookup[currentTool]) === undefined)
+            .forEach((entity, index) => this.equipNewTool(entity, currentTool))
+    }
 
 
-                // const x =                 
 
-                // const moveItemTool 
-            })
+    equipNewTool(equipper: Entity, newTool: Tool) {
+        const toolEquipper = equipper.getMutableComponent(ToolEquipper)!
+        equipper.removeComponent(toolComponentLookup[toolEquipper.currentTool])
+        equipper.addComponent(toolComponentLookup[newTool])
+        toolEquipper.currentTool = newTool
     }
 
     static queries: SystemQueries = {

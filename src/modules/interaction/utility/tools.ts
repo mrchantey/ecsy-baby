@@ -1,9 +1,11 @@
 import { Component } from "ecsy";
 import { MoveItemsTool } from "../components/MoveItemsTool";
+import { NoTool } from "../components/NoTool";
 import { RotateItemsTool } from "../components/RotateItemsTool";
 import { ViewTool } from "../components/ViewTool";
 
 export enum Tool {
+    None,
     View,
     MoveItems,
     RotateItems
@@ -16,6 +18,7 @@ export enum Tool {
 // }
 
 export const toolComponentLookup = [
+    NoTool,
     ViewTool,
     MoveItemsTool,
     RotateItemsTool

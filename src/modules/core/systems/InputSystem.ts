@@ -7,11 +7,11 @@ export class InputSystem extends BabySystem {
 	execute() {
 
 		// const Keyboard = this.world.entity.getMutableComponent(Keyboard)
-		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
-		const canvasEvents = this.world.entity.getComponent(CanvasEvents)!.events
+		const windowEvents = this.getSingletonComponent(WindowEvents)!.events
+		const canvasEvents = this.getSingletonComponent(CanvasEvents)!.events
 
-		// console.dir(windowEvents);
-		// console.dir(windowEvents);
+
+		//ONLY EVENTS REGISTERED ON DOMEVENTSYSTEM WILL BE TRIGGERED
 		if (canvasEvents.pointermove)
 			this.handleMouseMove(canvasEvents.pointermove)
 		if (canvasEvents.wheel)
@@ -20,6 +20,10 @@ export class InputSystem extends BabySystem {
 			this.handleMouseDown(canvasEvents.pointerdown)
 		if (canvasEvents.pointerup)
 			this.handleMouseUp(canvasEvents.pointerup)
+		if (canvasEvents.mouseover)
+			this.handleMouseOver(canvasEvents.mouseover)
+		if (canvasEvents.mouseout)
+			this.handleMouseOut(canvasEvents.mouseout)
 		if (windowEvents.keydown)
 			this.handleKeyDown(windowEvents.keydown)
 		if (windowEvents.keyup)
@@ -44,13 +48,29 @@ export class InputSystem extends BabySystem {
 		const val = this.getXYNorm(event)
 		mouseComp.xnorm = val.x
 		mouseComp.ynorm = val.y
-		mouseComp.xsign = mouseComp.xnorm * 2 - 1
-		mouseComp.ysign = mouseComp.ynorm * 2 - 1
+
+		const newx = mouseComp.xnorm * 2 - 1
+		const newy = mouseComp.ynorm * 2 - 1
+		mouseComp.xdelta = newx - mouseComp.xsign
+		mouseComp.ydelta = newy - mouseComp.ysign
+		mouseComp.xsign = newx
+		mouseComp.ysign = newy
 		if (mouseComp.leftButtonDown) {
 			console.log('setting');
 			mouseComp.xDownNorm = mouseComp.xnorm
 			mouseComp.yDownNorm = mouseComp.ynorm
 		}
+	}
+
+	handleMouseOver(event: MouseEvent) {
+		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		mouseComp.mouseOver = true
+		mouseComp.mouseStay = true
+	}
+	handleMouseOut(event: MouseEvent) {
+		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		mouseComp.mouseStay = false
+		mouseComp.mouseOut = true
 	}
 
 	handleMouseWheel(event: WheelEvent) {
@@ -87,7 +107,10 @@ export class InputSystem extends BabySystem {
 	}
 
 	afterRender() {
+		//this should be a different system now we have order sorted
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		mouseComp.mouseOver = false
+		mouseComp.mouseOut = false
 		mouseComp.leftButtonDown = false
 		mouseComp.leftButtonUp = false
 		mouseComp.xWheelSign = 0

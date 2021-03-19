@@ -9,7 +9,3 @@ export class Lifecycle extends Component<Lifecycle> {
 		onDispose: { type: BabyEventType }
 	}
 }
-
-/*
-
-*/

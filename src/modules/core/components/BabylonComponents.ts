@@ -26,4 +26,3 @@ export class StandardMaterialComp extends Component<StandardMaterialComp> {
     value: StandardMaterial
     static schema: ComponentSchema = { value: { type: Types.Ref } }
 }
-export const babylonComponents: ComponentConstructor<any>[] = [EngineComp, SceneComp, TargetCameraComp, NodeComp, TransformNodeComp, StandardMaterialComp]

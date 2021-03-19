@@ -4,6 +4,14 @@ const spawn = require('cross-spawn');
 
 const argsIn = process.argv.slice(2)
 
+if (argsIn.length === 0) {
+    console.log(`
+arg0: build|watch
+arg1: dirName
+`)
+    return
+}
+
 const argsOut = []
 
 

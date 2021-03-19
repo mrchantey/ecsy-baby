@@ -37,7 +37,7 @@ export class DomEventSystem extends BabySystem {
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!
 
 		const registeredWindowEvents: Array<keyof WindowEventMap> = ["resize", "keydown", "keyup"]
-		const registeredCanvasEvents: Array<keyof HTMLElementEventMap> = ["pointermove", "pointerdown", "pointerup", "wheel"]
+		const registeredCanvasEvents: Array<keyof HTMLElementEventMap> = ["pointermove", "pointerdown", "pointerup", "wheel", "mouseover", "mouseout"]
 
 		// window.addEventListener("mousedown", (ev) => console.log('banana'))
 

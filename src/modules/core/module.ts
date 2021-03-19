@@ -4,7 +4,8 @@
 import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, Vector3 } from 'babylonjs';
 import { ModuleConstructor, SystemPriority, SystemPriorityDelta } from '../../register';
 import { BabyWorld } from '../..';
-import { babylonComponents, Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, Mouse, SceneComp, TargetCameraComp, WindowEvents } from "./components";
+import { Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, Mouse, SceneComp, TargetCameraComp, WindowEvents } from "./components";
+import * as Components from './components';
 import { DebugSystem, DomEventSystem, InputSystem, RenderSystem } from "./systems";
 
 
@@ -40,16 +41,6 @@ const createDefaultCamera: iCreateCamera = (scene: Scene, canvas: HTMLCanvasElem
 
 
 
-const components = babylonComponents.concat([
-    Canvas,
-    CanvasEvents,
-    DebugLines,
-    EulerRotation,
-    Keyboard,
-    Mouse,
-    WindowEvents
-])
-
 const systems = [
     {
         priority: CoreSystemPriority.DomEvents,
@@ -79,7 +70,7 @@ export const createCoreModule: ModuleConstructor<iCoreArgs> = ({
     createLight = true,
 } = {}) => {
     return {
-        components,
+        components: Object.values(Components),
         systems,
         onComponentsRegistered: world => {
 

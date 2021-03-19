@@ -1,9 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-
-
-export interface iKeys {
-	[key: string]: boolean
-}
+import { iKeys } from '../utility/interfaces';
 
 export class Keyboard extends Component<Keyboard> {
 	keysDown: iKeys
