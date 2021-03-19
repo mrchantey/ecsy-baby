@@ -1,12 +1,12 @@
+import { SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
-import { EngineComp } from "../components/Engine";
-import { Scene } from "../components/Scene";
-import { WindowEvents } from "../components/WindowEvents";
+import { EngineComp, SceneComp, WindowEvents } from "../components";
+
 
 export class RenderSystem extends BabySystem {
 
 	start() {
-		const engine = this.world.entity.getComponent(EngineComp)!.engine
+		const engine = this.world.entity.getComponent(EngineComp)!.value
 
 		const startTime = Date.now() * 0.001
 		let lastTime = startTime
@@ -26,19 +26,28 @@ export class RenderSystem extends BabySystem {
 	execute() {
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
 		if (windowEvents.resize !== null)
-			this.world.entity.getComponent(EngineComp)!.engine.resize()
+			this.world.entity.getComponent(EngineComp)!.value.resize()
 	}
 
 	render() {
-		this.queries.scenes.results.forEach(entity => {
-			const scene = entity.getComponent(Scene)!.scene
-			if (scene.activeCamera)
-				scene.render()
-		})
+		const scene = this.getSingletonComponent(SceneComp)!.value
+		if (scene.activeCamera)
+			scene.render()
+
+
+		// this.queries.scenes.results.forEach(entity => {
+		// 	const scene = entity.getComponent(SceneComp)!.value
+		// 	if (scene.activeCamera)
+		// 		scene.render()
+		// })
 	}
 
-	static queries = {
-		scenes: { components: [Scene] },
-	}
 
+
+
+	// static queries: SystemQueries = {
+	// 	scenes: {
+	// 		components: [SceneComp]
+	// 	}
+	// }
 }

@@ -1,21 +1,16 @@
 import { MeshBuilder } from "babylonjs";
 import { SystemQueries } from "ecsy";
-import { DebugLines } from "../components/DebugLines";
-import { Scene } from "../components/Scene";
 import { BabySystem } from "../../../types/system";
+import { DebugLines, SceneComp } from "../components";
 
 export class DebugSystem extends BabySystem {
-
-
-
-
 	beforeRender() {
 		const debugLines = this.getMutableSingletonComponent(DebugLines)
 		if (debugLines == undefined)
 			return;
 
 		if (debugLines.needsNewInstance) {
-			const scene = this.getSingletonComponent(Scene).scene
+			const scene = this.getSingletonComponent(SceneComp).value
 			debugLines.options.instance = undefined;
 			debugLines.options.instance = (<any>MeshBuilder).CreateLineSystem("guides", debugLines.options, scene)
 		} else if (debugLines.needsRedraw) {

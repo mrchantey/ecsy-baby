@@ -1,14 +1,8 @@
 import { ArcRotateCamera, Camera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, Vector3 } from "babylonjs";
 import { Component, ComponentConstructor, Entity, System, SystemConstructor, WorldOptions } from "ecsy";
-import { BabyWorld, createBabyWorld } from "./types/world";
-import { Keyboard } from "./modules/core/components/Keyboard";
+import { createBabyWorld } from ".";
+import { Canvas, createCoreModule, EngineComp, iCoreArgs, SceneComp, TargetCameraComp } from "./modules/core";
 import { iModule, ModuleConstructor, registerModules } from "./register";
-import { DebugLines } from "./modules/core/components/DebugLines";
-import { Canvas, CameraComp, createCoreModule, EngineComp, iCoreArgs, SceneComp } from "./modules/core";
-// import { SceneComp } from "./modules/core/components/Scene";
-// import { EngineComp } from "./modules/core/components/Engine";
-// import { CanvasComp } from "./modules/core/components/Canvas";
-// import { CameraComp } from "./modules/core/components/Camera";
 
 
 
@@ -31,17 +25,19 @@ export function initialize({
 
 	registerModules(world, allModules)
 
-	const scene = world.entity.getComponent(SceneComp)!.scene
+	const scene = world.entity.getComponent(SceneComp)!.value
 	scene.onDispose = () => world.dispose()
 
 	if (start)
 		world.start()
+	// console.log('starting..');
+
 
 	return {
 		world,
-		engine: world.entity.getComponent(EngineComp)!.engine,
-		canvas: world.entity.getComponent(Canvas)!.canvas,
-		camera: world.entity.getComponent(CameraComp)!.camera,
-		scene: world.entity.getComponent(SceneComp)!.scene,
+		engine: world.entity.getComponent(EngineComp)!.value,
+		canvas: world.entity.getComponent(Canvas)!.value,
+		camera: world.entity.getComponent(TargetCameraComp)!.value,
+		scene: world.entity.getComponent(SceneComp)!.value,
 	}
 }

@@ -1,12 +1,12 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { BabyTypes } from '../../..';
+import { BabyEventType } from '../../..';
 import { BabyEvent } from '../../../utility/BabyEvent';
 
 export class Lifecycle extends Component<Lifecycle> {
 	onDispose: BabyEvent
 
 	static schema: ComponentSchema = {
-		onDispose: { type: BabyTypes.BabyEvent }
+		onDispose: { type: BabyEventType }
 	}
 }
 

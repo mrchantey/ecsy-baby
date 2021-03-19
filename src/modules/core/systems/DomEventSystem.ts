@@ -1,9 +1,10 @@
 
-import { BabySystem } from "../../../types/system";
+// import { BabySystem } from '../../../types/system';
+import { BabySystem } from '../../../types/system';
 import { Action } from '../../../utility/interfaces';
-import { WindowEvents } from "../components/WindowEvents";
-import { CanvasEvents } from "../components/CanvasEvents";
-import { Canvas } from "../components/Canvas";
+import { Canvas, CanvasEvents, WindowEvents } from '../components';
+
+// import { BabySystem } from "../../..";
 
 
 function registerWindowEvent<K extends keyof WindowEventMap>(el: Window, name: K, windowEventsBuffer: WindowEvents, disposeActions: Action[]) {
@@ -31,7 +32,7 @@ export class DomEventSystem extends BabySystem {
 		// console.log('pow');
 
 
-		const canvas = this.world.entity.getComponent(Canvas)!.canvas
+		const canvas = this.world.entity.getComponent(Canvas)!.value
 		const canvasEvents = this.world.entity.getComponent(CanvasEvents)!
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!
 

@@ -1,4 +1,5 @@
-dist
+#exclude source dist but include example dist for 
+/dist/
 
 
 # Logs

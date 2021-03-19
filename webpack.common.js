@@ -1,12 +1,13 @@
-const path = require('path');
+// const path = require('path');
 
-module.exports.createCommonConfig = (contentBase) => {
+module.exports.createCommonConfig = (dir) => {
+
     return {
-        entry: `${contentBase}/src/index.ts`,
+        entry: `${dir}/src/index.ts`,
         mode: "development",
         devtool: 'inline-source-map',
         devServer: {
-            contentBase,
+            contentBase: `${dir}/dist`,
             overlay: true,
             port: 8080
             // historyApiFallback: true
@@ -30,7 +31,9 @@ module.exports.createCommonConfig = (contentBase) => {
         },
         output: {
             filename: 'main.js',
-            path: path.resolve(__dirname, contentBase),
+            path: `${dir}/dist`,
         },
     }
 }
+
+

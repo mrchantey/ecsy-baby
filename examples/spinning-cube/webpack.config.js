@@ -1,9 +1,5 @@
-
 const { createCommonConfig } = require('../../webpack.common');
 
-const contentBase = './examples/spinning-cube'
-
-const config = createCommonConfig(contentBase)
-
+const config = createCommonConfig(__dirname)
 
 module.exports = config

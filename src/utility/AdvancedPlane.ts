@@ -1,5 +1,6 @@
 import { Plane, Vector2, Vector3 } from "babylonjs";
-import { Color4Ext, DebugLines, QuaternionExt } from "../";
+import { Color4Ext, QuaternionExt } from "../";
+import { DebugLines } from "../modules/core";
 
 
 

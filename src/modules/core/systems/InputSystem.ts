@@ -1,13 +1,11 @@
-import { BabySystem } from "../../../types/system";
-import { CanvasEvents } from "../components/CanvasEvents";
-import { Keyboard } from "../components/Keyboard";
-import { Mouse } from "../components/Mouse";
-import { WindowEvents } from "../components/WindowEvents";
+import { BabySystem } from "../../../types/system"
+import { CanvasEvents, Keyboard, Mouse, WindowEvents } from "../components"
 
 
 export class InputSystem extends BabySystem {
 
 	execute() {
+
 		// const Keyboard = this.world.entity.getMutableComponent(Keyboard)
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
 		const canvasEvents = this.world.entity.getComponent(CanvasEvents)!.events

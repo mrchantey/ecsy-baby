@@ -2,26 +2,19 @@ import { Color3, Matrix, Mesh, StandardMaterial } from "babylonjs";
 import { Entity, SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
 import { isEmpty } from "../../../utility/jsUtility";
-import { CameraComp } from "../../core/components/Camera";
-import { SceneComp } from "../../core/components/Scene";
-import { TransformNodeComp } from "../../core/components/TransformNode";
+import { SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
 import { Interactable } from "../components/Interactable";
 import { Interactor } from "../components/Interactor";
 
 export class InteractionSystem extends BabySystem {
     execute() {
 
-        const scene = this.getSingletonComponent(SceneComp).scene
-        const camera = this.getSingletonComponent(CameraComp).camera
-
-        // const interactables = this.queries.interactables.results.map(entity=>({
-        //     interactable:entity.getComponent
-        // }))
+        const scene = this.getSingletonComponent(SceneComp)!.value
+        const camera = this.getSingletonComponent(TargetCameraComp)!.value
 
         this.queries.interactors.results
             .forEach((entity, index) => {
                 const interactor = entity.getMutableComponent(Interactor)!
-                // const node = entity.getMutableComponent(TransformNode)!.value
                 const ray = scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera)
                 const hit = scene.pickWithRay(ray)
 
@@ -29,6 +22,8 @@ export class InteractionSystem extends BabySystem {
                     const interactableEntity = this.queries.interactables.results
                         .find(entity => entity.getComponent(TransformNodeComp)!.value === hit.pickedMesh)
                     this.tryStartHover(interactor, interactableEntity)
+                } else {
+                    this.tryEndHover(interactor)
                 }
             })
     }
@@ -44,8 +39,7 @@ export class InteractionSystem extends BabySystem {
             //interactor event
             //interactable event
             if (interactable !== undefined) {
-                const mesh = interactable.getComponent(TransformNodeComp)!.value as Mesh
-                const mat = mesh.material as StandardMaterial
+                const mat = interactable.getComponent(StandardMaterialComp)!.value
                 mat.diffuseColor = new Color3(0, 1, 1)
                 interactor.isHovering = true
             }
@@ -56,9 +50,11 @@ export class InteractionSystem extends BabySystem {
         if (!interactor.isHovering)
             return
         interactor.isHovering = false
-        if (isEmpty(interactor.currentInteraction))
+        if (!interactor.currentInteraction)
             return
-        (<any>interactor.currentInteraction!.getComponent(TransformNodeComp)!.value).material.diffuseColor = new Color3(1, 1, 1)
+        const mat = interactor.currentInteraction!.getComponent(StandardMaterialComp)!.value
+        mat.diffuseColor = new Color3(1, 1, 1)
+        interactor.currentInteraction = undefined
     }
 
     static queries: SystemQueries = {
@@ -66,7 +62,7 @@ export class InteractionSystem extends BabySystem {
             components: [TransformNodeComp, Interactor]
         },
         interactables: {
-            components: [TransformNodeComp, Interactable]
+            components: [Interactable, TransformNodeComp, StandardMaterialComp]
         }
     }
 }

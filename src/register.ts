@@ -1,7 +1,7 @@
 import { BabyWorld } from "./types/world";
 import * as TagComponents from "./TagComponents";
 import { ComponentConstructor, SystemConstructor } from "ecsy";
-import { SceneComp } from "./";
+import { SceneComp } from "./modules/core/components/BabylonComponents";
 import { Scene } from "babylonjs";
 
 
@@ -18,7 +18,7 @@ export enum SystemPriority {
 	Last = 1
 }
 
-export type ModuleConstructor<T> = (args: T) => iModule
+export type ModuleConstructor<T> = (args?: T) => iModule
 
 
 export interface iModule {
@@ -55,10 +55,10 @@ export function registerModules(world: BabyWorld, modules: iModule[]) {
 		.flat()
 		.forEach(s => world.registerSystem(s))
 
-	const scene = world.entity.getComponent(SceneComp)!.scene
-
+	const scene = world.entity.getComponent(SceneComp)!.value
 	modules
 		.filter(m => m.onSystemsRegistered !== undefined)
+		// .forEach(m => m.onSystemsRegistered!(world))
 		.forEach(m => m.onSystemsRegistered!(world, scene))
 }
 

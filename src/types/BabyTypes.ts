@@ -42,15 +42,15 @@ function defineClonableType(ClassName: string, BabylonClass: any) {
 // 	}
 // }
 
-export const Frustum = defineClonableType("Frustum", _Frustum);
-export const Plane = defineClonableType("Plane", _Plane);
-export const Quaternion = defineClonableType("Quaternion", _Quaternion);
-export const Ray = defineClonableType("Ray", _Ray);
-export const Vector2 = defineClonableType("Vector2", _Vector2);
-export const Vector3 = defineClonableType("Vector3", _Vector3);
-export const Vector4 = defineClonableType("Vector4", _Vector4);
-export const Matrix = defineClonableType("Matrix", _Matrix);
-export const Color3 = defineClonableType("Color3", _Color3);
-export const Color4 = defineClonableType("Color4", _Color4);
+export const FrustumType = defineClonableType("Frustum", _Frustum);
+export const PlaneType = defineClonableType("Plane", _Plane);
+export const QuaternionType = defineClonableType("Quaternion", _Quaternion);
+export const RayType = defineClonableType("Ray", _Ray);
+export const Vector2Type = defineClonableType("Vector2", _Vector2);
+export const Vector3Type = defineClonableType("Vector3", _Vector3);
+export const Vector4Type = defineClonableType("Vector4", _Vector4);
+export const MatrixType = defineClonableType("Matrix", _Matrix);
+export const Color3Type = defineClonableType("Color3", _Color3);
+export const Color4Type = defineClonableType("Color4", _Color4);
 
-export const BabyEvent = defineClonableType("BabyEvent", _BabyEvent);
+export const BabyEventType = defineClonableType("BabyEvent", _BabyEvent);

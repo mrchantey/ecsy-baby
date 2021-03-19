@@ -38,14 +38,35 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 - Circular Dependency
 	- Symptoms: enums and variables undefined or 'cannot access before initialization'
 	- Prognosis: Circular Dependencies
-	```ts
-	// ./register.ts
-	import {SceneComp} from "./modules/core"
-	// ./modules/core/index.ts
-	import {SystemPriority} from "../../"
-	```
-	- Prescription: all imports from root unless exporting them
-	```ts
-	// ./register.ts
-	import {SceneComp} from "./"
-	```
+	- Prescription: 
+		- never import from index.js, unless from seperate thing
+	- note: npm run check-circular will not find all of them
+	- example 1
+		```ts
+		// INCORRECT
+		// ./register.ts
+		import {SceneComp} from "./modules/core"
+		// ./modules/core/index.ts
+		import {SystemPriority} from "../../"
+		
+		// CORRECT
+		// ./register.ts
+		import {SceneComp} from "./"
+		```
+	- example 2
+		```ts
+		// INCORRECT
+		import { SceneComp } from '../../';
+		
+		// CORRECT
+		import { SceneComp } from '../components/BabylonComponents';
+
+		```
+
+
+- Something
+	- Symptoms: Cannot write file '../dist/../*.d.ts' because it would overwrite input file.
+	- Prognosis: 
+		- A file is importing from dist folder
+			`import { CameraComp } from '../../../dist/modules/core/module';`
+		- Delete dist folder to find out who

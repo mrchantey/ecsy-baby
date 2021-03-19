@@ -1,7 +1,7 @@
 import { SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
 import { Mouse } from "../../core/components/Mouse";
-import { TransformNodeComp } from "../../core/components/TransformNode";
+import { TransformNodeComp } from "../../core";
 import { ViewTool } from "../components/ViewTool";
 
 export class ViewSystem extends BabySystem {

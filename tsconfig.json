@@ -11,6 +11,9 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
-		"strictPropertyInitialization": false
-	}
+		"strictPropertyInitialization": false,
+	},
+	"exclude": [
+		"./dist"
+	]
 }

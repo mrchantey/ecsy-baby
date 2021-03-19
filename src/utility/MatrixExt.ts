@@ -1,5 +1,5 @@
 import { Plane, Vector2, Vector3, Matrix, Quaternion } from "babylonjs";
-import { DebugLines } from "../";
+import { DebugLines } from "../modules/core/components";
 
 
 
