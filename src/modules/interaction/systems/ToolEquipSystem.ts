@@ -1,30 +1,50 @@
 import { Entity, SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
 import { isEmpty } from "../../../utility/jsUtility";
-import { CurrentTool } from "../components/CurrentTool";
+import { EquipToolEvent } from "../components";
+// import { CurrentTool } from "../components/CurrentTool";
 import { ToolEquipper } from "../components/ToolEquipper";
-import { Tool, toolComponentLookup } from "../utility/tools";
+import { toolComponentLookup } from "../utility/toolLookup";
+import { iToolType } from "../utility/tools";
 
 export class ToolEquipSystem extends BabySystem {
     execute() {
-        const currentTool = this.getSingletonComponent(CurrentTool)?.tool
-        this.queries.toolEquippers.results
-            .filter(equipper => equipper.getComponent(toolComponentLookup[currentTool]) === undefined)
-            .forEach((entity, index) => this.equipNewTool(entity, currentTool))
+        this.queries.equippers.added!.forEach(entity => {
+            const equipper = entity.getMutableComponent(ToolEquipper)!
+            const equipEvent = entity.getComponent(EquipToolEvent)!
+            entity.removeComponent(toolComponentLookup[equipper.currentTool])
+
+            const ToEquipType = toolComponentLookup[equipEvent.toolType]
+            const tool = equipEvent.toolEntity.getComponent(ToEquipType)!
+
+            entity.addComponent(ToEquipType, tool)
+            // console.log('equipping!');
+            // console.dir(componentCopy);
+            // entity.addComponent(toolComponentLookup[equipEvent.tool.toolType], componentCopy)
+
+            entity.removeComponent(EquipToolEvent)
+        })
+        // const currentTool = this.getSingletonComponent(CurrentTool)?.tool
+        // this.queries.toolEquippers.results
+        //     .filter(equipper => equipper.getComponent(toolComponentLookup[currentTool]) === undefined)
+        //     .forEach((entity, index) => this.equipNewTool(entity, currentTool))
     }
 
 
 
-    equipNewTool(equipper: Entity, newTool: Tool) {
-        const toolEquipper = equipper.getMutableComponent(ToolEquipper)!
-        equipper.removeComponent(toolComponentLookup[toolEquipper.currentTool])
-        equipper.addComponent(toolComponentLookup[newTool])
-        toolEquipper.currentTool = newTool
-    }
+    // equipNewTool(equipper: Entity, newTool: Tool) {
+    //     const toolEquipper = equipper.getMutableComponent(ToolEquipper)!
+    //     equipper.removeComponent(toolComponentLookup[toolEquipper.currentTool])
+    //     equipper.addComponent(toolComponentLookup[newTool])
+    //     toolEquipper.currentTool = newTool
+    // }
 
     static queries: SystemQueries = {
-        toolEquippers: {
-            components: [ToolEquipper]
+        equippers: {
+            components: [ToolEquipper, EquipToolEvent],
+            listen: {
+                added: true
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
 	"main": "./dist/index.js",
 	"scripts": {
 		"prepublishOnly": "./scripts/publish.sh",
-		"generate-index": "node ./scripts/generate-index.js",
+		"watch-index": "node ./scripts/watch-index.js",
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
 		"build": "npm run build-src && npm run build-site",
 		"build-src": "tsc --project tsconfig.source.json",

@@ -1,12 +1,12 @@
 
 import { HemisphericLight, MeshBuilder, Scene, StandardMaterial, TargetCamera, TransformNode, Vector3 } from "babylonjs";
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-import { BabyWorld, iModule, initialize } from "../../../src";
+import { AdvancedPlane, BabyWorld, iModule, initialize } from "../../../src";
 import { TransformNodeComp, TargetCameraComp, iCreateCamera, StandardMaterialComp } from "../../../src/modules/core";
-import { Interactable, Interactor, createInteractionModule, ToolEquipper, CurrentTool, MoveItemsTool, Tool } from "../../../src/modules/interaction";
+import { Interactable, Interactor, createInteractionModule, ToolEquipper, moveItemTool, EquipToolEvent, ToolType } from "../../../src/modules/interaction";
 
 
-function createBox(world: BabyWorld, scene: Scene, position: Vector3) {
+function createBox(world: BabyWorld, scene: Scene, position: Vector3, index: number) {
 
     const box = MeshBuilder.CreateBox("box", {}, scene)
     box.position.copyFrom(position)
@@ -14,7 +14,7 @@ function createBox(world: BabyWorld, scene: Scene, position: Vector3) {
     const mat = new StandardMaterial("mat", scene)
     box.material = mat
 
-    world.createEntity("interactable")
+    world.createEntity(`interactable ${index}`)
         .addComponent(TransformNodeComp, { value: box })
         .addComponent(Interactable)
         .addComponent(StandardMaterialComp, { value: mat })
@@ -31,19 +31,29 @@ const testModule: iModule = {
     // }],
     onSystemsRegistered: (world, scene) => {
 
-        createBox(world, scene, new Vector3(-1, 0, 0))
-        createBox(world, scene, new Vector3(1, 0, 0))
+        createBox(world, scene, new Vector3(-1, 0, 0), 1)
+        createBox(world, scene, new Vector3(1, 0, 0), 2)
 
         const node = new TransformNode("interactor", scene)
         const camera = world.entity.getComponent(TargetCameraComp)!.value
         camera.parent = node
 
+        const moveItemsEntity = world.createEntity("moveItemTool")
+            .addComponent(moveItemTool, { plane: new AdvancedPlane(Vector3.Zero(), Vector3.Forward(), Vector3.Up()) })
+
+        // const moveItemTool 
+
         world.createEntity("interactor")
             .addComponent(TransformNodeComp, { value: node })
             .addComponent(Interactor)
             .addComponent(ToolEquipper)
+            .addComponent(EquipToolEvent, {
+                toolType: ToolType.MoveItems,
+                toolEntity: moveItemsEntity,
+            })
 
-        world.entity.addComponent(CurrentTool, { tool: Tool.MoveItems })
+
+        // world.entity.addComponent(CurrentTool, { tool: Tool.MoveItems })
 
         node.position = new Vector3(0, 0, -5)
     }

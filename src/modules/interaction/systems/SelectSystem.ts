@@ -1,61 +1,46 @@
 import { Color3, TransformNode } from "babylonjs";
-import { SystemQueries } from "ecsy";
+import { Entity, Not, SystemQueries } from "ecsy";
 import { BabySystem } from "../../../"
 import { Mouse, StandardMaterialComp, TransformNodeComp } from "../../core";
-import { Interactable, Interactor } from "../components";
+import { HoverEvent, Interactable, Interactor, SelectEvent } from "../components";
 
 export class SelectSystem extends BabySystem {
     execute() {
         const mouse = this.getSingletonComponent(Mouse)
-        this.queries.interactors.results
-            .forEach((entity, index) => {
-                const interactor = entity.getMutableComponent(Interactor)!
-                if (mouse.leftButtonDown)
-                    this.tryStartSelect(interactor)
-                if (mouse.leftButtonUp || mouse.mouseOut)
-                    // if (mouse.leftButtonUp)
-                    this.tryEndSelect(interactor)
-            })
+        if (mouse.leftButtonDown)
+            this.queries.interactorsHovering.results
+                .forEach(entity => this.tryStartSelect(entity))
+        if (mouse.leftButtonUp || mouse.mouseOut)
+            this.queries.interactorsSelecting.results
+                .forEach(entity => this.tryEndSelect(entity))
     }
 
-    tryStartSelect(interactor: Interactor) {
-        if (!interactor.isHovering)
-            return
-        interactor.isHovering = false
-        //interaction event
-        interactor.isSelecting = true
-        const interactable = interactor.currentInteraction
-        if (interactable === undefined)
-            console.warn(`SelectSystem - tried to Start Select but no current interaction`)
-        else {
-            const mat = interactable.getComponent(StandardMaterialComp)!.value
-            mat.diffuseColor = new Color3(0, 0, 1)
-        }
-    }
-    tryEndSelect(interactor: Interactor) {
-        if (!interactor.isSelecting)
-            return
-        interactor.isSelecting = false
-        //interaction event
-        const interactable = interactor.currentInteraction
-        if (interactable === undefined)
-            console.warn(`SelectSystem - tried to End Select but no current interaction`)
-        else {
-            const mat = interactable.getComponent(StandardMaterialComp)!.value
-            mat.diffuseColor = new Color3(1, 1, 1)
-            interactor.currentInteraction = undefined
-        }
-        //try hover again to avoid flicker
-    }
+    tryStartSelect(interactor: Entity) {
+        const interactable = interactor.getComponent(HoverEvent)!.interactable
+        interactor.removeComponent(HoverEvent)
+        interactor.addComponent(SelectEvent, { interactable })
 
+        const mat = interactable.getComponent(StandardMaterialComp)!.value
+        mat.diffuseColor = new Color3(0, 0, 1)
+    }
+    tryEndSelect(interactor: Entity) {
+        const interactable = interactor.getComponent(SelectEvent)!.interactable
+        interactor.removeComponent(SelectEvent)
+        const mat = interactable.getComponent(StandardMaterialComp)!.value
+        mat.diffuseColor = new Color3(1, 1, 1)
+        //try hover again to avoid 1 render frame of no hover
+    }
 
     static queries: SystemQueries = {
-        interactors: {
-            components: [TransformNodeComp, Interactor]
+        interactorsHovering: {
+            components: [TransformNodeComp, Interactor, HoverEvent]
         },
-        interactables: {
-            components: [Interactable, TransformNodeComp, StandardMaterialComp]
-        }
+        interactorsSelecting: {
+            components: [TransformNodeComp, Interactor, SelectEvent]
+        },
+        // selectables: {
+        //     components: [Interactable, TransformNodeComp, StandardMaterialComp]
+        // }
     }
 }
 

@@ -15,5 +15,7 @@
 			// 	"cmd": "npm run build-src"
 			// }
 		]
-	}
+	},
+	"filewatcher.autoClearConsole": true,
+	// "filewatcher.shell": "powershell",
 }

@@ -2,7 +2,7 @@ import { SystemQueries } from "ecsy";
 import { BabySystem } from "../../../types/system";
 import { Mouse } from "../../core/components/Mouse";
 import { TransformNodeComp } from "../../core";
-import { ViewTool } from "../components/ViewTool";
+import { ViewTool } from "../components/tools/ViewTool";
 
 export class ViewSystem extends BabySystem {
     execute(delta: number) {

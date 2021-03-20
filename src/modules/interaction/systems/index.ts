@@ -1,5 +1,5 @@
 export * from "./HoverSystem"
-export * from "./MoveItemsSystem"
+export * from "./MoveItemSystem"
 export * from "./SelectSystem"
 export * from "./ToolEquipSystem"
 export * from "./ViewSystem"

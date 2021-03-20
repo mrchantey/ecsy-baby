@@ -1,4 +1,4 @@
-import { Plane, Vector2, Vector3 } from "babylonjs";
+import { Plane, Ray, Vector2, Vector3 } from "babylonjs";
 import { Color4Ext, QuaternionExt } from "../";
 import { DebugLines } from "../modules/core";
 
@@ -30,6 +30,20 @@ export class AdvancedPlane {
 		const dist = Vector3.Dot(point, this.normal) + d;
 		return point.subtract(this.normal.scale(dist))
 	}
+
+
+	raycastPlane(ray: Ray) {
+		var dPos = ray.origin.subtract(this.origin);
+		var dot1 = Vector3.Dot(dPos, this.normal);
+		var dot2 = Vector3.Dot(ray.direction, this.normal);
+		if (dot2 == 0) 		//ray is parrallel to plane
+			return;
+		var dot3 = dot1 / dot2;
+		if (dot3 > 0) 			//intersection is behind ray
+			return;
+		return ray.origin.subtract(ray.direction.scale(dot3));
+	}
+
 	// projectVector3(point: Vector3) {
 	// 	const planePoint = this.pointOnPlane(point)
 	// 	return this.projectVector2(Vector3Ext.toVector2(planePoint))

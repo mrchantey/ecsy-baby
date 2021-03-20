@@ -1,18 +1,12 @@
 import { iSystemsToRegister, ModuleConstructor, SystemPriority } from "../../register";
-import { CurrentTool, Interactable, Interactor, MoveItemsTool, RotateItemsTool, ToolEquipper, ViewTool } from "./components";
-import { HoverSystem, MoveItemsSystem, SelectSystem, ToolEquipSystem, ViewSystem } from "./systems";
-
+import { HoverSystem, MoveItemSystem, SelectSystem, ToolEquipSystem, ViewSystem } from "./systems";
 
 import * as Components from './components';
-
-const components = Object.values(Components)
 
 
 export interface iArgs {
 
 }
-
-
 
 const systems: iSystemsToRegister[] = [
     {
@@ -24,7 +18,7 @@ const systems: iSystemsToRegister[] = [
             ToolEquipSystem,
             //below order is not important
             ViewSystem,
-            MoveItemsSystem
+            MoveItemSystem
         ]
     }
 ]
@@ -32,7 +26,7 @@ const systems: iSystemsToRegister[] = [
 export const createInteractionModule: ModuleConstructor<iArgs> = () => {
 
     return {
-        components,
+        components: Object.values(Components),
         systems
     }
 }

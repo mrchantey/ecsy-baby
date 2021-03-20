@@ -1,15 +1,21 @@
-import { AbstractMesh, Matrix } from "babylonjs"
+import { AbstractMesh, Camera, Matrix, Scene } from "babylonjs"
 import { BabyWorld } from ".."
 import { SceneComp, TargetCameraComp } from "../modules/core"
 
 
 type iPredicate = (mesh: AbstractMesh) => boolean
 
+
+export function screenRay(world: BabyWorld, scene?: Scene, camera?: Camera) {
+    scene = scene || world.entity.getComponent(SceneComp)!.value
+    camera = camera || world.entity.getComponent(TargetCameraComp)!.value
+    return scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera)
+
+}
+
 export function raycastMouse(world: BabyWorld, predicate?: iPredicate) {
     const scene = world.entity.getComponent(SceneComp)!.value
-    const camera = world.entity.getComponent(TargetCameraComp)!.value
-
-    const ray = scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera)
+    const ray = screenRay(world, scene)
     const hit = scene.pickWithRay(ray, predicate)
     return hit
 }
