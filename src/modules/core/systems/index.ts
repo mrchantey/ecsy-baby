@@ -1,4 +1,7 @@
 export * from "./DebugSystem"
 export * from "./DomEventSystem"
 export * from "./InputSystem"
+export * from "./KeyboardMoveSystem"
+export * from "./MouseLookSystem"
 export * from "./RenderSystem"
+export * from "./ShortcutSystem"

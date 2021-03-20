@@ -6,11 +6,11 @@ import { BabySystem } from "./system";
 
 
 export function createBabyWorld(options: WorldOptions) {
-	const _options = {
-		entityClass: BabyEntity
-	}
-	Object.assign(_options, options as any)
-	return new BabyWorld(_options)
+	// const _options = {
+	// 	entityClass: BabyEntity
+	// }
+	// Object.assign(_options, options as any)
+	return new BabyWorld({ entityClass: BabyEntity, ...options })
 }
 
 

@@ -1,5 +1,5 @@
 import { iSystemsToRegister, ModuleConstructor, SystemPriority } from "../../register";
-import { HoverSystem, MoveItemSystem, SelectSystem, ToolEquipSystem, ViewSystem } from "./systems";
+import { HoverSystem, MoveItemSystem, SelectSystem, ToolEquipSystem } from "./systems";
 
 import * as Components from './components';
 
@@ -16,8 +16,7 @@ const systems: iSystemsToRegister[] = [
             HoverSystem,
             SelectSystem,
             ToolEquipSystem,
-            //below order is not important
-            ViewSystem,
+            //below order is not important, either/or kinda thing
             MoveItemSystem
         ]
     }

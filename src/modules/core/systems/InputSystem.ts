@@ -71,6 +71,8 @@ export class InputSystem extends BabySystem {
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
 		mouseComp.mouseStay = false
 		mouseComp.mouseOut = true
+
+		this.handleMouseUp(event)
 	}
 
 	handleMouseWheel(event: WheelEvent) {
@@ -113,8 +115,17 @@ export class InputSystem extends BabySystem {
 		mouseComp.mouseOut = false
 		mouseComp.leftButtonDown = false
 		mouseComp.leftButtonUp = false
+
 		mouseComp.xWheelSign = 0
+		// mouseComp.xnorm = 0
+		// mouseComp.xsign = 0
+		mouseComp.xdelta = 0
+
 		mouseComp.yWheelSign = 0
+		// mouseComp.ynorm = 0
+		// mouseComp.ysign = 0
+		mouseComp.ydelta = 0
+
 
 		const keyboard = this.world.entity.getMutableComponent(Keyboard)!
 		Object.keys(keyboard.keysDown).forEach(key => keyboard.keysDown[key] = false)

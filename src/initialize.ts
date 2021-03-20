@@ -25,13 +25,8 @@ export function initialize({
 
 	registerModules(world, allModules)
 
-	const scene = world.entity.getComponent(SceneComp)!.value
-	scene.onDispose = () => world.dispose()
-
 	if (start)
 		world.start()
-	// console.log('starting..');
-
 
 	return {
 		world,

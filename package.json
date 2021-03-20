@@ -9,7 +9,7 @@
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
 		"build": "npm run build-src && npm run build-site",
 		"build-src": "tsc --project tsconfig.source.json",
-		"watch-src": "tsc -w --project tsconfig.source.json",
+		"watch-src": "concurrently \"tsc -w --project tsconfig.source.json\" \"node ./scripts/watch-index.js\" ",
 		"example": "node ./scripts/handle-examples.js",
 		"watch-spinning-cube": "webpack serve --open --config ./examples/spinning-cube/webpack.config.js",
 		"test-spinning-cube": "cd ./examples/spinning-cube && live-server",
@@ -33,6 +33,7 @@
 	"homepage": "https://github.com/mrchantey/ecsy-baby#readme",
 	"devDependencies": {
 		"babylonjs": "^4.2.0",
+		"concurrently": "^6.0.0",
 		"cross-spawn": "^7.0.3",
 		"ecsy": "^0.4.2",
 		"live-server": "^1.2.1",

@@ -1,12 +1,13 @@
 
 // import { BabyWorld, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../..";
 // import { ModuleConstructor, iModule, SystemPriority, SystemPriorityDelta, } from "../../register";
-import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, Vector3 } from 'babylonjs';
+import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, TransformNode, Vector3 } from 'babylonjs';
 import { ModuleConstructor, SystemPriority, SystemPriorityDelta } from '../../register';
 import { BabyWorld } from '../..';
-import { Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, Mouse, SceneComp, TargetCameraComp, WindowEvents } from "./components";
+import { Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, KeyboardMove, Mouse, MouseLook, Player, SceneComp, TargetCameraComp, TransformNodeComp, WindowEvents } from "./components";
 import * as Components from './components';
-import { DebugSystem, DomEventSystem, InputSystem, RenderSystem } from "./systems";
+import { DebugSystem, DomEventSystem, InputSystem, KeyboardMoveSystem, MouseLookSystem, RenderSystem } from "./systems";
+import { ShortcutSystem } from './systems/ShortcutSystem';
 
 
 // console.dir(SystemPriority);
@@ -25,6 +26,7 @@ export interface iCoreArgs {
     sceneOptions?: SceneOptions
     createCamera?: iCreateCamera
     createLight?: boolean
+    createPlayer?: boolean
 }
 
 export interface iCreateCamera {
@@ -33,12 +35,16 @@ export interface iCreateCamera {
 
 
 
-const createDefaultCamera: iCreateCamera = (scene: Scene, canvas: HTMLCanvasElement, world: BabyWorld) => {
-    const camera = new ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 5, new Vector3(0, 0, 0), scene);
-    camera.attachControl(canvas, true);
+// const createDefaultCamera: iCreateCamera = (scene: Scene, canvas: HTMLCanvasElement, world: BabyWorld) => {
+//     const camera = new ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 5, new Vector3(0, 0, 0), scene);
+//     camera.attachControl(canvas, true);
+//     return camera
+// }
+
+const createDefaultCamera: iCreateCamera = (scene, canvas, world) => {
+    const camera = new TargetCamera("camera", new Vector3(0, 0, -5), scene)
     return camera
 }
-
 
 
 const systems = [
@@ -48,7 +54,12 @@ const systems = [
     },
     {
         priority: CoreSystemPriority.Input,
-        systems: [InputSystem]
+        systems: [
+            InputSystem,
+            ShortcutSystem,
+            KeyboardMoveSystem,
+            MouseLookSystem,
+        ]
     },
     {
         priority: CoreSystemPriority.Render,
@@ -68,6 +79,7 @@ export const createCoreModule: ModuleConstructor<iCoreArgs> = ({
     sceneOptions = {},
     createCamera = createDefaultCamera,
     createLight = true,
+    createPlayer = true,
 } = {}) => {
     return {
         components: Object.values(Components),
@@ -85,6 +97,10 @@ export const createCoreModule: ModuleConstructor<iCoreArgs> = ({
             const scene = new Scene(engine, sceneOptions)
             const camera = createCamera(scene, canvas, world)
 
+            scene.onDispose = () => world.dispose()
+
+
+
             world.entity
                 .addComponent(EngineComp, { value: engine })
                 .addComponent(Canvas, { value: canvas })
@@ -96,12 +112,29 @@ export const createCoreModule: ModuleConstructor<iCoreArgs> = ({
                 .addComponent(Keyboard)
                 .addComponent(DebugLines)
 
+            if (createPlayer) {
+
+                const node = new TransformNode("player", scene)
+                node.position = camera.position
+                camera.parent = node
+                camera.position = Vector3.Zero()
+
+                const entity = world.createEntity("player")
+                    .addComponent(TargetCameraComp, { value: camera })
+                    .addComponent(TransformNodeComp, { value: node })
+                    .addComponent(MouseLook)
+                    .addComponent(KeyboardMove)
+
+                world.entity.addComponent(Player, { value: entity })
+            }
         },
         onSystemsRegistered: (world) => {
             const scene = world.entity.getComponent(SceneComp)!.value
             if (createLight) {
                 const light = new HemisphericLight("light", new Vector3(0, 10, -5), scene)
             }
+
+
         }
     }
 }
