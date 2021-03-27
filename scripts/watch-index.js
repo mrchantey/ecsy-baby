@@ -2,7 +2,9 @@ const fs = require('fs');
 
 
 const ignore = [
+    './src/tests',
     './src/modules',
+    './src/modules/core/tests',
     './src/zz-archive',
     './src/zz-deprecated'
 ]

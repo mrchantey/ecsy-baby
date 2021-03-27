@@ -4,6 +4,7 @@
 	"description": "A community project for easy implementation of ecsy in babylon.js",
 	"main": "./dist/index.js",
 	"scripts": {
+		"test-watch": "jest --watchAll --forceExit --detectOpenHandles --runInBand",
 		"prepublishOnly": "./scripts/publish.sh",
 		"watch-index": "node ./scripts/watch-index.js",
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
@@ -32,12 +33,15 @@
 	},
 	"homepage": "https://github.com/mrchantey/ecsy-baby#readme",
 	"devDependencies": {
+		"@types/jest": "^26.0.22",
 		"babylonjs": "^4.2.0",
 		"concurrently": "^6.0.0",
 		"cross-spawn": "^7.0.3",
 		"ecsy": "^0.4.2",
+		"jest": "^26.6.3",
 		"live-server": "^1.2.1",
 		"madge": "^4.0.2",
+		"ts-jest": "^26.5.4",
 		"ts-loader": "^8.0.14",
 		"typescript": "^4.1.3",
 		"webpack": "^5.14.0",

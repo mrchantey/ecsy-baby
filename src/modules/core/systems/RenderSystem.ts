@@ -23,6 +23,11 @@ export class RenderSystem extends BabySystem {
 		})
 	}
 
+	stop() {
+		const engine = this.world.entity.getComponent(EngineComp)!.value
+		engine.stopRenderLoop()
+	}
+
 	execute() {
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
 		if (windowEvents.resize !== null)

@@ -1,6 +1,6 @@
 import { BabyWorld } from "./types/world";
 import { ComponentConstructor, SystemConstructor } from "ecsy";
-import { SceneComp } from "./modules/core/components/BabylonComponents";
+import { SceneComp } from "./modules/core/components/BabylonComponents";//circular dependency, this is a problem
 import { Scene } from "babylonjs";
 
 

@@ -1,19 +1,9 @@
-import { Scene } from "babylonjs";
 import { World, WorldOptions } from "ecsy";
 import { BabyEntity } from "./entity";
 import { BabySystem } from "./system";
-// import { Object3DComponent } from "./components/Object3DComponent.js";
 
 
-export function createBabyWorld(options: WorldOptions) {
-	// const _options = {
-	// 	entityClass: BabyEntity
-	// }
-	// Object.assign(_options, options as any)
-	return new BabyWorld({ entityClass: BabyEntity, ...options })
-}
-
-
+const isFunction = (f: any) => typeof f === 'function'
 
 export class BabyWorld extends World<BabyEntity> {
 	entity: BabyEntity
@@ -23,24 +13,30 @@ export class BabyWorld extends World<BabyEntity> {
 	systemsBeforeRender: BabySystem[]
 	systemsAfterRender: BabySystem[]
 	systemsDispose: BabySystem[]
+	systemsStop: BabySystem[]
 
-	constructor(options: WorldOptions) {
-		super(options)
+	constructor({ entityClass = BabyEntity, ...options }: WorldOptions = {}) {
+		super({ entityClass, ...options })
 		this.entity = this.createEntity("singleton")
 	}
 
 	start() {
+		//they arent nessecarily babysystems
 		const systems = this.getSystems() as BabySystem[]
-		this.systemsStart = systems.filter(s => s.start !== undefined)
-		this.systemsBeforeRender = systems.filter(s => s.beforeRender !== undefined)
-		this.systemsAfterRender = systems.filter(s => s.afterRender !== undefined)
-		this.systemsDispose = systems.filter(s => s.dispose !== undefined)
+		this.systemsStart = systems.filter(s => isFunction(s.start))
+		this.systemsBeforeRender = systems.filter(s => isFunction(s.beforeRender))
+		this.systemsAfterRender = systems.filter(s => isFunction(s.afterRender))
+		this.systemsDispose = systems.filter(s => isFunction(s.dispose))
+		this.systemsStop = systems.filter(s => isFunction(s.stop))
 
-		// console.dir(this.systemsAfterRender.length);
 		this.systemsStart.forEach(s => s.start())
 	}
 
-	execute(delta: number, time: number) {
+	stop() {
+		this.systemsStop.forEach(s => s.stop())
+	}
+
+	execute(delta: number = 0, time: number = 0) {
 		super.execute(delta, time)
 		this.onExecute(delta, time)
 	}

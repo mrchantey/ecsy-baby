@@ -11,7 +11,9 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
+		"esModuleInterop": true,
 		"strictPropertyInitialization": false,
+		// "strictPropertyInitialization": true,
 	},
 	"exclude": [
 		"./dist"

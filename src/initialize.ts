@@ -1,8 +1,9 @@
 import { ArcRotateCamera, Camera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, Vector3 } from "babylonjs";
 import { Component, ComponentConstructor, Entity, System, SystemConstructor, WorldOptions } from "ecsy";
-import { createBabyWorld } from ".";
+// import { createBabyWorld } from ".";
 import { Canvas, createCoreModule, EngineComp, iCoreArgs, SceneComp, TargetCameraComp } from "./modules/core";
 import { iModule, ModuleConstructor, registerModules } from "./register";
+import { BabyWorld } from "./types/world";
 
 
 
@@ -19,8 +20,9 @@ export function initialize({
 	...coreOptions
 }: iOptions = {}) {
 
-	const world = createBabyWorld(worldOptions)
+	// const world = createBabyWorld(worldOptions)
 
+	const world = new BabyWorld(worldOptions)
 	const allModules = [createCoreModule(coreOptions), ...modules]
 
 	registerModules(world, allModules)

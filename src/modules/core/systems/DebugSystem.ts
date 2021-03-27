@@ -11,6 +11,7 @@ export class DebugSystem extends BabySystem {
 
 		if (debugLines.needsNewInstance) {
 			const scene = this.getSingletonComponent(SceneComp).value
+			//dont we need to dispose the instance
 			debugLines.options.instance = undefined;
 			debugLines.options.instance = (<any>MeshBuilder).CreateLineSystem("guides", debugLines.options, scene)
 		} else if (debugLines.needsRedraw) {

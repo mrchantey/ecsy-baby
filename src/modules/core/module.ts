@@ -1,7 +1,7 @@
 
 // import { BabyWorld, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../..";
 // import { ModuleConstructor, iModule, SystemPriority, SystemPriorityDelta, } from "../../register";
-import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Scene, SceneOptions, TargetCamera, TransformNode, Vector3 } from 'babylonjs';
+import { ArcRotateCamera, Engine, EngineOptions, HemisphericLight, Logger, NullEngine, NullEngineOptions, Scene, SceneOptions, TargetCamera, TransformNode, Vector3 } from 'babylonjs';
 import { ModuleConstructor, SystemPriority, SystemPriorityDelta } from '../../register';
 import { BabyWorld } from '../..';
 import { Canvas, CanvasEvents, DebugLines, EngineComp, EulerRotation, Keyboard, KeyboardMove, Mouse, MouseLook, Player, SceneComp, TargetCameraComp, TransformNodeComp, WindowEvents } from "./components";
@@ -46,6 +46,13 @@ const createDefaultCamera: iCreateCamera = (scene, canvas, world) => {
     return camera
 }
 
+const createDefaultEngine = (canvas: HTMLCanvasElement, antialias: boolean, engineOptions: EngineOptions) => {
+    Logger.LogLevels = Logger.ErrorLogLevel
+
+    if (process.env.NODE_ENV === 'test')
+        return new NullEngine()
+    return new Engine(canvas, antialias, engineOptions)
+}
 
 const systems = [
     {
@@ -93,7 +100,7 @@ export const createCoreModule: ModuleConstructor<iCoreArgs> = ({
                     document.body.appendChild(canvas)
                 }
             }
-            const engine = new Engine(canvas, antialias, engineOptions)
+            const engine = createDefaultEngine(canvas, antialias, engineOptions)
             const scene = new Scene(engine, sceneOptions)
             const camera = createCamera(scene, canvas, world)
 
