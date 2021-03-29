@@ -4,9 +4,10 @@
 	"description": "A community project for easy implementation of ecsy in babylon.js",
 	"main": "./dist/index.js",
 	"scripts": {
+		"test": "jest --forceExit --detectOpenHandles --runInBand",
 		"test-watch": "jest --watchAll --forceExit --detectOpenHandles --runInBand",
 		"prepublishOnly": "./scripts/publish.sh",
-		"watch-index": "node ./scripts/watch-index.js",
+		"auto-index": "node ./scripts/watch-index.js",
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
 		"build": "npm run build-src && npm run build-site",
 		"build-src": "tsc --project tsconfig.source.json",
@@ -14,7 +15,8 @@
 		"example": "node ./scripts/handle-examples.js",
 		"watch-spinning-cube": "webpack serve --open --config ./examples/spinning-cube/webpack.config.js",
 		"test-spinning-cube": "cd ./examples/spinning-cube && live-server",
-		"check-circular": "npx madge --circular --warning --debug --extensions ts ./src"
+		"check-circular": "npx madge --circular --warning --debug --extensions ts ./src",
+		"relink": "npm link lilbud"
 	},
 	"repository": {
 		"type": "git",
@@ -33,7 +35,6 @@
 	},
 	"homepage": "https://github.com/mrchantey/ecsy-baby#readme",
 	"devDependencies": {
-		"@types/jest": "^26.0.22",
 		"babylonjs": "^4.2.0",
 		"concurrently": "^6.0.0",
 		"cross-spawn": "^7.0.3",
@@ -41,6 +42,7 @@
 		"jest": "^26.6.3",
 		"live-server": "^1.2.1",
 		"madge": "^4.0.2",
+		"@types/jest": "^26.0.22",
 		"ts-jest": "^26.5.4",
 		"ts-loader": "^8.0.14",
 		"typescript": "^4.1.3",

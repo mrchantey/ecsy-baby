@@ -1,0 +1,20 @@
+{
+    "ignoreExact": [
+        "./src"
+    ],
+    "exportAs": [
+        "MathExt",
+        "BabyTypes",
+        "MatrixExt",
+        "QuaternionExt",
+        "Vector2Ext",
+        "Vector3Ext",
+        "ArrayExt",
+        "Color4Ext",
+        "Vector2Ext",
+        "Vector3Ext",
+        "QuaternionExt",
+        "MeshBuilderExt",
+        "MatrixExt"
+    ]
+}
