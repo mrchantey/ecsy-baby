@@ -1,14 +1,28 @@
 
 import { HemisphericLight, MeshBuilder, Vector3 } from "babylonjs";
+import { Scene } from "babylonjs/scene";
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-import { iModule, initialize, SystemPriority } from "../../../src";
-import { EulerRotation, SceneComp } from "../../../src/modules/core";
+import { BabySystem, iModule, SystemPriority } from "../../../src/base/index";
+import { EulerRotation, SceneComp } from "../../../src/core/index";
+import { initialize } from "../../../src/core/initialize";
 
 class CubeSpinComponent extends Component<CubeSpinComponent>{
     speed: number
     static schema: ComponentSchema = {
         speed: { default: 1, type: Types.Number }
     }
+}
+
+class CubeSpawnSystem extends BabySystem {
+
+    init() {
+        const scene = this.getSingletonComponent(SceneComp)!.value
+        const box = MeshBuilder.CreateBox("box", {}, scene)
+        this.world.createEntity("box")
+            .addComponent(CubeSpinComponent, { speed: 3 })
+            .addComponent(EulerRotation, { value: box.rotation })
+    }
+
 }
 
 class CubeSpinSystem extends System {
@@ -38,18 +52,14 @@ const cubeSpinModule: iModule = {
     components: [CubeSpinComponent],
     systems: [{
         priority: SystemPriority.BeforeRender,
-        systems: [CubeSpinSystem]
+        systems: [
+            CubeSpawnSystem,
+            CubeSpinSystem]
     }],
-    onSystemsRegistered: (world, scene) => {
-        const box = MeshBuilder.CreateBox("box", {}, scene)
-        world.createEntity("box")
-            .addComponent(CubeSpinComponent, { speed: 3 })
-            .addComponent(EulerRotation, { value: box.rotation })
-    }
 }
 
 
-const { scene, world } = initialize({ modules: [cubeSpinModule] })
+const { world } = initialize({ modules: [cubeSpinModule] })
 // initialize()
 // // world
 // // 	.registerComponent(CubeSpinComponent)

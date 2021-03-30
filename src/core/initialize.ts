@@ -1,7 +1,6 @@
 import { Component, ComponentConstructor, Entity, System, SystemConstructor, WorldOptions } from "ecsy";
-import { createCoreModule, iCoreArgs } from "./core";
-import { iModule, registerModules } from "./base";
-import { BabyWorld } from "./base/types/world";
+import { BabyWorld, registerModules, iModule } from "../base/index";
+import { iCoreArgs, createCoreModule } from "./module";
 
 
 

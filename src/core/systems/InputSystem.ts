@@ -56,7 +56,7 @@ export class InputSystem extends BabySystem {
 		mouseComp.xsign = newx
 		mouseComp.ysign = newy
 		if (mouseComp.leftButtonDown) {
-			console.log('setting');
+			// console.log('setting');
 			mouseComp.xDownNorm = mouseComp.xnorm
 			mouseComp.yDownNorm = mouseComp.ynorm
 		}
@@ -108,7 +108,9 @@ export class InputSystem extends BabySystem {
 		keyboard.keysPressed[event.key] = false
 	}
 
-	afterRender() {
+	afterExecute() {
+		// console.log('cachow');
+
 		//this should be a different system now we have order sorted
 		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
 		mouseComp.mouseOver = false

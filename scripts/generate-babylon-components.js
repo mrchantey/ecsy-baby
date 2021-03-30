@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const path = './src/modules/core/components/BabylonComponents.ts'
+const path = './src/core/components/BabylonComponents.ts'
 
 const components = [
     'Engine',
@@ -19,15 +19,16 @@ const componentsCompStr = components.map(c => `${c}Comp`).join(', ')
 let txt = `
 import { ${componentsStr} } from 'babylonjs'
 import { Component, ComponentConstructor, ComponentSchema, Types } from 'ecsy';
+import { ValueComponent } from '../../base'
 `
 
 components.forEach(c => {
     txt += `
-export class ${c}Comp extends Component<${c}Comp> {
-    value: ${c}
+export class ${c}Comp extends ValueComponent<${c}Comp,${c}> {
     static schema: ComponentSchema = { value: { type: Types.Ref } }
 }`
 })
+// value: ${c}
 
 // txt += `\nexport const babylonComponents: ComponentConstructor<any>[] = [${componentsCompStr}]`
 

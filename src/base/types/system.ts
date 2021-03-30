@@ -26,8 +26,8 @@ export abstract class BabySystem extends System<BabyEntity>  {
 
 	start() { }
 	execute(delta: number, time: number): void { }
-	beforeRender(): void { }
-	afterRender(): void { }
+	beforeExecute(): void { }
+	afterExecute(): void { }
 	dispose(): void { }
 }
 

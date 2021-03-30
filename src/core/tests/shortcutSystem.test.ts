@@ -4,7 +4,8 @@ import { SceneComp } from "../components/BabylonComponents"
 import { DebugPanel } from "../components/DebugPanel"
 import { Keyboard } from "../components/Keyboard"
 import { ShortcutSystem } from "../systems/ShortcutSystem"
-import { createSceneComp } from "../utility/testUtils"
+import { createTestScene } from "../utility/testUtils"
+
 
 
 
@@ -18,7 +19,7 @@ describe("shortcutSystem", () => {
         .registerSystem(ShortcutSystem)
     world.start()
     world.entity
-        .addComponent(SceneComp, createSceneComp())
+        .addComponent(SceneComp, { value: createTestScene() })
         .addComponent(Keyboard)
         .addComponent(DebugPanel)
 

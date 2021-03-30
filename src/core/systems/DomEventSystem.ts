@@ -45,7 +45,7 @@ export class DomEventSystem extends BabySystem {
 
 	}
 
-	afterRender() {
+	afterExecute() {
 
 
 		const windowEvents = this.world.entity.getMutableComponent(WindowEvents)!

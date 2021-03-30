@@ -17,9 +17,6 @@ export class RenderSystem extends BabySystem {
 			const elapsed = time - startTime
 			lastTime = time
 			this.world.execute(delta, elapsed)
-			this.world.beforeRender()
-			this.render()
-			this.world.afterRender()
 		})
 	}
 
@@ -32,21 +29,15 @@ export class RenderSystem extends BabySystem {
 		const windowEvents = this.world.entity.getComponent(WindowEvents)!.events
 		if (windowEvents.resize !== null)
 			this.world.entity.getComponent(EngineComp)!.value.resize()
-	}
-
-	render() {
 		const scene = this.getSingletonComponent(SceneComp)!.value
 		if (scene.activeCamera)
 			scene.render()
-
-
 		// this.queries.scenes.results.forEach(entity => {
 		// 	const scene = entity.getComponent(SceneComp)!.value
 		// 	if (scene.activeCamera)
 		// 		scene.render()
 		// })
 	}
-
 
 
 

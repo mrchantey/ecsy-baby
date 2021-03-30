@@ -1,7 +1,7 @@
-import { initialize } from "../../initialize"
 import { BabyEntity } from "../index"
 import { BabyWorld } from "../index"
 import { wait } from "../utility/jsUtility"
+import { TestValueComponent } from "./testTypes"
 
 describe("jsdom", () => {
 
@@ -20,9 +20,6 @@ describe("jsdom", () => {
 })
 
 
-const minFrameDeltaMillis = 50
-
-
 describe("world", () => {
     const world = new BabyWorld()
     it("is a baby world", async () => {
@@ -39,45 +36,58 @@ describe("world", () => {
     })
 })
 
-describe("initializeFunction", () => {
-    it("runs once", () => {
-        expect(initialize)
-            .not.toThrow()
-    })
 
-    it("runs twice", () => {
-        expect(initialize)
-            .not.toThrow()
-        expect(initialize)
-            .not.toThrow()
-    })
-    it("returns a baby world", () => {
-        const { world } = initialize()
-        expect(world)
-            .toBeInstanceOf(BabyWorld)
-    })
-    it("starts automatically", async done => {
-        const { world } = initialize()
-        world.beforeRender = () => done()
-    })
-    it("waits to start", async done => {
-        const { world } = initialize({ start: false })
-        world.beforeRender = () => { throw new Error("it started") }
-        setTimeout(done, minFrameDeltaMillis);
-    })
-    it("starts manually", async (done) => {
-        const { world } = initialize({ start: false })
-        world.start()
-        world.beforeRender = () => done()
-    })
-    it("stops", async (done) => {
-        const world = new BabyWorld()
-        world.start()
-        world.stop()
-        world.beforeRender = () => { throw new Error("it didnt stop") }
-        setTimeout(done, minFrameDeltaMillis);
-    })
+describe("entity", () => {
+    const world = new BabyWorld()
+    const entity = world
+        .registerComponent(TestValueComponent)
+        .createEntity("test entity")
 
 
+    const actualWarn = console.warn
+
+    it("adds components", () => {
+        entity.addComponent(TestValueComponent, { value: 3 })
+        expect(entity.getComponent(TestValueComponent)?.value).toBe(3)
+    })
+    it("warns on re-adding component", () => {
+        const mockWarn = jest.fn()
+        console.warn = mockWarn
+        entity.addComponent(TestValueComponent)
+        expect(mockWarn.mock.calls.length).toBe(1)
+    })
+
+    it("removes components", () => {
+        entity.removeComponent(TestValueComponent)
+        expect(entity.getComponent(TestValueComponent)?.value)
+            .toBeUndefined()
+    })
+    it("sets components", () => {
+        entity.setComponent(TestValueComponent, { value: 4 })
+        expect(entity.getComponent(TestValueComponent)?.value)
+            .toBe(4)
+        entity.setComponent(TestValueComponent, { value: 5 })
+        expect(entity.getComponent(TestValueComponent)?.value)
+            .toBe(5)
+        entity.removeComponent(TestValueComponent)
+    })
+
+    it("gets component values", () => {
+        entity.addComponent(TestValueComponent, { value: 5 })
+        expect(entity.getComponentValue(TestValueComponent))
+            .toBe(5)
+        entity.removeComponent(TestValueComponent)
+    })
+    it("sets component values", () => {
+        entity.setComponentValue(TestValueComponent, 5)
+        expect(entity.getComponentValue(TestValueComponent))
+            .toBe(5)
+        entity.removeComponent(TestValueComponent)
+    })
+
+
+    afterEach(() => {
+        console.warn = actualWarn
+    })
 
 })

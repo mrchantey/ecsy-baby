@@ -1,9 +1,8 @@
 import { Logger, NullEngine, Scene } from "babylonjs"
 
-export function createSceneComp() {
+export function createTestScene() {
     Logger.LogLevels = Logger.ErrorLogLevel
     const engine = new NullEngine()
-    const scene = new Scene(engine)
-    return { value: scene }
+    return new Scene(engine)
 }
 

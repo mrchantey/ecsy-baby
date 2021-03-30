@@ -17,6 +17,7 @@
 	},
 	"exclude": [
 		"./dist",
-		"./archive"
+		"./archive",
+		"*.test.ts"
 	]
 }

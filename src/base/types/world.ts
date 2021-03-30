@@ -8,10 +8,14 @@ const isFunction = (f: any) => typeof f === 'function'
 export class BabyWorld extends World<BabyEntity> {
 	entity: BabyEntity
 
-	onExecute: (delta: number, time: number) => any = () => { }
+	_start: () => any = () => { }
+	_beforeExecute: () => any = () => { }
+	_execute: (delta: number, time: number) => any = () => { }
+	_afterExecute: () => any = () => { }
+	_dispose: () => any = () => { }
 	systemsStart: BabySystem[]
-	systemsBeforeRender: BabySystem[]
-	systemsAfterRender: BabySystem[]
+	systemsBeforeExecute: BabySystem[]
+	systemsAfterExecute: BabySystem[]
 	systemsDispose: BabySystem[]
 	systemsStop: BabySystem[]
 
@@ -24,12 +28,13 @@ export class BabyWorld extends World<BabyEntity> {
 		//they arent nessecarily babysystems
 		const systems = this.getSystems() as BabySystem[]
 		this.systemsStart = systems.filter(s => isFunction(s.start))
-		this.systemsBeforeRender = systems.filter(s => isFunction(s.beforeRender))
-		this.systemsAfterRender = systems.filter(s => isFunction(s.afterRender))
+		this.systemsBeforeExecute = systems.filter(s => isFunction(s.beforeExecute))
+		this.systemsAfterExecute = systems.filter(s => isFunction(s.afterExecute))
 		this.systemsDispose = systems.filter(s => isFunction(s.dispose))
 		this.systemsStop = systems.filter(s => isFunction(s.stop))
 
 		this.systemsStart.forEach(s => s.start())
+		this._start()
 	}
 
 	stop() {
@@ -37,21 +42,24 @@ export class BabyWorld extends World<BabyEntity> {
 	}
 
 	execute(delta: number = 0, time: number = 0) {
+		this.beforeExecute()
 		super.execute(delta, time)
-		this.onExecute(delta, time)
+		this._execute(delta, time)
+		this.afterExecute()
 	}
 
-	beforeRender() {
-		this.systemsBeforeRender.forEach(s => s.beforeRender())
+	beforeExecute() {
+		this.systemsBeforeExecute.forEach(s => s.beforeExecute())
+		this._beforeExecute()
 	}
 
-
-	afterRender() {
-		this.systemsAfterRender.forEach(s => s.afterRender())
+	afterExecute() {
+		this.systemsAfterExecute.forEach(s => s.afterExecute())
+		this._afterExecute()
 	}
 	dispose() {
 		this.systemsDispose.forEach(s => s.dispose())
-		// 	// this.entity.getComponent(Lifecycle)?.onDispose.invoke()
+		this._dispose()
 	}
 }
 

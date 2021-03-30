@@ -4,7 +4,7 @@ import { BabySystem } from "../../base/index";
 import { DebugLines, SceneComp } from "../components";
 
 export class DebugSystem extends BabySystem {
-	beforeRender() {
+	execute() {
 		const debugLines = this.getMutableSingletonComponent(DebugLines)
 		if (debugLines == undefined)
 			return;
