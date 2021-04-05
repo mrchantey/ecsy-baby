@@ -1,7 +1,7 @@
 import { Color4, Vector3, Color3 } from 'babylonjs';
+import { Color4Ext, iLineSystemOptions } from 'core/utility';
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { Color4Ext } from '../index';
-import { iLineSystemOptions } from '../utility/extensions';
+// import { Color4Ext } from '../index';
 
 export class DebugLines extends Component<DebugLines> {
 	options: iLineSystemOptions = {
@@ -55,3 +55,10 @@ export class DebugLines extends Component<DebugLines> {
 		clearEachFrame: { type: Types.Boolean, default: true },
 	}
 }
+
+//advanced plane
+// debug(debugLines: DebugLines) {
+// 	debugLines.addLine(this.origin, this.origin.add(this.tangent), Color4Ext.Red())
+// 	debugLines.addLine(this.origin, this.origin.add(this.bitangent), Color4Ext.Green())
+// 	debugLines.addLine(this.origin, this.origin.add(this.normal), Color4Ext.Blue())
+// }

@@ -1,8 +1,8 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { BabyEntity } from '../../base/index';
+import { ExtraEntity } from '../../extra-ecsy/index';
 
 export class Player extends Component<Player> {
-    value: BabyEntity
+    value: ExtraEntity
 
     static schema: ComponentSchema = {
         value: { type: Types.Ref }

@@ -1,5 +1,5 @@
 import { NullEngine, Scene, TargetCamera, Vector3 } from "babylonjs"
-import { BabyWorld, KeyValue } from "../../base/index"
+import { ExtraWorld, KeyValue } from "../../extra-ecsy/index"
 import { SceneComp } from "../components/BabylonComponents"
 import { DebugPanel } from "../components/DebugPanel"
 import { Keyboard } from "../components/Keyboard"
@@ -12,7 +12,7 @@ import { createTestScene } from "../utility/testUtils"
 
 describe("shortcutSystem", () => {
 
-    const world = new BabyWorld()
+    const world = new ExtraWorld()
         .registerComponent(SceneComp)
         .registerComponent(Keyboard)
         .registerComponent(DebugPanel)

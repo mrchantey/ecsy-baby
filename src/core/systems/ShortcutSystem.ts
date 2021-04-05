@@ -1,9 +1,9 @@
 import { IInspectorOptions } from "babylonjs";
 import { SystemQueries } from "ecsy";
-import { BabySystem, KeyValue } from "../../base/index";
+import { ExtraSystem, KeyValue } from "../../extra-ecsy/index";
 import { DebugPanel, Keyboard, SceneComp } from "../components";
 
-export class ShortcutSystem extends BabySystem {
+export class ShortcutSystem extends ExtraSystem {
     execute() {
 
         const keyboard = this.getSingletonComponent(Keyboard)

@@ -1,12 +1,12 @@
 import { Vector3 } from "babylonjs";
+import { MatrixExt } from "core/utility";
 import { SystemQueries } from "ecsy";
-import { BabySystem, KeyValue } from "../../base/index";
-// import { BabySystem, KeyValue, MatrixExt } from "../../..";
+import { ExtraSystem, KeyValue } from "../../extra-ecsy/index";
+// import { ExtraSystem, KeyValue, MatrixExt } from "../../..";
 import { Keyboard, KeyboardMove, TransformNodeComp } from "../components";
-import { MatrixExt } from "../index";
 
 
-export class KeyboardMoveSystem extends BabySystem {
+export class KeyboardMoveSystem extends ExtraSystem {
 	execute(delta: number) {
 		this.queries.entities.results.forEach(entity => {
 			const node = entity.getComponent(TransformNodeComp)!.value
@@ -49,7 +49,10 @@ export class KeyboardMoveSystem extends BabySystem {
 
 	static queries: SystemQueries = {
 		entities: {
-			components: [TransformNodeComp, KeyboardMove]
+			components: [
+				TransformNodeComp,
+				KeyboardMove
+			]
 		}
 	}
 }

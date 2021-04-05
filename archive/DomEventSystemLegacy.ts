@@ -1,5 +1,5 @@
 // import { Canvas, Render, DomEvent } from '../Components';
-// import { BabySystem } from "../base-types/system";
+// import { ExtraSystem } from "../base-types/system";
 // import { Lifecycle } from "../components/Lifecycle";
 // import { Scene } from "../components/Scene";
 // import { BabyEvent } from '../utility/BabyEvent';
@@ -21,7 +21,7 @@
 // 	return event
 // }
 
-// export class DomEventSystem extends BabySystem {
+// export class DomEventSystem extends ExtraSystem {
 
 // 	init() {
 // 		const onDispose = this.world.entity.getComponent(Lifecycle)!.onDispose

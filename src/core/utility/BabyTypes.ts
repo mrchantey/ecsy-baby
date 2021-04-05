@@ -10,7 +10,7 @@ import {
 	Color3 as _Color3,
 	Color4 as _Color4,
 } from "babylonjs";
-import { defineClonableType } from "../../base/index";
+import { defineClonableType } from "../../extra-ecsy/index";
 
 export const Frustum = defineClonableType("Frustum", _Frustum);
 export const Plane = defineClonableType("Plane", _Plane);

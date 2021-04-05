@@ -1,10 +1,8 @@
+import { Keyboard, Mouse, MouseLook, TransformNodeComp } from "core/components";
 import { SystemQueries } from "ecsy";
-import { Mouse } from "../components/Mouse";
-import { TransformNodeComp } from "..";
-import { Keyboard, MouseLook } from "../components";
-import { BabySystem, KeyValue } from "../../base/index";
+import { ExtraSystem, KeyValue } from "extra-ecsy";
 
-export class MouseLookSystem extends BabySystem {
+export class MouseLookSystem extends ExtraSystem {
     execute(delta: number) {
 
         const mouse = this.getSingletonComponent(Mouse)

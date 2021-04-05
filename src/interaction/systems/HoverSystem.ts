@@ -1,13 +1,13 @@
 import { AbstractMesh, Color3, Matrix, Mesh, StandardMaterial } from "babylonjs";
 import { Entity, Not, SystemQueries } from "ecsy";
-import { BabySystem } from "../../base/index";
+import { ExtraSystem } from "../../extra-ecsy/index";
 import { Mouse, raycastMouse, SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
 import { HoverEvent, SelectEvent } from "../components";
 import { Interactable } from "../components/Interactable";
 import { Interactor } from "../components/Interactor";
 
 
-export class HoverSystem extends BabySystem {
+export class HoverSystem extends ExtraSystem {
     execute() {
         const mouseStay = this.getSingletonComponent(Mouse).mouseStay
         if (!mouseStay) {

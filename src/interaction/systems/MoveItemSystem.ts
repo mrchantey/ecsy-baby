@@ -4,9 +4,9 @@ import { screenRay, TransformNodeComp } from "../../core";
 import { ViewTool } from "../components/tools/ViewTool";
 import { Interactor, MoveItemEvent, moveItemTool, SelectEvent } from "../components";
 import { Vector3 } from "babylonjs";
-import { BabySystem } from "../../base/index";
+import { ExtraSystem } from "../../extra-ecsy/index";
 
-export class MoveItemSystem extends BabySystem {
+export class MoveItemSystem extends ExtraSystem {
 
 
     execute(delta: number) {

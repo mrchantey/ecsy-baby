@@ -1,10 +1,10 @@
 import { Color3, TransformNode } from "babylonjs";
 import { Entity, Not, SystemQueries } from "ecsy";
-import { BabySystem } from "../../base/index";
+import { ExtraSystem } from "../../extra-ecsy/index";
 import { Mouse, StandardMaterialComp, TransformNodeComp } from "../../core";
 import { HoverEvent, Interactable, Interactor, SelectEvent } from "../components";
 
-export class SelectSystem extends BabySystem {
+export class SelectSystem extends ExtraSystem {
     execute() {
         const mouse = this.getSingletonComponent(Mouse)
         if (mouse.leftButtonDown)

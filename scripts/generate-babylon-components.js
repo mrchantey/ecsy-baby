@@ -9,6 +9,8 @@ const components = [
     'Node',
     'TransformNode',
     'StandardMaterial',
+    'SceneOptions',
+    'HemisphericLight'
 ]
 
 
@@ -19,7 +21,7 @@ const componentsCompStr = components.map(c => `${c}Comp`).join(', ')
 let txt = `
 import { ${componentsStr} } from 'babylonjs'
 import { Component, ComponentConstructor, ComponentSchema, Types } from 'ecsy';
-import { ValueComponent } from '../../base'
+import { ValueComponent } from '../../extra-ecsy'
 `
 
 components.forEach(c => {

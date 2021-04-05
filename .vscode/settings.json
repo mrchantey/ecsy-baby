@@ -5,6 +5,7 @@
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/.DS_Store": true,
+		// "**/*node_modules": false,
 		// "dist": true
 	},
 	"emeraldwalk.runonsave": {

@@ -1,5 +1,5 @@
 import { MeshBuilder } from "babylonjs";
-import { iLineOptions, iLineSystemOptions } from "./index";
+import { iLineOptions, iLineSystemOptions } from "./extensions";
 
 
 export function redrawLineSystem(options: iLineSystemOptions) {

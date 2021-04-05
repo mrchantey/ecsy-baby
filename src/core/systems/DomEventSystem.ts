@@ -1,4 +1,5 @@
-import { Action, BabySystem } from '../../base/index';
+import { Not, SystemQueries } from 'ecsy';
+import { Action, ExtraSystem } from '../../extra-ecsy/index';
 import { Canvas, CanvasEvents, WindowEvents } from '../components';
 
 function registerWindowEvent<K extends keyof WindowEventMap>(el: Window, name: K, windowEventsBuffer: WindowEvents, disposeActions: Action[]) {
@@ -18,46 +19,63 @@ function registerHtmlEvent<K extends keyof HTMLElementEventMap>(el: HTMLElement,
 	disposeActions.push(() => el.removeEventListener(name, func))
 }
 
-export class DomEventSystem extends BabySystem {
+export class DomEventSystem extends ExtraSystem {
 
+
+
+	//TODO ACTUALLY DISPOSE ON STOP
 	disposeActions: Action[] = []
 
-	init() {
-		// console.log('pow');
-
-
-		const canvas = this.world.entity.getComponent(Canvas)!.value
-		const canvasEvents = this.world.entity.getComponent(CanvasEvents)!
-		const windowEvents = this.world.entity.getComponent(WindowEvents)!
-
-		const registeredWindowEvents: Array<keyof WindowEventMap> = ["resize", "keydown", "keyup"]
-		const registeredCanvasEvents: Array<keyof HTMLElementEventMap> = ["pointermove", "pointerdown", "pointerup", "wheel", "mouseover", "mouseout"]
-
-		// window.addEventListener("mousedown", (ev) => console.log('banana'))
-
-		registeredWindowEvents.forEach(key => registerWindowEvent(window, key, windowEvents, this.disposeActions))
-		registeredCanvasEvents.forEach(key => registerHtmlEvent(canvas, key, canvasEvents, this.disposeActions))
-	}
-
-
 	execute() {
+		// console.log('pow');
+		this.queries.uninitialized.results.forEach(entity => {
 
+			const canvas = entity.getComponent(Canvas)!.value
+			entity
+				.addComponent(WindowEvents)
+				.addComponent(CanvasEvents)
+			const canvasEvents = entity.getComponent(CanvasEvents)!
+			const windowEvents = entity.getComponent(WindowEvents)!
+			const registeredWindowEvents: Array<keyof WindowEventMap> = ["resize", "keydown", "keyup"]
+			const registeredCanvasEvents: Array<keyof HTMLElementEventMap> = ["pointermove", "pointerdown", "pointerup", "wheel", "mouseover", "mouseout"]
 
+			// window.addEventListener("mousedown", (ev) => console.log('banana'))
+
+			registeredWindowEvents.forEach(key => registerWindowEvent(window, key, windowEvents, this.disposeActions))
+			registeredCanvasEvents.forEach(key => registerHtmlEvent(canvas, key, canvasEvents, this.disposeActions))
+		})
 	}
 
 	afterExecute() {
-
-
-		const windowEvents = this.world.entity.getMutableComponent(WindowEvents)!
-		const canvasEvents = this.world.entity.getMutableComponent(CanvasEvents)!
-
-		windowEvents.events = {}
-		canvasEvents.events = {}
+		this.queries.initialized.results.forEach(entity => {
+			const windowEvents = this.world.entity.getMutableComponent(WindowEvents)!
+			const canvasEvents = this.world.entity.getMutableComponent(CanvasEvents)!
+			windowEvents.events = {}
+			canvasEvents.events = {}
+		})
 	}
 
 	dispose() {
 		this.disposeActions.forEach(a => a())
 	}
 
+
+
+	static queries: SystemQueries = {
+		uninitialized: {
+			components: [
+				// Canvas,
+				WindowEvents
+				// Not(WindowEvents), Not(CanvasEvents)
+			]
+		},
+		// initialized: {
+		// 	components: [
+		// 		// Canvas,
+		// 		// WindowEvents,
+		// 		// CanvasEvents
+		// 	]
+		// }
+	}
 
 }

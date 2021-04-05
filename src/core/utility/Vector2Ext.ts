@@ -1,5 +1,5 @@
 import { Vector2, Vector3 } from "babylonjs"
-import { MathExt } from "../../base/index"
+import { MathExt } from "../../extra-ecsy/index"
 
 // export interface iVector2 {
 // 	x: number,

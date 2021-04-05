@@ -1,12 +1,12 @@
 import { Entity, SystemQueries } from "ecsy";
-import { BabySystem } from "../../base/index";
+import { ExtraSystem } from "../../extra-ecsy/index";
 import { EquipToolEvent } from "../components";
 // import { CurrentTool } from "../components/CurrentTool";
 import { ToolEquipper } from "../components/ToolEquipper";
 import { toolComponentLookup } from "../utility/toolLookup";
 import { iToolType } from "../utility/tools";
 
-export class ToolEquipSystem extends BabySystem {
+export class ToolEquipSystem extends ExtraSystem {
     execute() {
         this.queries.equippers.added!.forEach(entity => {
             const equipper = entity.getMutableComponent(ToolEquipper)!

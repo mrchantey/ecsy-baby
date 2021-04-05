@@ -1,12 +1,12 @@
 
 import { HemisphericLight, MeshBuilder, Scene, StandardMaterial, TargetCamera, TransformNode, Vector3 } from "babylonjs";
 import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-import { BabySystem, BabyWorld, iModule, SystemPriority } from "../../../src/base/index";
-import { AdvancedPlane, MouseLook, Player, SceneComp, StandardMaterialComp, TransformNodeComp, initialize } from "../../../src/core/index";
-import { Interactable, Interactor, moveItemTool, ToolEquipper, EquipToolEvent, ToolType, createInteractionModule } from "../../../src/interaction/index";
+import { ExtraSystem, ExtraWorld, iModule, SystemPriority, SystemPriorityDelta } from "../../../src/extra-ecsy/index";
+import { AdvancedPlane, MouseLook, Player, SceneComp, StandardMaterialComp, TransformNodeComp, CoreSystemPriority, initialize } from "../../../src/core/index";
+import { Interactable, Interactor, moveItemTool, ToolEquipper, EquipToolEvent, ToolType, interactionModule } from "../../../src/interaction/index";
 
 
-function createBox(world: BabyWorld, scene: Scene, position: Vector3, index: number) {
+function createBox(world: ExtraWorld, scene: Scene, position: Vector3, index: number) {
 
     const box = MeshBuilder.CreateBox("box", {}, scene)
     box.position.copyFrom(position)
@@ -22,7 +22,7 @@ function createBox(world: BabyWorld, scene: Scene, position: Vector3, index: num
 }
 
 
-class BoxSpawnSystem extends BabySystem {
+class BoxSpawnSystem extends ExtraSystem {
 
     init() {
         const scene = this.getSingletonComponent(SceneComp)!.value
@@ -49,8 +49,8 @@ class BoxSpawnSystem extends BabySystem {
 
 const testModule: iModule = {
     // components: [CubeSpinComponent],
-    systems: [{
-        priority: SystemPriority.BeforeRender,
+    systemGroups: [{
+        priority: CoreSystemPriority.Render - SystemPriorityDelta,
         systems: [BoxSpawnSystem]
     }],
 }
@@ -58,8 +58,7 @@ const testModule: iModule = {
 
 const modules = [
     testModule,
-    createInteractionModule()
+    interactionModule
 ]
-
 
 initialize({ modules })

@@ -1,9 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
+import { ValueComponent } from '../../extra-ecsy';
 
-export class Canvas extends Component<Canvas> {
-	value: HTMLCanvasElement
-
-	static schema: ComponentSchema = {
-		value: { type: Types.Ref }
-	}
+export class Canvas extends ValueComponent<Canvas, HTMLCanvasElement> {
 }

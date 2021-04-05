@@ -1,7 +1,5 @@
 import { Plane, Ray, Vector2, Vector3 } from "babylonjs";
-import { Color4Ext, DebugLines, QuaternionExt } from "../";
-
-
+import * as QuaternionExt from "core/utility/QuaternionExt";
 
 
 export class AdvancedPlane {
@@ -51,9 +49,4 @@ export class AdvancedPlane {
 	toString = () => `origin: ${this.origin}, normal: ${this.normal}, tangent: ${this.tangent}, bitangent: ${this.bitangent}`
 
 
-	debug(debugLines: DebugLines) {
-		debugLines.addLine(this.origin, this.origin.add(this.tangent), Color4Ext.Red())
-		debugLines.addLine(this.origin, this.origin.add(this.bitangent), Color4Ext.Green())
-		debugLines.addLine(this.origin, this.origin.add(this.normal), Color4Ext.Blue())
-	}
 }

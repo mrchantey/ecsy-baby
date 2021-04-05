@@ -1,4 +1,5 @@
 export * from "./components"
+export * from "./componentUtility"
 export * from "./initialize"
 export * from "./module"
 export * from "./systems"

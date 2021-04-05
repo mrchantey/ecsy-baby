@@ -1,8 +1,8 @@
-import { BabySystem } from "../../base/index"
+import { ExtraSystem } from "../../extra-ecsy/index"
 import { CanvasEvents, Keyboard, Mouse, WindowEvents } from "../components"
 
 
-export class InputSystem extends BabySystem {
+export class InputSystem extends ExtraSystem {
 
 	execute() {
 

@@ -1,32 +1,56 @@
+import { InitEngine } from "core/components";
+import { Canvas } from "core/components/Canvas";
+import { DebugLines } from "core/components/DebugLines";
+import { Keyboard } from "core/components/Keyboard";
+import { Mouse } from "core/components/Mouse";
+import { coreModule } from "core/module";
 import { Component, ComponentConstructor, Entity, System, SystemConstructor, WorldOptions } from "ecsy";
-import { BabyWorld, registerModules, iModule } from "../base/index";
-import { iCoreArgs, createCoreModule } from "./module";
-
+import { registerModules } from "extra-ecsy/register";
+import { iModule } from "extra-ecsy/types/module";
+import { ExtraWorld } from "extra-ecsy/types/world";
 
 
 interface iOptions {
 	worldOptions?: WorldOptions,
 	start?: boolean,
 	modules?: iModule[],
-	coreOptions?: iCoreArgs
 }
+
 export function initialize({
-	worldOptions = {},
+	worldOptions,
 	start = true,
 	modules = [],
-	coreOptions = {}
 }: iOptions = {}) {
 
-	const world = new BabyWorld(worldOptions)
-	const allModules = [createCoreModule(coreOptions), ...modules]
+	const world = new ExtraWorld(worldOptions)
 
-	const setupArgs = registerModules(world, allModules)
+	registerModules(world, [coreModule, ...modules])
+	world.entity
+		.addComponent(Mouse)
+		.addComponent(Keyboard)
+		.addComponent(DebugLines)
+		.addComponent(InitEngine)
 
-	if (start)
+	attachCanvas(world)
+	if (start) {
 		world.start()
+		world.execute()
 
-	return {
-		world,
-		...setupArgs
 	}
+
+	return world
+}
+
+
+
+export function attachCanvas(world: ExtraWorld, canvas?: HTMLCanvasElement) {
+	if (!canvas) {
+		canvas = document.getElementsByTagName('canvas')[0]
+		if (!canvas) {
+			canvas = document.createElement('canvas')
+			document.body.appendChild(canvas)
+		}
+	}
+	world.entity
+		.addComponent(Canvas, { value: canvas })
 }

@@ -4,6 +4,13 @@
 			"es2019",
 			"dom"
 		],
+		"baseUrl": "./src",
+		// "paths": {
+		// 	"*": [
+		// 		// "*",
+		// 		"src/*"
+		// 	]
+		// },
 		"moduleResolution": "node",
 		"module": "es6",
 		"target": "es6",
