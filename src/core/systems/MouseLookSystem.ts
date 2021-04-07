@@ -1,6 +1,6 @@
 import { Keyboard, Mouse, MouseLook, TransformNodeComp } from "core/components";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem, KeyValue } from "extra-ecsy";
+import { ExtraSystem, KeyValue } from "ecsy-extra";
 
 export class MouseLookSystem extends ExtraSystem {
     execute(delta: number) {

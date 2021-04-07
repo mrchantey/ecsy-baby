@@ -1,25 +1,12 @@
-
-
-
 import { TargetCamera, Vector3 } from "babylonjs";
 import { SceneComp, TargetCameraComp } from "core/components";
-import { Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "extra-ecsy";
+import { ExtraSystem } from "ecsy-extra";
 
 export class InitCameraSystem extends ExtraSystem {
-    execute() {
-        this.queries.entities.results
-            .forEach(entity => {
-                const scene = entity.getComponent(SceneComp)!.value
-                const camera = new TargetCamera("camera", new Vector3(0, 0, -5), scene)
-                entity.addComponent(TargetCameraComp, { value: camera })
-            })
-    }
-
-    static queries: SystemQueries = {
-        entities: {
-            components: [SceneComp, Not(TargetCameraComp)]
-        }
+    start() {
+        const scene = this.getSingletonComponent(SceneComp)!.value
+        const camera = new TargetCamera("camera", new Vector3(0, 0, -5), scene)
+        this.addSingletonComponent(TargetCameraComp, { value: camera })
     }
 }
 

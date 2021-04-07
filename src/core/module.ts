@@ -4,13 +4,15 @@ import { DebugSystem, DomEventSystem, InitCameraSystem, InitLightSystem, InitPla
 // import { RenderSystem } from './systems/RenderSystem';
 import { ShortcutSystem } from './systems/ShortcutSystem';
 import { InitEngineSystem } from './systems/InitEngineSystem';
-import { iModule, SystemPriority } from '../extra-ecsy/index';
+import { iModule, SystemPriority, SystemPriorityDelta } from '../ecsy-extra/index';
+import { InitCanvasSystem } from 'core/systems/InitCanvasSystem';
 // import { DebugSystem } from './systems/DebugSystem';
 
 export enum CoreSystemPriority {
-    DomEvents = SystemPriority.First,
     Input = SystemPriority.Early,
+    BeforeRender = SystemPriority.Middle - SystemPriorityDelta,
     Render = SystemPriority.Middle,
+    AfterRender = SystemPriority.Middle + SystemPriorityDelta,
     Debug = SystemPriority.Late
 }
 
@@ -20,6 +22,7 @@ export const coreModule: iModule = {
         {
             priority: SystemPriority.First,
             systems: [
+                InitCanvasSystem,
                 InitEngineSystem,
                 InitSceneSystem,
                 InitLightSystem,
@@ -27,26 +30,30 @@ export const coreModule: iModule = {
                 InitPlayerSystem,
             ]
         },
-        // {
-        //     priority: CoreSystemPriority.DomEvents,
-        //     systems: [DomEventSystem]
-        // },
-        // {
-        //     priority: CoreSystemPriority.Input,
-        //     systems: [
-        //         InputSystem,
-        //         ShortcutSystem,
-        //         KeyboardMoveSystem,
-        //         MouseLookSystem,
-        //     ]
-        // },
+        {
+            priority: CoreSystemPriority.Input,
+            systems: [
+                InputSystem,
+                ShortcutSystem,
+                KeyboardMoveSystem,
+                MouseLookSystem,
+            ]
+        },
         {
             priority: CoreSystemPriority.Render,
             systems: [RenderSystem]
         },
-        // {
-        //     priority: CoreSystemPriority.Debug,
-        //     systems: [DebugSystem]
-        // },
+        {
+            priority: CoreSystemPriority.Debug,
+            systems: [DebugSystem]
+        },
+        {
+            priority: SystemPriority.Last,
+            systems: [
+                //dom events will set components in between execute calls.
+                //the execute for this system is cleanup
+                DomEventSystem,
+            ]
+        }
     ]
 }

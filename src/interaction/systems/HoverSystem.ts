@@ -1,34 +1,44 @@
 import { AbstractMesh, Color3, Matrix, Mesh, StandardMaterial } from "babylonjs";
 import { Entity, Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../extra-ecsy/index";
+import { ExtraSystem } from "../../ecsy-extra/index";
 import { Mouse, raycastMouse, SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
 import { HoverEvent, SelectEvent } from "../components";
 import { Interactable } from "../components/Interactable";
 import { Interactor } from "../components/Interactor";
+import { InteractionEvent } from "interaction/components/events/InteractionEvent";
 
 
 export class HoverSystem extends ExtraSystem {
+
+    _interactionAdded: () => void
+    _interactionRemoved: () => void
+
     execute() {
-        const mouseStay = this.getSingletonComponent(Mouse).mouseStay
-        if (!mouseStay) {
-            this.tryEndAllHovers()
-            return
-        }
-        if (this.queries.interactors.results.length === 0)
-            return
+        // const mouseStay = this.getSingletonComponent(Mouse).mouseStay
+        // if (!mouseStay) {
+        //     this.tryEndAllHovers()
+        //     return
+        // }
+        // // if (this.queries.interactors.results.length === 0)
+        //     return
 
-        const hoverables = this.queries.hoverables.results
-            .map(entity => ({ entity, mesh: entity.getComponent(TransformNodeComp)!.value }))
-        this.queries.interactors.results
-            .forEach((entity, index) => {
-                const mesh = raycastMouse(this.world, mesh => hoverables.some(h => h.mesh === mesh))?.pickedMesh
-                if (!mesh) {
-                    this.tryEndHover(entity)
-                    return
-                }
+        this.queries.interactionEvents.added?.forEach(entity => {
+            console.log('INTERACTION ADDED');
+        })
+        this.queries.interactionEvents.removed?.forEach(entity => {
+            console.log('INTERACTION REMOVED');
+        })
 
-                this.tryStartHover(entity, hoverables.find(h => h.mesh === mesh)!.entity)
-            })
+        // this.queries.interactors.results
+        //     .forEach((entity, index) => {
+        //         const mesh = raycastMouse(this.world, mesh => hoverables.some(h => h.mesh === mesh))?.pickedMesh
+        //         if (!mesh) {
+        //             return
+        //         }
+        //         // this.tryStartHover(entity, hoverables.find(h => h.mesh === mesh)!.entity)
+        //     })
+        //on no interaction
+        // this.tryEndHover(entity)
     }
 
     tryStartHover(interactor: Entity, interactable: Entity) {
@@ -60,15 +70,19 @@ export class HoverSystem extends ExtraSystem {
     }
 
     static queries: SystemQueries = {
-        interactors: {
-            components: [TransformNodeComp, Interactor, Not(SelectEvent)]
+        interactionEvents: {
+            components: [Interactor, InteractionEvent],
+            listen: {
+                added: true,
+                removed: true
+            }
         },
-        interactorsHovering: {
-            components: [TransformNodeComp, Interactor, HoverEvent]
-        },
-        hoverables: {
-            components: [Interactable, TransformNodeComp, StandardMaterialComp]
-        }
+        // interactors: {
+        //     components: [TransformNodeComp, Interactor, Not(SelectEvent)]
+        // },
+        // interactorsHovering: {
+        //     components: [TransformNodeComp, Interactor, HoverEvent]
+        // },
     }
 }
 

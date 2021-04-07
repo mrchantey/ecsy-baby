@@ -1,4 +1,4 @@
-import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../extra-ecsy/index";
+import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../ecsy-extra/index";
 import { HoverSystem, MoveItemSystem, SelectSystem, ToolEquipSystem } from "./systems";
 
 import * as Components from './components';

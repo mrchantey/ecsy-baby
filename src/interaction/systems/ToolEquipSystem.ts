@@ -1,5 +1,5 @@
 import { Entity, SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../extra-ecsy/index";
+import { ExtraSystem } from "../../ecsy-extra/index";
 import { EquipToolEvent } from "../components";
 // import { CurrentTool } from "../components/CurrentTool";
 import { ToolEquipper } from "../components/ToolEquipper";

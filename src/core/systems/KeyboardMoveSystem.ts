@@ -1,7 +1,7 @@
 import { Vector3 } from "babylonjs";
 import { MatrixExt } from "core/utility";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem, KeyValue } from "../../extra-ecsy/index";
+import { ExtraSystem, KeyValue } from "../../ecsy-extra/index";
 // import { ExtraSystem, KeyValue, MatrixExt } from "../../..";
 import { Keyboard, KeyboardMove, TransformNodeComp } from "../components";
 
@@ -11,7 +11,7 @@ export class KeyboardMoveSystem extends ExtraSystem {
 		this.queries.entities.results.forEach(entity => {
 			const node = entity.getComponent(TransformNodeComp)!.value
 			const keyboardMove = entity.getComponent(KeyboardMove)!
-			const keyboard = this.getSingletonComponent(Keyboard)
+			const keyboard = this.getSingletonComponent(Keyboard)!
 
 			const translateSpeed = delta * keyboardMove.translateSpeed
 			const rotateSpeed = delta * keyboardMove.rotateSpeed

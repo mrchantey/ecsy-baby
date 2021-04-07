@@ -36,7 +36,9 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 ### Gotchyas
 
 - Circular Dependency
-	- Symptoms: enums and variables undefined or 'cannot access before initialization'
+	- Symptoms:
+		- `cannot read property "isComponent" | "_typeId" of undefined` 
+		- enums and variables undefined or `cannot access before initialization`
 	- Prognosis: Circular Dependencies
 	- Prescription: 
 		- read [this](//https://spin.atomicobject.com/2018/06/25/circular-dependencies-javascript/) 
@@ -85,7 +87,7 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 		4. is component registered ? no
 		5. can use component? yes
 - Systems throw on register
-	- Symptoms: `cannot read property "isComponent" | "_typeId" of undefined`
+	- Symptoms: 
 	- Prognosis:
 		- Weird import error, when registering components, try importing directly from source folder.
 	- Prescription:

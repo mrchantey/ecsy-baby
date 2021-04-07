@@ -1,8 +1,8 @@
 import { ExtraWorld } from ".."
 import { TestValueComponent, TestSystem } from "./testTypes"
 
-describe.only("system", () => {
-    let world: any
+describe("system", () => {
+    let world: ExtraWorld
     // world
     // .registerComponent(TestValueComponent)
 
@@ -13,7 +13,7 @@ describe.only("system", () => {
         expect(world.hasRegisteredComponent(TestValueComponent)).toBe(false)
     )
 
-    it("starts with no systems", () =>
+    it("has no systems", () =>
         expect(world.getSystems()).toHaveLength(0))
 
     it("registers a system", () => {
@@ -23,14 +23,21 @@ describe.only("system", () => {
         expect(world.getSystems()).toHaveLength(1)
     })
 
-    it("runs with system", async (done) => {
-        const entity = world
+    it("runs the start function", async (done) => {
+        world.getSystem(TestSystem)._onStart = done
+        world.start()
+    })
+
+    it("runs the execute function", done => {
+        world
             .createEntity("test entity")
             .addComponent(TestValueComponent)
-        world.start()
-        world.getSystem(TestSystem)._onExecute = () => {
-            done()
-        }
+        world.getSystem(TestSystem)._onExecute = done
         world.execute()
+    })
+
+    it("runs the dispose function", done => {
+        world.getSystem(TestSystem)._onDispose = done
+        world.dispose()
     })
 })

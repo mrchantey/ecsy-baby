@@ -1,14 +1,5 @@
-import { Canvas, CanvasEvents, DomEventSystem } from ".."
-import { ExtraWorld, registerModules } from "../../extra-ecsy"
-import { TestSystem } from "../../extra-ecsy/tests/testTypes"
-import { WindowEvents } from "../components"
-// import { WindowEvents } from "../components/WindowEvents"
-import { coreModule } from "../module"
-// import { DomEventSystem } from "../systems"
-
-
-
-
+import { WindowEvents, Canvas, CanvasEvents, DomEventSystem, coreModule } from "core"
+import { ExtraWorld, registerModules } from "ecsy-extra"
 
 
 describe("core module", () => {
@@ -30,6 +21,11 @@ describe("core module", () => {
     it("registers using the core module", () => {
         const world = new ExtraWorld()
         registerModules(world, [coreModule])
-
+        world.entity
+            .addComponent(Canvas, { value: document.createElement('canvas') })
+        // .addComponent(WindowEvents)
+        world.start()
+        world.execute()
+        world.dispose()
     })
 })

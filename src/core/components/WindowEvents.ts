@@ -1,11 +1,9 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { iWindowEvents } from '../../extra-ecsy';
+import { iWindowEvents } from '../../ecsy-extra';
 
 export class WindowEvents extends Component<WindowEvents>{
-	events: iWindowEvents
-	bla: boolean
+	events: iWindowEvents = {}
 	static schema: ComponentSchema = {
-		// bla: { type: Types.Boolean }
 		events: { type: Types.Ref }
 	}
 }

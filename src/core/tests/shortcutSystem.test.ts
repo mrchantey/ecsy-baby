@@ -1,10 +1,5 @@
-import { NullEngine, Scene, TargetCamera, Vector3 } from "babylonjs"
-import { ExtraWorld, KeyValue } from "../../extra-ecsy/index"
-import { SceneComp } from "../components/BabylonComponents"
-import { DebugPanel } from "../components/DebugPanel"
-import { Keyboard } from "../components/Keyboard"
-import { ShortcutSystem } from "../systems/ShortcutSystem"
-import { createTestScene } from "../utility/testUtils"
+import { SceneComp, Keyboard, DebugPanel, ShortcutSystem, createTestScene } from "core"
+import { ExtraWorld, KeyValue } from "ecsy-extra"
 
 
 

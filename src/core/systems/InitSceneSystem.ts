@@ -1,25 +1,15 @@
 import { Scene } from "babylonjs";
-import { Canvas, EngineComp, SceneComp, SceneOptionsComp } from "core/components";
-import { Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "extra-ecsy";
+import { EngineComp, SceneComp, SceneOptionsComp } from "core/components";
+import { ExtraSystem } from "ecsy-extra";
 
 export class InitSceneSystem extends ExtraSystem {
-    execute() {
-        this.queries.entities.results
-            .forEach(entity => {
-                const canvas = entity.getComponent(Canvas)!.value
-                const engine = entity.getComponent(EngineComp)!.value
+    start() {
+        const engine = this.getSingletonComponent(EngineComp)!.value
 
-                const sceneOptions = entity.getComponent(SceneOptionsComp)?.value
-                const scene = new Scene(engine, sceneOptions)
-                scene.onDispose = () => this.world.dispose()
-                entity.addComponent(SceneComp, { value: scene })
-            })
+        const sceneOptions = this.getSingletonComponent(SceneOptionsComp)?.value
+        const scene = new Scene(engine, sceneOptions)
+        scene.onDispose = () => this.world.dispose()
+        this.addSingletonComponent(SceneComp, { value: scene })
     }
 
-    static queries: SystemQueries = {
-        entities: {
-            components: [Canvas, EngineComp, Not(SceneComp)]
-        }
-    }
 }

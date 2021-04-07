@@ -1,9 +1,8 @@
 
 import { HemisphericLight, MeshBuilder, Vector3 } from "babylonjs";
-import { attachCanvas, CoreSystemPriority, EulerRotation, InitEngine, initialize, SceneComp } from "core";
-import { Component, ComponentSchema, Not, System, SystemQueries, Types } from "ecsy";
-import { ExtraSystem, iModule, SystemPriorityDelta } from "extra-ecsy";
-class CubeSpawned extends Component<CubeSpawned>{ }
+import { coreModule, CoreSystemPriority, EulerRotation, SceneComp } from "core";
+import { Component, ComponentSchema, SystemQueries, Types } from "ecsy";
+import { ExtraSystem, ExtraWorld, iModule, registerModules } from "ecsy-extra";
 
 class CubeSpinComponent extends Component<CubeSpinComponent>{
     speed: number
@@ -12,32 +11,16 @@ class CubeSpinComponent extends Component<CubeSpinComponent>{
     }
 }
 
-class CubeSpawnSystem extends ExtraSystem {
+class CubeSpinSystem extends ExtraSystem {
 
-    init() {
+    start() {
+        const scene = this.getSingletonComponent(SceneComp)!.value
+        const box = MeshBuilder.CreateBox("box", {}, scene)
+        this.world.createEntity("box")
+            .addComponent(CubeSpinComponent, { speed: 3 })
+            .addComponent(EulerRotation, { value: box.rotation })
     }
 
-
-    execute() {
-        this.queries.entities.results.forEach(entity => {
-            const scene = entity.getComponent(SceneComp)!.value
-            const box = MeshBuilder.CreateBox("box", {}, scene)
-            this.world.createEntity("box")
-                .addComponent(CubeSpinComponent, { speed: 3 })
-                .addComponent(EulerRotation, { value: box.rotation })
-            entity.addComponent(CubeSpawned)
-        })
-    }
-
-    static queries: SystemQueries = {
-        entities: {
-            components: [SceneComp, Not(CubeSpawned)]
-        }
-    }
-
-}
-
-class CubeSpinSystem extends System {
     execute(delta: number) {
         // console.log('pow');
 
@@ -61,15 +44,14 @@ class CubeSpinSystem extends System {
 
 
 const cubeSpinModule: iModule = {
-    components: [
-        CubeSpawned,
-        CubeSpinComponent],
+    components: [CubeSpinComponent],
     systemGroups: [{
-        priority: CoreSystemPriority.Render - SystemPriorityDelta,
-        systems: [
-            CubeSpawnSystem,
-            CubeSpinSystem]
+        priority: CoreSystemPriority.BeforeRender,
+        systems: [CubeSpinSystem]
     }],
 }
 
-const world = initialize({ modules: [cubeSpinModule] })
+
+const world = new ExtraWorld()
+registerModules(world, [coreModule, cubeSpinModule])
+world.start()

@@ -1,17 +1,22 @@
 import { MeshBuilder } from "babylonjs";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../extra-ecsy/index";
+import { ExtraSystem } from "../../ecsy-extra/index";
 // import { DebugLines } from "../components/DebugLines";
 import { DebugLines, SceneComp } from "../components";
 
 export class DebugSystem extends ExtraSystem {
+
+	start() {
+		// this.addSingletonComponent(DebugLines)
+	}
+
 	execute() {
 		this.queries.initialized.results.forEach(entity => {
 
 			const debugLines = entity.getMutableComponent(DebugLines)!
 
 			if (debugLines.needsNewInstance) {
-				const scene = this.getSingletonComponent(SceneComp).value
+				const scene = this.getSingletonComponent(SceneComp)!.value
 				//dont we need to dispose the instance
 				debugLines.options.instance = undefined;
 				debugLines.options.instance = (<any>MeshBuilder).CreateLineSystem("guides", debugLines.options, scene)

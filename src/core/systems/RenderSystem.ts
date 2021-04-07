@@ -1,38 +1,30 @@
+import { EngineComp, WindowEvents, SceneComp } from "core/components";
 import { Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../extra-ecsy/index";
-import { EngineComp, SceneComp } from "../components/BabylonComponents";
-import { Render } from "../components/Render";
-import { WindowEvents } from "../components/WindowEvents";
+import { ExtraSystem } from "ecsy-extra";
 // import { EngineComp, Render, SceneComp, WindowEvents } from "../components";
 
 
 export class RenderSystem extends ExtraSystem {
 
+
 	start() {
+		const engine = this.getSingletonComponent(EngineComp)!.value
+		const startTime = Date.now() * 0.001
+		let lastTime = startTime
+
+		engine.runRenderLoop(() => {
+			const time = Date.now() * 0.001
+			const delta = time - lastTime
+			const elapsed = time - startTime
+			lastTime = time
+			this.world.execute(delta, elapsed)
+		})
+
+		// this.world.execute()
 	}
 
-	stop() {
-		const engine = this.world.entity.getComponent(EngineComp)?.value
-		if (engine !== undefined)
-			engine.stopRenderLoop()
-	}
 
 	execute() {
-		this.queries.enginesToRun.results.forEach(entity => {
-			const engine = entity.getComponent(EngineComp)!.value
-			const startTime = Date.now() * 0.001
-			let lastTime = startTime
-
-			engine.runRenderLoop(() => {
-				const time = Date.now() * 0.001
-				const delta = time - lastTime
-				const elapsed = time - startTime
-				lastTime = time
-				this.world.execute(delta, elapsed)
-			})
-
-			entity.addComponent(Render)
-		})
 
 		this.queries.windowEvents.results.forEach(entity => {
 			const windowEvents = entity.getComponent(WindowEvents)!.events
@@ -48,13 +40,15 @@ export class RenderSystem extends ExtraSystem {
 	}
 
 
+	// dispose() {
+	// 	const engine = this.world.entity.getComponent(EngineComp)?.value
+	// 	if (engine !== undefined)
+	// 		engine.stopRenderLoop()
+	// }
 
 	static queries: SystemQueries = {
-		enginesToRun: {
-			components: [EngineComp, Not(Render)]
-		},
 		scenes: {
-			components: [SceneComp, EngineComp, Render]
+			components: [SceneComp, EngineComp]
 		},
 		windowEvents: {
 			components: [WindowEvents]

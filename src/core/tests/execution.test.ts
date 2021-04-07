@@ -1,6 +1,4 @@
-import { ExtraWorld } from "../../extra-ecsy/index"
-
-
+import { ExtraWorld } from "ecsy-extra"
 
 
 

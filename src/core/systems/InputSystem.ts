@@ -1,12 +1,21 @@
-import { ExtraSystem } from "../../extra-ecsy/index"
+import { SystemQueries } from "ecsy"
+import { ExtraSystem } from "../../ecsy-extra/index"
 import { CanvasEvents, Keyboard, Mouse, WindowEvents } from "../components"
 
 
 export class InputSystem extends ExtraSystem {
 
+	start() {
+		this
+			.addSingletonComponent(Mouse)
+			.addSingletonComponent(Keyboard)
+	}
+
+
+
 	execute() {
 
-		// const Keyboard = this.world.entity.getMutableComponent(Keyboard)
+		// const Keyboard = this.getMutableSingletonComponent(Keyboard)
 		const windowEvents = this.getSingletonComponent(WindowEvents)!.events
 		const canvasEvents = this.getSingletonComponent(CanvasEvents)!.events
 
@@ -32,6 +41,30 @@ export class InputSystem extends ExtraSystem {
 
 	}
 
+	cleanupMouse() {
+		const mouse = this.getMutableSingletonComponent(Mouse)!
+		mouse.mouseOver = false
+		mouse.mouseOut = false
+		mouse.leftButtonDown = false
+		mouse.leftButtonUp = false
+
+		mouse.xWheelSign = 0
+		// mouse.xnorm = 0
+		// mouse.xsign = 0
+		mouse.xdelta = 0
+
+		mouse.yWheelSign = 0
+		// mouse.ynorm = 0
+		// mouse.ysign = 0
+		mouse.ydelta = 0
+	}
+
+	cleanupKeyboard() {
+		const keyboard = this.getMutableSingletonComponent(Keyboard)!
+		Object.keys(keyboard.keysDown).forEach(key => keyboard.keysDown[key] = false)
+		Object.keys(keyboard.keysUp).forEach(key => keyboard.keysUp[key] = false)
+	}
+
 	getXYNorm(event: MouseEvent) {
 		const rect = (event.target as HTMLElement).getBoundingClientRect()
 		const elx = event.clientX - Math.round(rect.left);
@@ -44,7 +77,7 @@ export class InputSystem extends ExtraSystem {
 
 
 	handleMouseMove(event: MouseEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		const val = this.getXYNorm(event)
 		mouseComp.xnorm = val.x
 		mouseComp.ynorm = val.y
@@ -63,12 +96,12 @@ export class InputSystem extends ExtraSystem {
 	}
 
 	handleMouseOver(event: MouseEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		mouseComp.mouseOver = true
 		mouseComp.mouseStay = true
 	}
 	handleMouseOut(event: MouseEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		mouseComp.mouseStay = false
 		mouseComp.mouseOut = true
 
@@ -76,13 +109,13 @@ export class InputSystem extends ExtraSystem {
 	}
 
 	handleMouseWheel(event: WheelEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		mouseComp.xWheelSign = Math.sign(event.deltaX)
 		mouseComp.yWheelSign = Math.sign(event.deltaY)
 	}
 
 	handleMouseDown(event: MouseEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		const val = this.getXYNorm(event)
 		mouseComp.xDownNorm = val.x
 		mouseComp.yDownNorm = val.y
@@ -91,50 +124,21 @@ export class InputSystem extends ExtraSystem {
 	}
 
 	handleMouseUp(event: MouseEvent) {
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
+		const mouseComp = this.getMutableSingletonComponent(Mouse)!
 		mouseComp.leftButtonUp = true
 		mouseComp.leftButtonHeld = false
 	}
 
 	handleKeyDown(event: KeyboardEvent) {
-		const keyboard = this.world.entity.getMutableComponent(Keyboard)!
+		const keyboard = this.getMutableSingletonComponent(Keyboard)!
 		if (keyboard.keysPressed[event.key] === true) return
 		keyboard.keysDown[event.key] = true
 		keyboard.keysPressed[event.key] = true
 	}
 	handleKeyUp(event: KeyboardEvent) {
-		const keyboard = this.world.entity.getMutableComponent(Keyboard)!
+		const keyboard = this.getMutableSingletonComponent(Keyboard)!
 		keyboard.keysUp[event.key] = true
 		keyboard.keysPressed[event.key] = false
-	}
-
-	afterExecute() {
-		// console.log('cachow');
-
-		//this should be a different system now we have order sorted
-		const mouseComp = this.world.entity.getMutableComponent(Mouse)!
-		mouseComp.mouseOver = false
-		mouseComp.mouseOut = false
-		mouseComp.leftButtonDown = false
-		mouseComp.leftButtonUp = false
-
-		mouseComp.xWheelSign = 0
-		// mouseComp.xnorm = 0
-		// mouseComp.xsign = 0
-		mouseComp.xdelta = 0
-
-		mouseComp.yWheelSign = 0
-		// mouseComp.ynorm = 0
-		// mouseComp.ysign = 0
-		mouseComp.ydelta = 0
-
-
-		const keyboard = this.world.entity.getMutableComponent(Keyboard)!
-		Object.keys(keyboard.keysDown).forEach(key => keyboard.keysDown[key] = false)
-		Object.keys(keyboard.keysUp).forEach(key => keyboard.keysUp[key] = false)
-		// Keyboard.keysDown = {}
-		// Keyboard.keysUp = {}
-		// deleteUndefined(Keyboard.keysPressed)
 	}
 }
 // function deleteUndefined(obj) { Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key]) }

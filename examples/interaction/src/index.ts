@@ -1,9 +1,10 @@
 
-import { HemisphericLight, MeshBuilder, Scene, StandardMaterial, TargetCamera, TransformNode, Vector3 } from "babylonjs";
-import { Component, ComponentSchema, System, SystemQueries, Types } from "ecsy";
-import { ExtraSystem, ExtraWorld, iModule, SystemPriority, SystemPriorityDelta } from "../../../src/extra-ecsy/index";
-import { AdvancedPlane, MouseLook, Player, SceneComp, StandardMaterialComp, TransformNodeComp, CoreSystemPriority, initialize } from "../../../src/core/index";
+import { MeshBuilder, Scene, StandardMaterial, Vector3 } from "babylonjs";
+import { ExtraSystem, ExtraWorld, iModule, registerModules, SystemPriority, SystemPriorityDelta } from "../../../src/ecsy-extra/index";
+import { AdvancedPlane, MouseLook, Player, SceneComp, StandardMaterialComp, TransformNodeComp, CoreSystemPriority, coreModule } from "../../../src/core/index";
 import { Interactable, Interactor, moveItemTool, ToolEquipper, EquipToolEvent, ToolType, interactionModule } from "../../../src/interaction/index";
+
+
 
 
 function createBox(world: ExtraWorld, scene: Scene, position: Vector3, index: number) {
@@ -24,7 +25,7 @@ function createBox(world: ExtraWorld, scene: Scene, position: Vector3, index: nu
 
 class BoxSpawnSystem extends ExtraSystem {
 
-    init() {
+    start() {
         const scene = this.getSingletonComponent(SceneComp)!.value
         createBox(this.world, scene, new Vector3(-1, 0, 0), 1)
         createBox(this.world, scene, new Vector3(1, 0, 0), 2)
@@ -50,15 +51,13 @@ class BoxSpawnSystem extends ExtraSystem {
 const testModule: iModule = {
     // components: [CubeSpinComponent],
     systemGroups: [{
-        priority: CoreSystemPriority.Render - SystemPriorityDelta,
+        priority: CoreSystemPriority.BeforeRender,
         systems: [BoxSpawnSystem]
     }],
 }
 
 
-const modules = [
-    testModule,
-    interactionModule
-]
 
-initialize({ modules })
+const world = new ExtraWorld()
+registerModules(world, [coreModule, interactionModule, testModule])
+world.start()

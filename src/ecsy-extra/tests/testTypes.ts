@@ -9,14 +9,22 @@ export class TestValueComponent extends ValueComponent<TestValueComponent, numbe
 
 export class TestSystem extends ExtraSystem {
 
+
+    _onStart: () => void
     _onExecute: () => void
+    _onDispose: () => void
+    start() {
+        this._onStart?.()
+    }
     execute() {
         this.queries.entities.results
             .forEach(entity => {
-                this._onExecute()
+                this._onExecute?.()
             })
     }
-
+    dispose() {
+        this._onDispose?.()
+    }
     static queries: SystemQueries = {
         entities: {
             components: [TestValueComponent]

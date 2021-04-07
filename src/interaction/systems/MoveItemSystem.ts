@@ -4,19 +4,23 @@ import { screenRay, TransformNodeComp } from "../../core";
 import { ViewTool } from "../components/tools/ViewTool";
 import { Interactor, MoveItemEvent, moveItemTool, SelectEvent } from "../components";
 import { Vector3 } from "babylonjs";
-import { ExtraSystem } from "../../extra-ecsy/index";
+import { ExtraSystem } from "../../ecsy-extra/index";
 
 export class MoveItemSystem extends ExtraSystem {
 
 
-    execute(delta: number) {
+    execute() {
 
         this.queries.interactorsSelecting
             .added?.forEach(entity => {
+                // console.log('SOMETHING ADDED');
+                console.dir(entity.getComponents());
                 // const interactor = entity.getComponent(Interactor)!
                 const tool = entity.getComponent(moveItemTool)!
                 const selectEvent = entity.getComponent(SelectEvent)!
-
+                // if (!selectEvent)
+                //     return
+                // console.dir(selectEvent);
                 const interactableTransform = selectEvent.interactable.getComponent(TransformNodeComp)!.value
                 const intersect = tool.plane.raycastPlane(screenRay(this.world))
                 if (!intersect)

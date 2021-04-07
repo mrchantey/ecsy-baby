@@ -1,6 +1,7 @@
 import { AbstractMesh, Camera, Matrix, Scene } from "babylonjs"
+import { Mesh } from "babylonjs/Meshes/mesh"
 import { SceneComp, TargetCameraComp } from "core/components"
-import { ExtraWorld } from "extra-ecsy"
+import { ExtraWorld } from "ecsy-extra"
 
 
 type iPredicate = (mesh: AbstractMesh) => boolean
@@ -17,5 +18,5 @@ export function raycastMouse(world: ExtraWorld, predicate?: iPredicate) {
     const scene = world.entity.getComponent(SceneComp)!.value
     const ray = screenRay(world, scene)
     const hit = scene.pickWithRay(ray, predicate)
-    return hit
+    return hit as { pickedMesh?: AbstractMesh }
 }

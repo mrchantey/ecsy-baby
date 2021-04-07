@@ -1,6 +1,6 @@
 import { IInspectorOptions } from "babylonjs";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem, KeyValue } from "../../extra-ecsy/index";
+import { ExtraSystem, KeyValue } from "../../ecsy-extra/index";
 import { DebugPanel, Keyboard, SceneComp } from "../components";
 
 export class ShortcutSystem extends ExtraSystem {

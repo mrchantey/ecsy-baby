@@ -1,4 +1,4 @@
-import { moveItemTool, NoTool, RotateItemsTool, ViewTool } from "..";
+import { moveItemTool, NoTool, RotateItemsTool, ViewTool } from "interaction/components";
 
 export const toolComponentLookup = [
     NoTool,
