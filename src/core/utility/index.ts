@@ -1,5 +1,6 @@
 export * from "./AdvancedPlane"
 export * as BabyTypes from "./BabyTypes"
+export * as Color3Ext from "./Color3Ext"
 export * as Color4Ext from "./Color4Ext"
 export * from "./extensions"
 export * from "./interfaces"

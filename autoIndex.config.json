@@ -10,6 +10,7 @@
         "Vector2Ext",
         "Vector3Ext",
         "ArrayExt",
+        "Color3Ext",
         "Color4Ext",
         "Vector2Ext",
         "Vector3Ext",

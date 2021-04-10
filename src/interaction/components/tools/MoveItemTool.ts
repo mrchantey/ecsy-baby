@@ -3,7 +3,7 @@ import { Component, ComponentSchema, Types } from 'ecsy';
 import { AdvancedPlane } from '../../../core/index';
 import { ToolType } from '../../utility/tools';
 
-export class moveItemTool extends Component<moveItemTool>{
+export class MoveItemTool extends Component<MoveItemTool>{
     plane: AdvancedPlane
     toolType: ToolType
     static schema: ComponentSchema = {

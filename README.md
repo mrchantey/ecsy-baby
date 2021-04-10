@@ -27,6 +27,10 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 - Instead of a `WebGLRendererComponent`, ecsy-baby has a 
 - In babylonjs all objects inherit from a node except for a scene
 
+### Danger zone
+- The current implementation of the 'execute' method means that only systems with a populated query will be run.
+	- This means that systems which run on external resources or singletons may be excluded from the execute loop.
+
 
 ### Changelog
 

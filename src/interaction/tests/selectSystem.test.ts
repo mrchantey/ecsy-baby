@@ -1,22 +1,25 @@
 import { Color3, StandardMaterial } from "babylonjs"
-import { Color3Ext, createTestScene, StandardMaterialComp, TransformNodeComp } from "core"
-import { ExtraEntity, ExtraWorld } from "ecsy-extra"
-import { HoverEvent, Interactable, Interactor, SelectEvent } from "interaction/components"
-import { InteractionEvent } from "interaction/components/events/InteractionEvent"
-import { HoverSystem } from "interaction/systems"
+import { Color3Ext, createTestScene, Mouse, StandardMaterialComp } from "core"
+import { ExtraWorld } from "ecsy-extra"
+import { SelectEvent, Interactable, InteractionEvent } from "interaction"
+import { SelectSystem } from "interaction/systems"
 
-describe("hover system", () => {
+
+
+
+describe("select system", () => {
     const scene = createTestScene()
     const world = new ExtraWorld()
+        .registerComponent(Mouse)
         .registerComponent(SelectEvent)
         .registerComponent(Interactable)
         .registerComponent(InteractionEvent)
         .registerComponent(StandardMaterialComp)
-        .registerSystem(HoverSystem)
+        .registerSystem(SelectSystem)
 
 
     const colDefault = new Color3(1, 1, 1)
-    const colHover = new Color3(0, 1, 1)
+    const colSelect = new Color3(0, 0, 1)
 
     let mat = new StandardMaterial("my mat", scene)
     mat.diffuseColor = colDefault
@@ -27,14 +30,21 @@ describe("hover system", () => {
         .addComponent(StandardMaterialComp, { value: mat })
 
 
+    beforeAll(() => {
+
+    })
+
     it("works", () => {
         expect(Color3Ext.isEqual(mat.diffuseColor, colDefault)).toBe(true)
 
-        interactable.addComponent(InteractionEvent)
-        world.execute()
-        expect(Color3Ext.isEqual(mat.diffuseColor, colHover)).toBe(true)
+        interactable.addComponent(InteractionEvent, { interactable })
+        world.entity.setComponent(Mouse, { leftButtonDown: true })
 
-        interactable.removeComponent(InteractionEvent)
+        world.execute()
+        expect(Color3Ext.isEqual(mat.diffuseColor, colSelect)).toBe(true)
+
+        world.entity.setComponent(Mouse, { leftButtonDown: false, leftButtonUp: true })
+        // interactable.removeComponent(InteractionEvent)
         world.execute()
         expect(Color3Ext.isEqual(mat.diffuseColor, colDefault)).toBe(true)
     })

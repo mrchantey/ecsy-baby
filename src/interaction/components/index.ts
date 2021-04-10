@@ -1,4 +1,5 @@
 export * from "./events"
+export * from "./Hoverable"
 export * from "./Interactable"
 export * from "./Interactor"
 export * from "./RotateItemsTool"

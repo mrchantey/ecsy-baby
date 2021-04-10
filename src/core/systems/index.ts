@@ -1,6 +1,7 @@
 export * from "./DebugSystem"
 export * from "./DomEventSystem"
 export * from "./InitCameraSystem"
+export * from "./InitCanvasSystem"
 export * from "./InitEngineSystem"
 export * from "./InitLightSystem"
 export * from "./InitPlayerSystem"
