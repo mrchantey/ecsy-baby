@@ -5,7 +5,7 @@ import { MathExt } from "../../ecsy-extra/index"
 // 	x: number,
 // 	y: number
 // }
-
+export const isEqual = (a: Vector2, b: Vector2) => a.x === b.x && a.y === b.y
 export const Right = () => new Vector2(1, 0)
 export const Up = () => new Vector2(0, 1)
 export const right = () => new Vector2(1, 0)

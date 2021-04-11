@@ -15,6 +15,9 @@ export class InputSystem extends ExtraSystem {
 
 	execute() {
 
+		this.cleanupMouse()
+		this.cleanupKeyboard()
+
 		// const Keyboard = this.getMutableSingletonComponent(Keyboard)
 		const windowEvents = this.getSingletonComponent(WindowEvents)!.events
 		const canvasEvents = this.getSingletonComponent(CanvasEvents)!.events

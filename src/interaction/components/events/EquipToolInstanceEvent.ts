@@ -1,12 +1,11 @@
 import { Component, ComponentSchema, Entity, Types } from 'ecsy';
 import { ToolType } from 'interaction/utility';
 
-
-export class EquipToolEvent extends Component<EquipToolEvent> {
+export class EquipToolInstanceEvent extends Component<EquipToolInstanceEvent> {
     toolType: ToolType
-    toolParams: Object
+    toolEntity: Entity
     static schema: ComponentSchema = {
         toolType: { type: Types.Number },
-        toolParams: { type: Types.Ref },
+        toolEntity: { type: Types.Ref },
     }
 }

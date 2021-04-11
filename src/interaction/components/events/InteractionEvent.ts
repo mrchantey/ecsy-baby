@@ -1,7 +1,3 @@
-
-
-
-
 import { Component, ComponentSchema, Types } from 'ecsy';
 import { ExtraEntity } from 'ecsy-extra';
 

@@ -1,8 +1,8 @@
 
 import { MeshBuilder, Scene, StandardMaterial, Vector3 } from "babylonjs";
-import { ExtraSystem, ExtraWorld, iModule, registerModules, SystemPriority, SystemPriorityDelta } from "../../../src/ecsy-extra/index";
-import { AdvancedPlane, MouseLook, Player, SceneComp, StandardMaterialComp, TransformNodeComp, CoreSystemPriority, coreModule } from "../../../src/core/index";
-import { Interactable, Interactor, moveItemTool, ToolEquipper, EquipToolEvent, ToolType, interactionModule } from "../../../src/interaction/index";
+import { ExtraWorld, ExtraSystem, iModule, registerModules } from "ecsy-extra";
+import { TransformNodeComp, StandardMaterialComp, SceneComp, AdvancedPlane, Player, MouseLook, CoreSystemPriority, coreModule } from "core";
+import { Interactable, Interactor, ToolEquipper, EquipToolEvent, ToolType, interactionModule } from "interaction";
 
 
 
@@ -30,21 +30,15 @@ class BoxSpawnSystem extends ExtraSystem {
         createBox(this.world, scene, new Vector3(-1, 0, 0), 1)
         createBox(this.world, scene, new Vector3(1, 0, 0), 2)
 
-        const moveItemsEntity = this.world.createEntity("moveItemTool")
-            .addComponent(moveItemTool, { plane: new AdvancedPlane(Vector3.Zero(), Vector3.Forward(), Vector3.Up()) })
-
         const player = this.world.entity.getComponent(Player)!.value
         player.addComponent(Interactor)
             .addComponent(ToolEquipper)
             .addComponent(EquipToolEvent, {
                 toolType: ToolType.MoveItems,
-                toolEntity: moveItemsEntity,
+                toolParams: { plane: new AdvancedPlane(Vector3.Zero(), Vector3.Forward(), Vector3.Up()) }
             })
         player.getMutableComponent(MouseLook)!.requireHoldAlt = true
-
     }
-
-
 }
 
 
@@ -55,7 +49,6 @@ const testModule: iModule = {
         systems: [BoxSpawnSystem]
     }],
 }
-
 
 
 const world = new ExtraWorld()

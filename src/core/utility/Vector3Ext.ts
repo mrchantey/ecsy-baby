@@ -20,7 +20,7 @@ export const clampMagnitude = (vector: Vector3, maxLength: number) => {
 	}
 	return vector.clone();
 }
-
+export const isEqual = (a: Vector3, b: Vector3) => a.x === b.x && a.y === b.y && a.z === b.z
 export const toXYZ = (vec: Vector3) => ({ x: vec.x, y: vec.y, z: vec.z })
 export const fromXYZ = (vec: iVecXYZ) => new Vector3(vec.x, vec.y, vec.z)
 

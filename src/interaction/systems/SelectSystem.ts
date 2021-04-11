@@ -7,6 +7,7 @@ import { HoverEvent, Interactable, InteractionEvent, Interactor, SelectEvent } f
 export class SelectSystem extends ExtraSystem {
     execute() {
         const mouse = this.getSingletonComponent(Mouse)
+        // console.dir(mouse.leftButtonDown);
         if (mouse.leftButtonDown)
             this.queries.interactablesReady.results
                 .forEach(this.tryStartSelect)
@@ -36,7 +37,8 @@ export class SelectSystem extends ExtraSystem {
             components: [
                 StandardMaterialComp,
                 Interactable,
-                InteractionEvent
+                InteractionEvent,
+                Not(SelectEvent)
             ]
         },
         interactablesSelecting: {

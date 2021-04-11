@@ -12,3 +12,4 @@ export const Gray = () => new Color4(0.5, 0.5, 0.5);
 export const Teal = () => new Color4(0, 1.0, 1.0);
 export const Random = () => new Color4(Math.random(), Math.random(), Math.random());
 export const Clear = () => new Color4(0, 0.0, 0.0, 0.0);
+export const isEqual = (a: Color4, b: Color4) => a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a
