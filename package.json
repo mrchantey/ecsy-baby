@@ -6,6 +6,8 @@
 	"scripts": {
 		"test": "jest --forceExit --detectOpenHandles --runInBand",
 		"test-watch": "jest --watchAll --forceExit --detectOpenHandles --runInBand",
+		"test-browser": "webpack serve -- --open --config ./src/tests/webpack.config.js",
+		"test-browser-mouse-follow": "webpack serve -- --open --config ./src/tests/webpack.config.js --entry ./src/interaction/tests/mouseFollow.ts",
 		"prepublishOnly": "./scripts/publish.sh",
 		"auto-index": "node ./scripts/watch-index.js",
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
