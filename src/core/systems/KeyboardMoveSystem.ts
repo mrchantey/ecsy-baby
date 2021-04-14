@@ -43,7 +43,8 @@ export class KeyboardMoveSystem extends ExtraSystem {
 				node.rotation.y += rotateSpeed
 
 			node.position.addInPlace(newPos)
-
+			node.computeWorldMatrix()
+			// node.update
 		})
 	}
 

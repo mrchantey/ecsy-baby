@@ -1,11 +1,14 @@
 import { AbstractMesh, MeshBuilder } from "babylonjs"
-import { Scene } from "babylonjs/scene"
 import { createTestScene, Mouse, TransformNodeComp } from "core"
 import { ExtraEntity, ExtraWorld } from "ecsy-extra"
-import { Interactable, Interactor } from "interaction/components"
-import { InteractionEvent } from "interaction/components/events/InteractionEvent"
-import { RaycastInteractionSystem } from "interaction/systems/RaycastInteractionSystem"
-
+import {
+    Interactable,
+    Interactor,
+    RaycastInteractionEvent,
+    SelectEvent,
+    InteractionEvent,
+    RaycastInteractionSystem,
+} from "interaction"
 
 
 
@@ -32,7 +35,9 @@ describe("raycast interaction system", () => {
             .registerComponent(TransformNodeComp)
             .registerComponent(Interactor)
             .registerComponent(Interactable)
+            .registerComponent(SelectEvent)
             .registerComponent(InteractionEvent)
+            .registerComponent(RaycastInteractionEvent)
             .registerSystem(RaycastInteractionSystem)
         world.start()
         interactor = world.createEntity("interactor")
@@ -46,7 +51,7 @@ describe("raycast interaction system", () => {
             .addComponent(TransformNodeComp, { value: interactable2Mesh })
             .addComponent(Interactable)
     })
-
+    it("passes", () => { })
     it("creates interaction event", () => {
         RaycastInteractionSystem._raycastMouse = mockRaycastMouse1
         world.execute()
@@ -59,7 +64,7 @@ describe("raycast interaction system", () => {
         RaycastInteractionSystem._raycastMouse = mockRaycastMouseMiss
         world.execute()
         expect(mockRaycastMouseMiss).toHaveBeenCalled()
-        expect(interactor.hasComponent(InteractionEvent))
+        expect(interactor.hasComponent(RaycastInteractionEvent))
             .toBe(false)
     })
 

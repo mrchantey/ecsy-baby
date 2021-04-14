@@ -24,6 +24,7 @@ export class MouseLookSystem extends ExtraSystem {
                     node.rotation.x += -mouse.ydelta * delta * mouseLook.speed
                     node.rotation.y += mouse.xdelta * delta * mouseLook.speed
                 }
+                node.computeWorldMatrix()
             })
     }
 

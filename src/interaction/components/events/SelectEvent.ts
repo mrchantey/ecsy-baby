@@ -1,3 +1,3 @@
-import { Component, ComponentSchema, Entity, Types } from 'ecsy';
+import { Component } from 'ecsy';
 
 export class SelectEvent extends Component<SelectEvent> { }

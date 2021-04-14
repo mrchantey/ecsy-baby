@@ -30,7 +30,7 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 ### Danger zone
 - The current implementation of the 'execute' method means that only systems with a populated query will be run.
 	- This means that systems which run on external resources or singletons may be excluded from the execute loop.
-
+- Unlike Unity, Babylonjs does not automatically update the world matrix, this must be done manually
 
 ### Changelog
 
@@ -83,6 +83,8 @@ The base of this project is a port from ecsy-three, with a few distinctions made
 				]
 			}
 			```
+- Unregistered components
+	- while ecsy will be helpful when including unregistered components in system queries, this is not the case when using the `Not()` function to exclude components.
 - Singleton ecsy worlds
 	- Symptoms: 
 		1. create world

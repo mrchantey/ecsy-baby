@@ -69,7 +69,12 @@ export class RaycastInteractionSystem extends ExtraSystem {
             components: [Interactor, Not(InteractionEvent)]
         },
         interactorsActive: {
-            components: [TransformNodeComp, Interactor, InteractionEvent, Not(SelectEvent)]
+            components: [
+                TransformNodeComp,
+                Interactor,
+                InteractionEvent,
+                Not(SelectEvent)
+            ]
         },
         interactables: {
             components: [TransformNodeComp, Interactable]

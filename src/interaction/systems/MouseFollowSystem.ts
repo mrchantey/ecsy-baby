@@ -1,5 +1,6 @@
 
-import { QuaternionExt, screenRay, TargetCameraComp, TransformNodeComp, Vector3Ext } from "core";
+import { Vector3 } from "babylonjs";
+import { MatrixExt, Player, QuaternionExt, screenRay, TargetCameraComp, TransformNodeComp, Vector3Ext } from "core";
 import { SystemQueries } from "ecsy";
 import { ExtraSystem } from "ecsy-extra";
 import { MouseFollow } from "interaction/components";
@@ -10,20 +11,23 @@ export class MouseFollowSystem extends ExtraSystem {
             .forEach(entity => {
                 const ray = screenRay(this.world)
                 const { offset, depth } = entity.getComponent(MouseFollow)!
-                const camera = this.getSingletonComponent(TargetCameraComp)!.value
+                const player = this.getSingletonComponent(Player)!.value
+                const playerNode = player.getComponent(TransformNodeComp)!.value
+
+                const pos = Vector3.TransformCoordinates(offset, playerNode.computeWorldMatrix())
+
+
                 const target = ray.direction
                     .scale(depth)
                     .add(ray.origin)
 
-                const pos = camera.position
-                    .add(offset)
-
                 const dirTarget = target
                     .subtract(pos)
 
-
                 const transform = entity.getComponent(TransformNodeComp)!.value
-                transform.position = pos
+                transform.setAbsolutePosition(pos)
+                // transform.matrix
+                // transform.rotationQuaternion = QuaternionExt.lookRotation(ray.direction)
                 transform.rotationQuaternion = QuaternionExt.lookRotation(dirTarget)
 
             })

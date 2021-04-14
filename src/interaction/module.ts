@@ -1,7 +1,7 @@
-import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "../ecsy-extra/index";
-import { EndInteractionSystem, HoverSystem, MoveItemSystem, RaycastInteractionSystem, SelectSystem, ToolEquipSystem } from "./systems";
+import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "ecsy-extra";
+import { EndInteractionSystem, HoverSystem, MoveItemSystem, RaycastInteractionSystem, SelectSystem, ToolEquipSystem } from "interaction/systems";
 
-import * as Components from './components';
+import * as Components from 'interaction/components';
 import { CoreSystemPriority } from "core";
 
 export const interactionModule: iModule = {

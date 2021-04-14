@@ -100,22 +100,8 @@ export const setPosition = (matrix: Matrix, pos: Vector3) => {
 	matrix._markAsUpdated()
 }
 
-// /**
-//  * Transforms point from local to world coordinates
-//  * @param m defines the matrix to use
-//  * @param point the local point to be translated
-//  * @returns the transformed Vector3
-//  */
-// export function transformPoint(m: Matrix, point: Vector3) {
-// 	return Vector3.TransformCoordinates(point, m)
-// }
-// /**
-//  * Transforms point from world to local coordinates. This is slow because it needs to create a world-to-local matrix.
-//  * @param m defines the matrix to use
-//  * @param point the local point to be translated
-//  * @returns the transformed Vector3
-//  */
-// export function InverseTransformPointSlowly(m: Matrix, point: Vector3) {
+// export const transformPoint = (m: Matrix, point: Vector3) => Vector3.TransformCoordinates(point, m)
+// export const inverseTransformPointSlowly = (m: Matrix, point: Vector3) => {
 // 	const mInv = new Matrix()
 // 	m.invertToRef(mInv)
 // 	return Vector3.TransformCoordinates(point, mInv)

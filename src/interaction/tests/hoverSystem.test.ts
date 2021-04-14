@@ -1,16 +1,15 @@
 import { Color3, StandardMaterial } from "babylonjs"
 import { Color3Ext, createTestScene, StandardMaterialComp, TransformNodeComp } from "core"
 import { ExtraEntity, ExtraWorld } from "ecsy-extra"
-import { HoverEvent, Interactable, Interactor, SelectEvent } from "interaction/components"
-import { InteractionEvent } from "interaction/components/events/InteractionEvent"
-import { HoverSystem } from "interaction/systems"
+import { HoverEvent, HoverSystem, Interactable, InteractionEvent, Interactor, RaycastInteractionEvent, SelectEvent } from "interaction"
 
 describe("hover system", () => {
     const scene = createTestScene()
     const world = new ExtraWorld()
         .registerComponent(SelectEvent)
+        .registerComponent(HoverEvent)
+        .registerComponent(RaycastInteractionEvent)
         .registerComponent(Interactable)
-        .registerComponent(InteractionEvent)
         .registerComponent(StandardMaterialComp)
         .registerSystem(HoverSystem)
 
@@ -30,11 +29,11 @@ describe("hover system", () => {
     it("works", () => {
         expect(Color3Ext.isEqual(mat.diffuseColor, colDefault)).toBe(true)
 
-        interactable.addComponent(InteractionEvent)
+        interactable.addComponent(RaycastInteractionEvent)
         world.execute()
         expect(Color3Ext.isEqual(mat.diffuseColor, colHover)).toBe(true)
 
-        interactable.removeComponent(InteractionEvent)
+        interactable.removeComponent(RaycastInteractionEvent)
         world.execute()
         expect(Color3Ext.isEqual(mat.diffuseColor, colDefault)).toBe(true)
     })

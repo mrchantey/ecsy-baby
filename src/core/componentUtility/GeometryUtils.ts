@@ -10,6 +10,7 @@ type iPredicate = (mesh: AbstractMesh) => boolean
 export function screenRay(world: ExtraWorld, scene?: Scene, camera?: Camera) {
     scene = scene || world.entity.getComponent(SceneComp)!.value
     camera = camera || world.entity.getComponent(TargetCameraComp)!.value
+    // camera.computeWorldMatrix()
     return scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera)
 
 }
