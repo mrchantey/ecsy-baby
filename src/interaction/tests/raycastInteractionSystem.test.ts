@@ -1,5 +1,5 @@
-import { AbstractMesh, MeshBuilder } from "babylonjs"
-import { createTestScene, Mouse, TransformNodeComp } from "core"
+import { AbstractMesh, MeshBuilder, TransformNode } from "babylonjs"
+import { createTestScene, Mouse, SceneComp, TransformNodeComp } from "core"
 import { ExtraEntity, ExtraWorld } from "ecsy-extra"
 import {
     Interactable,
@@ -26,22 +26,25 @@ describe("raycast interaction system", () => {
     const interactable1Mesh = new AbstractMesh("interactable1", scene)
     const interactable2Mesh = new AbstractMesh("interactable2", scene)
 
-    let mockRaycastMouse1 = jest.fn(() => ({ pickedMesh: interactable1Mesh }))
-    let mockRaycastMouse2 = jest.fn(() => ({ pickedMesh: interactable2Mesh }))
-    let mockRaycastMouseMiss = jest.fn(() => ({ pickedMesh: undefined }))
+    let mockRaycast1 = jest.fn(() => ({ pickedMesh: interactable1Mesh }))
+    let mockRaycast2 = jest.fn(() => ({ pickedMesh: interactable2Mesh }))
+    let mockRaycastMiss = jest.fn(() => ({ pickedMesh: undefined }))
 
     beforeAll(() => {
         world = new ExtraWorld()
             .registerComponent(TransformNodeComp)
+            .registerComponent(SceneComp)
             .registerComponent(Interactor)
             .registerComponent(Interactable)
             .registerComponent(SelectEvent)
             .registerComponent(InteractionEvent)
             .registerComponent(RaycastInteractionEvent)
             .registerSystem(RaycastInteractionSystem)
+
+        world.entity.addComponent(SceneComp, { value: scene })
         world.start()
         interactor = world.createEntity("interactor")
-            .addComponent(TransformNodeComp)
+            .addComponent(TransformNodeComp, { value: new TransformNode("interactor") })
             .addComponent(Interactor)
 
         interactable1 = world.createEntity("interactable1")
@@ -53,31 +56,31 @@ describe("raycast interaction system", () => {
     })
     it("passes", () => { })
     it("creates interaction event", () => {
-        RaycastInteractionSystem._raycastMouse = mockRaycastMouse1
+        scene.pickWithRay = mockRaycast1 as any
         world.execute()
-        expect(mockRaycastMouse1).toHaveBeenCalled()
+        expect(mockRaycast1).toHaveBeenCalled()
         expect(interactor.getComponent(InteractionEvent)?.interactable)
             .toBe(interactable1)
     })
 
     it("removes interaction event", () => {
-        RaycastInteractionSystem._raycastMouse = mockRaycastMouseMiss
+        scene.pickWithRay = mockRaycastMiss as any
         world.execute()
-        expect(mockRaycastMouseMiss).toHaveBeenCalled()
+        expect(mockRaycastMiss).toHaveBeenCalled()
         expect(interactor.hasComponent(RaycastInteractionEvent))
             .toBe(false)
     })
 
     it("replaces interaction event", () => {
-        RaycastInteractionSystem._raycastMouse = mockRaycastMouse1
+        scene.pickWithRay = mockRaycast1 as any
         world.execute()
-        expect(mockRaycastMouse1).toHaveBeenCalled()
+        expect(mockRaycast1).toHaveBeenCalled()
         expect(interactor.getComponent(InteractionEvent)?.interactable)
             .toBe(interactable1)
 
-        RaycastInteractionSystem._raycastMouse = mockRaycastMouse2
+        scene.pickWithRay = mockRaycast2 as any
         world.execute()
-        expect(mockRaycastMouse2).toHaveBeenCalled()
+        expect(mockRaycast2).toHaveBeenCalled()
         expect(interactor.getComponent(InteractionEvent)?.interactable)
             .toBe(interactable2)
     })

@@ -1,5 +1,5 @@
 import { TransformNode } from "babylonjs";
-import { raycastMouse, TransformNodeComp } from "core";
+import { RayExt, SceneComp, TransformNodeComp } from "core";
 import { Not, SystemQueries } from "ecsy";
 import { ExtraEntity, ExtraSystem } from "ecsy-extra";
 import { Interactable, Interactor, InteractionEvent, RaycastInteractionEvent, SelectEvent } from "interaction/components";
@@ -11,10 +11,11 @@ import { Interactable, Interactor, InteractionEvent, RaycastInteractionEvent, Se
 
 export class RaycastInteractionSystem extends ExtraSystem {
     //overwrite for testing
-    static _raycastMouse = raycastMouse
-    getRaycastedInteractable(validInteractables: { entity: ExtraEntity, mesh: TransformNode }[]) {
-        const mesh = RaycastInteractionSystem._raycastMouse(this.world,
-            mesh => validInteractables.some(i => i.mesh === mesh))?.pickedMesh
+    getRaycastedInteractable(interactor: ExtraEntity, validInteractables: { entity: ExtraEntity, mesh: TransformNode }[]) {
+        const node = interactor.getComponent(TransformNodeComp)!.value
+        const scene = this.getSingletonComponent(SceneComp)!.value
+        const ray = RayExt.fromTransformNode(node)
+        const mesh = scene.pickWithRay(ray, mesh => validInteractables.some(i => i.mesh === mesh))?.pickedMesh
         return validInteractables.find(h => h.mesh === mesh)?.entity
     }
 
@@ -43,30 +44,31 @@ export class RaycastInteractionSystem extends ExtraSystem {
         // }
         const interactables = this.queries.interactables.results
             .map(entity => ({ entity, mesh: entity.getComponent(TransformNodeComp)!.value }))
-        const raycastedInteractable = this.getRaycastedInteractable(interactables)
 
-        this.queries.interactorsActive.results.forEach(entity => {
-            const { interactable } = entity.getComponent(InteractionEvent)!
+        this.queries.interactorsActive.results.forEach(interactor => {
+            const raycastedInteractable = this.getRaycastedInteractable(interactor, interactables)
+            const { interactable } = interactor.getComponent(InteractionEvent)!
             if (raycastedInteractable === undefined)
-                this.endInteraction(entity, interactable)
+                this.endInteraction(interactor, interactable)
             else if (raycastedInteractable !== interactable) {
-                this.endInteraction(entity, interactable)
-                this.startInteraction(entity, raycastedInteractable)
+                this.endInteraction(interactor, interactable)
+                this.startInteraction(interactor, raycastedInteractable)
             }
         })
 
 
         // console.dir(raycastedInteractable);
 
-        this.queries.interactorsReady.results.forEach(entity => {
+        this.queries.interactorsReady.results.forEach(interactor => {
+            const raycastedInteractable = this.getRaycastedInteractable(interactor, interactables)
             if (raycastedInteractable !== undefined)
-                this.startInteraction(entity, raycastedInteractable)
+                this.startInteraction(interactor, raycastedInteractable)
         })
     }
 
     static queries: SystemQueries = {
         interactorsReady: {
-            components: [Interactor, Not(InteractionEvent)]
+            components: [TransformNodeComp, Interactor, Not(InteractionEvent)]
         },
         interactorsActive: {
             components: [

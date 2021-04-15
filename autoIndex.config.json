@@ -14,6 +14,7 @@
         "Color4Ext",
         "Vector2Ext",
         "Vector3Ext",
+        "RayExt",
         "QuaternionExt",
         "MeshBuilderExt",
         "MatrixExt"

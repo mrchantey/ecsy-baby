@@ -13,8 +13,6 @@ export class MoveItemSystem extends ExtraSystem {
 
         this.queries.entitiesReady
             .added?.forEach(entity => {
-                console.log('ready');
-
                 const { interactable } = entity.getComponent(InteractionEvent)!
                 const interactableNode = interactable.getComponent(TransformNodeComp)!.value
                 const { plane } = entity.getComponent(MoveItemTool)!
