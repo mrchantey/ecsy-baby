@@ -1,27 +1,26 @@
-import { Attributes, Component, ComponentConstructor, System } from "ecsy";
+import { Attributes, Component, ComponentConstructor, Entity, System, _Entity } from "ecsy";
 import { ExtraEntity } from "ecsyExtra/types/entity";
 import { ExtraWorld } from "ecsyExtra/types/world";
-import { QueryExt } from "ecsyExtra/utility";
+import { createQueryTuplesFromObject, QuerySet, QueryTupleSet } from "ecsyExtra/utility/QueryExt";
 
 
 export abstract class ExtraSystem extends System<ExtraEntity>  {
 	world: ExtraWorld
+
 	constructor(world: ExtraWorld, attributes?: Attributes) {
 		super(world, attributes)
 		this.world = world //a little hacky
 	}
 
-
 	//query tuples
-	queryTuples: QueryExt.QueryTupleSet<ExtraEntity>
+	queryTuples: QueryTupleSet<ExtraEntity>
+
 	init() {
-		const systemQueryTuples = (this as any).constructor.queryTuples as QueryExt.QuerySet
+		const systemQueryTuples = (this as any).constructor.queryTuples as QuerySet
 		if (systemQueryTuples)
-			this.queryTuples = QueryExt.createQueryTuplesFromObject(this, systemQueryTuples)
+			this.queryTuples = createQueryTuplesFromObject(this, systemQueryTuples)
 	}
-	static queryTuples: QueryExt.QuerySet
-
-
+	static queryTuples: QuerySet
 
 	//singletons -- to deprecate
 	getMutableSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>) {

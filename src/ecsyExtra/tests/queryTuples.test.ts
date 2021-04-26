@@ -1,7 +1,5 @@
 import { Component, System } from "ecsy"
-import { ExtraSystem, ExtraWorld } from "ecsyExtra/types"
-import { QueryExt } from "ecsyExtra/utility"
-import { createQueryTuple, QuerySet } from "ecsyExtra/utility/QueryExt"
+import { ExtraSystem, ExtraWorld } from "ecsyExtra"
 
 
 
@@ -22,14 +20,15 @@ class SystemA extends ExtraSystem {
         }
     }
 
-    // execute() {
-    //     this.queryTuples.myTuple.getResults()
-    //         .forEach(([hasCompA, hasCompB]) => {
-    //         })
-    // }
+    execute() {
+        this.queryTuples.myTuple()
+            .forEach(([hasCompA, hasCompB]) => {
+            })
+    }
 
     static queryTuples = {
-        myTuple: [SystemA.queries.compA, SystemA.queries.compB]
+        myTuple: [SystemA.queries.compA, SystemA.queries.compB],
+        // bla:true
     }
 }
 

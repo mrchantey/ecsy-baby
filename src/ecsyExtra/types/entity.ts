@@ -24,11 +24,11 @@ export class ExtraEntity extends _Entity {
     }
     addComponentValue<C extends ValueComponent<any, valueType>, valueType>(component: ComponentConstructor<C>, value: valueType) {
         const values = { value } as Partial<Omit<C, keyof Component<any>>>
-        this.addComponent(component, values)
+        return this.addComponent(component, values)
     }
     setComponentValue<C extends ValueComponent<any, valueType>, valueType>(component: ComponentConstructor<C>, value: valueType) {
         const values = { value } as Partial<Omit<C, keyof Component<any>>>
-        this.setComponent(component, values)
+        return this.setComponent(component, values)
     }
 
 

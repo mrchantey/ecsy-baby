@@ -49,3 +49,5 @@ export const roundToNearestInPlace = (vec: Vector3, interval: number) => {
 	vec.z = interval * Math.round(vec.z / interval)
 	return vec
 }
+
+export const toFixed = (vec: Vector3, val = 2) => `x:${vec.x.toFixed(val)} y:${vec.y.toFixed(val)} z:${vec.z.toFixed(val)}`

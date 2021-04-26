@@ -13,6 +13,8 @@ export class HoverSystem extends ExtraSystem {
             entity.addComponent(HoverEvent)
             const mat = entity.getComponent(StandardMaterialComp)!.value
             mat.diffuseColor = new Color3(0, 1, 1)
+            // console.log('HOVERED');
+
         })
 
         this.queries.entitiesSelectedHovered.added!.forEach(entity => {

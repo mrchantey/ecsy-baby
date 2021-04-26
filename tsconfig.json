@@ -16,6 +16,7 @@
 		"target": "es6",
 		"sourceMap": true,
 		"strict": true,
+		"composite": true, //allow to be referenced
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
 		"esModuleInterop": true,

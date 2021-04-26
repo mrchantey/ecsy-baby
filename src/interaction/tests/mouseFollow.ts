@@ -12,7 +12,10 @@ export class MainSystem extends ExtraSystem {
         this.world
             .createEntity("follower")
             .addComponent(TransformNodeComp, { value: box })
-            .addComponent(MouseFollow,)
+            .addComponent(MouseFollow, {
+                offset: new Vector3(0, -0.3, 1.3),
+                depth: 4
+            })
 
         const player = this.getSingletonComponent(Player)!.value
         player.getMutableComponent(MouseLook)!.requireHoldAlt = true

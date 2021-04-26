@@ -7,6 +7,45 @@ A community project for easy implementation of [ecsy](https://ecsy.io/) in [baby
 import 
 initialize()
 ```
+
+## About local linking
+From experimentation, using `npm link` has proved unreliable. 
+Instead the reccomended approach is to use [typescript project references](https://www.typescriptlang.org/docs/handbook/project-references.html)
+### Project to be linked
+```json
+//tsconfig.json
+{
+	"compilerOptions":{
+		"composite": true,
+	}
+}		
+```
+### Project to link
+```json
+//tsconfig.json
+{
+	"compilerOptions":{
+	"baseUrl": "src",
+	//ie "../../../ecsy-baby/src/core/index"
+	"paths": {"some-alias": ["src/path/relative/to/baseUrl"]}
+	},
+	// ie "../../ecsy-baby"
+	"references": [	{"path": "tsconfig/path/relative/to/this/tsconfig" 	}]
+}		
+```
+```js
+//webpack.config.js
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+module.exports = {
+	resolve: {
+		extensions: ['.tsx', '.ts', '.jsx', '.js'],
+		modules: ['node_modules',path.resolve(__dirname, '../../ecsy-baby/src')],
+		plugins: [new TsconfigPathsPlugin()]
+	}
+}		
+```
+
+
 ### Spinning Cube Demo
 - [source](examples/spinning-cube/src/index.ts)
 - [demo](https://mrchantey.github.io/ecsy-baby/examples/spinning-cube)
