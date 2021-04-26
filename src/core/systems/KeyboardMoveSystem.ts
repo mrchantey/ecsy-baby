@@ -1,7 +1,7 @@
 import { Vector3 } from "babylonjs";
 import { MatrixExt } from "core/utility";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem, KeyValue } from "../../ecsy-extra/index";
+import { ExtraSystem, KeyValue } from "../../ecsyExtra/index";
 // import { ExtraSystem, KeyValue, MatrixExt } from "../../..";
 import { Keyboard, KeyboardMove, TransformNodeComp } from "../components";
 

@@ -1,6 +1,6 @@
 
 import { Canvas } from "core/components";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitCanvasSystem extends ExtraSystem {
     start() {

@@ -1,5 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { iWindowEvents } from '../../ecsy-extra';
+import { iWindowEvents } from '../../ecsyExtra';
 
 export class WindowEvents extends Component<WindowEvents>{
 	events: iWindowEvents = {}

@@ -1,7 +1,7 @@
 import { Color3, TransformNode } from "babylonjs";
 import { Mouse, StandardMaterialComp, TransformNodeComp } from "core";
 import { Entity, Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 import { HoverEvent, Interactable, InteractionEvent, Interactor, SelectEvent } from "interaction/components";
 
 export class SelectSystem extends ExtraSystem {

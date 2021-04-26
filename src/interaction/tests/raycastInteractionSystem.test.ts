@@ -1,6 +1,6 @@
 import { AbstractMesh, MeshBuilder, TransformNode } from "babylonjs"
 import { createTestScene, Mouse, SceneComp, TransformNodeComp } from "core"
-import { ExtraEntity, ExtraWorld } from "ecsy-extra"
+import { ExtraEntity, ExtraWorld } from "ecsyExtra"
 import {
     Interactable,
     Interactor,

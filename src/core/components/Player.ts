@@ -1,5 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { ExtraEntity } from '../../ecsy-extra/index';
+import { ExtraEntity } from '../../ecsyExtra/index';
 
 export class Player extends Component<Player> {
     value: ExtraEntity

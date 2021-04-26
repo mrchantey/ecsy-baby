@@ -1,6 +1,6 @@
 import { Color3, StandardMaterial } from "babylonjs"
 import { Color3Ext, createTestScene, StandardMaterialComp, TransformNodeComp } from "core"
-import { ExtraEntity, ExtraWorld } from "ecsy-extra"
+import { ExtraEntity, ExtraWorld } from "ecsyExtra"
 import { HoverEvent, HoverSystem, Interactable, InteractionEvent, Interactor, RaycastInteractionEvent, SelectEvent } from "interaction"
 
 describe("hover system", () => {

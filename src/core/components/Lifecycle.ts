@@ -1,5 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { BabyEvent, BabyEventType } from '../../ecsy-extra/index';
+import { BabyEvent, BabyEventType } from '../../ecsyExtra/index';
 
 export class Lifecycle extends Component<Lifecycle> {
 	onDispose: BabyEvent

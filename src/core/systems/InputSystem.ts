@@ -1,5 +1,5 @@
 import { SystemQueries } from "ecsy"
-import { ExtraSystem } from "../../ecsy-extra/index"
+import { ExtraSystem } from "../../ecsyExtra/index"
 import { CanvasEvents, Keyboard, Mouse, WindowEvents } from "../components"
 
 

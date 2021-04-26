@@ -1,5 +1,5 @@
 import { WindowEvents, Canvas, CanvasEvents, DomEventSystem, coreModule } from "core"
-import { ExtraWorld, registerModules } from "ecsy-extra"
+import { ExtraWorld, registerModules } from "ecsyExtra"
 
 
 describe("core module", () => {

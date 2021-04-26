@@ -1,6 +1,6 @@
 {
     "ignoreExact": [
-        "./src"
+        "src"
     ],
     "exportAs": [
         "MathExt",
@@ -17,6 +17,7 @@
         "RayExt",
         "QuaternionExt",
         "MeshBuilderExt",
-        "MatrixExt"
+        "MatrixExt",
+        "QueryExt"
     ]
 }

@@ -4,7 +4,7 @@ import { DebugSystem, DomEventSystem, InitCameraSystem, InitLightSystem, InitPla
 // import { RenderSystem } from './systems/RenderSystem';
 import { ShortcutSystem } from './systems/ShortcutSystem';
 import { InitEngineSystem } from './systems/InitEngineSystem';
-import { iModule, SystemPriority, SystemPriorityDelta } from '../ecsy-extra/index';
+import { iModule, SystemPriority, SystemPriorityDelta } from '../ecsyExtra/index';
 import { InitCanvasSystem } from 'core/systems/InitCanvasSystem';
 // import { DebugSystem } from './systems/DebugSystem';
 

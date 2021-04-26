@@ -1,7 +1,7 @@
 import { TransformNode } from "babylonjs";
 import { RayExt, SceneComp, TransformNodeComp } from "core";
 import { Not, SystemQueries } from "ecsy";
-import { ExtraEntity, ExtraSystem } from "ecsy-extra";
+import { ExtraEntity, ExtraSystem } from "ecsyExtra";
 import { Interactable, Interactor, InteractionEvent, RaycastInteractionEvent, SelectEvent } from "interaction/components";
 
 

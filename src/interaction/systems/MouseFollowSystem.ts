@@ -2,7 +2,7 @@
 import { Vector3 } from "babylonjs";
 import { MatrixExt, Player, QuaternionExt, screenRay, TargetCameraComp, TransformNodeComp, Vector3Ext } from "core";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 import { MouseFollow } from "interaction/components";
 
 export class MouseFollowSystem extends ExtraSystem {

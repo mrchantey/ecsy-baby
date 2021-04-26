@@ -3,7 +3,7 @@
 
 
 import { Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 import { HoverEvent, InteractionEvent, MoveItemEvent, RaycastInteractionEvent, SelectEvent } from "interaction/components";
 
 export class EndInteractionSystem extends ExtraSystem {

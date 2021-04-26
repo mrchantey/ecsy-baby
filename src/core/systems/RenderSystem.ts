@@ -1,6 +1,6 @@
 import { EngineComp, WindowEvents, SceneComp } from "core/components";
 import { Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 // import { EngineComp, Render, SceneComp, WindowEvents } from "../components";
 
 

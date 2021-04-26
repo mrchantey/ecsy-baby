@@ -1,6 +1,6 @@
 
 import { MeshBuilder, Scene, StandardMaterial, Vector3 } from "babylonjs";
-import { ExtraWorld, ExtraSystem, iModule, registerModules } from "ecsy-extra";
+import { ExtraWorld, ExtraSystem, iModule, registerModules } from "ecsyExtra";
 import { TransformNodeComp, StandardMaterialComp, SceneComp, AdvancedPlane, Player, MouseLook, CoreSystemPriority, coreModule } from "core";
 import { Interactable, Interactor, ToolEquipper, EquipToolEvent, ToolType, interactionModule } from "interaction";
 

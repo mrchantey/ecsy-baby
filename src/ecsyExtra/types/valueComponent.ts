@@ -5,3 +5,9 @@ export class ValueComponent<componentType, valueType> extends Component<componen
     value: valueType
     static schema: ComponentSchema = { value: { type: Types.Ref } }
 }
+
+
+
+export interface iHasValue<T> {
+    value: T
+}

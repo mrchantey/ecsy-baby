@@ -1,6 +1,6 @@
 import { SystemQueries } from "ecsy";
 import { toolLookup } from "interaction/utility/toolLookup";
-import { ExtraSystem } from "../../ecsy-extra/index";
+import { ExtraSystem } from "../../ecsyExtra/index";
 import { EquipToolEvent, EquipToolInstanceEvent } from "../components";
 // import { CurrentTool } from "../components/CurrentTool";
 import { ToolEquipper } from "../components/tools/ToolEquipper";

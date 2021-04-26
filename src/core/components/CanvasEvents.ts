@@ -1,5 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { iHtmlEvents } from '../../ecsy-extra';
+import { iHtmlEvents } from '../../ecsyExtra';
 
 export class CanvasEvents extends Component<CanvasEvents>{
 	events: iHtmlEvents = {}

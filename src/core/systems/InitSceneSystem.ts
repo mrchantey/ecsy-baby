@@ -1,6 +1,6 @@
 import { Scene } from "babylonjs";
 import { EngineComp, SceneComp, SceneOptionsComp } from "core/components";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitSceneSystem extends ExtraSystem {
     start() {

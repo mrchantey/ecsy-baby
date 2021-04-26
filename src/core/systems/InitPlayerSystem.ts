@@ -3,7 +3,7 @@
 
 import { TransformNode, Vector3 } from "babylonjs";
 import { KeyboardMove, MouseLook, Player, SceneComp, TargetCameraComp, TransformNodeComp } from "core/components";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitPlayerSystem extends ExtraSystem {
     start() {

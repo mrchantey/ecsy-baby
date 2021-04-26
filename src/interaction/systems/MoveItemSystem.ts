@@ -1,7 +1,7 @@
 import { TransformNode, Vector3 } from "babylonjs";
 import { TransformNodeComp, screenRay, AdvancedPlane } from "core";
 import { Not, SystemQueries } from "ecsy";
-import { ExtraEntity, ExtraSystem } from "ecsy-extra";
+import { ExtraEntity, ExtraSystem } from "ecsyExtra";
 import { MoveItemTool, InteractionEvent, MoveItemEvent, Interactor, SelectEvent } from "interaction/components";
 
 export class MoveItemSystem extends ExtraSystem {

@@ -1,15 +1,29 @@
 import { Attributes, Component, ComponentConstructor, System } from "ecsy";
-import { ExtraWorld, ExtraEntity } from "..";
+import { ExtraEntity } from "ecsyExtra/types/entity";
+import { ExtraWorld } from "ecsyExtra/types/world";
+import { QueryExt } from "ecsyExtra/utility";
 
 
 export abstract class ExtraSystem extends System<ExtraEntity>  {
 	world: ExtraWorld
-
 	constructor(world: ExtraWorld, attributes?: Attributes) {
 		super(world, attributes)
 		this.world = world //a little hacky
 	}
 
+
+	//query tuples
+	queryTuples: QueryExt.QueryTupleSet<ExtraEntity>
+	init() {
+		const systemQueryTuples = (this as any).constructor.queryTuples as QueryExt.QuerySet
+		if (systemQueryTuples)
+			this.queryTuples = QueryExt.createQueryTuplesFromObject(this, systemQueryTuples)
+	}
+	static queryTuples: QueryExt.QuerySet
+
+
+
+	//singletons -- to deprecate
 	getMutableSingletonComponent<C extends Component<any>>(component: ComponentConstructor<C>) {
 		return this.world.entity.getMutableComponent(component)!
 	}
@@ -29,6 +43,9 @@ export abstract class ExtraSystem extends System<ExtraEntity>  {
 	}
 	// hasSingletonComponent
 
+
+
+
 	start() { }
 	//dont implement execute, if system has no execute function it will simply be ignored.
 	//systems are allowed to not have an execute function
@@ -38,19 +55,3 @@ export abstract class ExtraSystem extends System<ExtraEntity>  {
 	// afterExecute(): void { }
 	dispose(): void { }
 }
-
-
-// export abstract class ECSYThreeSystem extends System {
-// 	constructor(world: ECSYThreeWorld, attributes?: Attributes);
-
-// 	queries: {
-// 	  [queryName: string]: {
-// 		results: ECSYThreeEntity[],
-// 		added?: ECSYThreeEntity[],
-// 		removed?: ECSYThreeEntity[],
-// 		changed?: ECSYThreeEntity[],
-// 	  }
-// 	}
-
-// 	world: ECSYThreeWorld;
-//   }

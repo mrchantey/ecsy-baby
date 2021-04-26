@@ -1,6 +1,6 @@
 import { System, SystemQueries } from "ecsy"
-import { TestValueComponent } from "ecsy-extra/tests/testTypes"
-import { ExtraEntity, ExtraSystem, ExtraWorld } from "ecsy-extra/types"
+import { TestValueComponent } from "ecsyExtra/tests/testTypes"
+import { ExtraEntity, ExtraSystem, ExtraWorld } from "ecsyExtra/types"
 
 interface iQuery {
     [queryName: string]: {

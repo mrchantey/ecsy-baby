@@ -1,6 +1,6 @@
 import { Color3, StandardMaterial } from "babylonjs"
 import { Color3Ext, createTestScene, Mouse, StandardMaterialComp } from "core"
-import { ExtraWorld } from "ecsy-extra"
+import { ExtraWorld } from "ecsyExtra"
 import { SelectEvent, Interactable, InteractionEvent } from "interaction"
 import { SelectSystem } from "interaction/systems"
 

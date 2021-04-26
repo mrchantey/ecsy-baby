@@ -7,6 +7,7 @@ import { ValueComponent } from "./valueComponent";
 
 
 export class ExtraEntity extends _Entity {
+    // name: string
 
     setComponent<C extends Component<any>>(component: ComponentConstructor<C>, values: Partial<Omit<C, keyof Component<any>>> = {}) {
         if (this.hasComponent(component)) {

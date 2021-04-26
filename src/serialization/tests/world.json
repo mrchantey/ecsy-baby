@@ -1,0 +1,155 @@
+{
+    "options": {
+        "entityPoolSize": 0
+    },
+    "componentsManager": {
+        "Components": [
+            null
+        ],
+        "_ComponentsMap": {},
+        "_componentPool": {
+            "0": {
+                "freeList": [],
+                "count": 1,
+                "isObjectPool": true
+            }
+        },
+        "numComponents": {
+            "0": 1
+        },
+        "nextComponentId": 1
+    },
+    "entityManager": {
+        "world": null,
+        "componentsManager": {
+            "Components": [
+                null
+            ],
+            "_ComponentsMap": {},
+            "_componentPool": {
+                "0": {
+                    "freeList": [],
+                    "count": 1,
+                    "isObjectPool": true
+                }
+            },
+            "numComponents": {
+                "0": 1
+            },
+            "nextComponentId": 1
+        },
+        "_entities": [
+            {
+                "_entityManager": null,
+                "id": 0,
+                "_ComponentTypes": [
+                    null
+                ],
+                "_components": {
+                    "0": {
+                        "_pool": {
+                            "freeList": [],
+                            "count": 1,
+                            "isObjectPool": true
+                        }
+                    }
+                },
+                "_componentsToRemove": {},
+                "queries": [
+                    {
+                        "key": "0",
+                        "reactive": false,
+                        "components": {
+                            "included": [
+                                "ToSerialize"
+                            ],
+                            "not": []
+                        },
+                        "numEntities": 1
+                    }
+                ],
+                "_ComponentTypesToRemove": [],
+                "alive": true,
+                "numStateComponents": 0,
+                "_pool": {
+                    "freeList": [],
+                    "count": 1,
+                    "isObjectPool": true,
+                    "entityManager": null,
+                    "_world": null
+                },
+                "name": ""
+            }
+        ],
+        "_nextEntityId": 1,
+        "_entitiesByNames": {},
+        "_queryManager": {
+            "_world": null,
+            "_queries": {
+                "0": {
+                    "key": "0",
+                    "reactive": false,
+                    "components": {
+                        "included": [
+                            "ToSerialize"
+                        ],
+                        "not": []
+                    },
+                    "numEntities": 1
+                }
+            }
+        },
+        "eventDispatcher": {
+            "_listeners": {},
+            "stats": {
+                "fired": 2,
+                "handled": 0
+            }
+        },
+        "_entityPool": {
+            "freeList": [],
+            "count": 1,
+            "isObjectPool": true,
+            "entityManager": null,
+            "_world": null
+        },
+        "entitiesWithComponentsToRemove": [],
+        "entitiesToRemove": [],
+        "deferredRemovalEnabled": true
+    },
+    "systemManager": {
+        "_systems": [
+            {
+                "name": "SerializeSystem",
+                "enabled": true,
+                "executeTime": 0,
+                "priority": 0,
+                "queries": {
+                    "entities": {
+                        "key": "0",
+                        "mandatory": false
+                    }
+                }
+            }
+        ],
+        "_executeSystems": [
+            {
+                "name": "SerializeSystem",
+                "enabled": true,
+                "executeTime": 0,
+                "priority": 0,
+                "queries": {
+                    "entities": {
+                        "key": "0",
+                        "mandatory": false
+                    }
+                }
+            }
+        ],
+        "world": null,
+        "lastExecutedSystem": null
+    },
+    "enabled": true,
+    "eventQueues": {},
+    "lastTime": 0.3418228
+}

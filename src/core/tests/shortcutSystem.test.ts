@@ -1,5 +1,5 @@
 import { SceneComp, Keyboard, DebugPanel, ShortcutSystem, createTestScene } from "core"
-import { ExtraWorld, KeyValue } from "ecsy-extra"
+import { ExtraWorld, KeyValue } from "ecsyExtra"
 
 
 

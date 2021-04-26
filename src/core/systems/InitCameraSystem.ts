@@ -1,6 +1,6 @@
 import { TargetCamera, Vector3 } from "babylonjs";
 import { SceneComp, TargetCameraComp } from "core/components";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitCameraSystem extends ExtraSystem {
     start() {

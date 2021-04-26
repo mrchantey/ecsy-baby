@@ -1,6 +1,6 @@
 import { MeshBuilder } from "babylonjs";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../ecsy-extra/index";
+import { ExtraSystem } from "../../ecsyExtra/index";
 // import { DebugLines } from "../components/DebugLines";
 import { DebugLines, SceneComp } from "../components";
 

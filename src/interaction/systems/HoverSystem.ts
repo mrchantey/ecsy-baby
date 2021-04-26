@@ -1,6 +1,6 @@
 import { AbstractMesh, Color3, Matrix, Mesh, StandardMaterial } from "babylonjs";
 import { Entity, Not, SystemQueries } from "ecsy";
-import { ExtraSystem } from "../../ecsy-extra/index";
+import { ExtraSystem } from "../../ecsyExtra/index";
 import { Mouse, raycastMouse, SceneComp, StandardMaterialComp, TargetCameraComp, TransformNodeComp } from "../../core";
 import { HoverEvent, Interactable, InteractionEvent, RaycastInteractionEvent, SelectEvent } from "interaction/components";
 

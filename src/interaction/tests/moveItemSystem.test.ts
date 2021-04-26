@@ -1,6 +1,6 @@
 import { AbstractMesh, Ray, Vector3 } from "babylonjs"
 import { AdvancedPlane, createTestScene, TransformNodeComp, Vector3Ext } from "core"
-import { ExtraWorld } from "ecsy-extra"
+import { ExtraWorld } from "ecsyExtra"
 import { Interactable, InteractionEvent, Interactor, MoveItemEvent, MoveItemTool, SelectEvent } from "interaction/components"
 import { MoveItemSystem } from "interaction/systems"
 

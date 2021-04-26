@@ -1,7 +1,7 @@
 import { AbstractMesh, Camera, Matrix, Scene } from "babylonjs"
 import { Mesh } from "babylonjs/Meshes/mesh"
 import { SceneComp, TargetCameraComp } from "core/components"
-import { ExtraWorld } from "ecsy-extra"
+import { ExtraWorld } from "ecsyExtra"
 
 
 type iPredicate = (mesh: AbstractMesh) => boolean

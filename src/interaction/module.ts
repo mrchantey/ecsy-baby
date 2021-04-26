@@ -1,4 +1,4 @@
-import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "ecsy-extra";
+import { iModule, ModuleConstructor, SystemPriority, SystemPriorityDelta } from "ecsyExtra";
 import { EndInteractionSystem, HoverSystem, MoveItemSystem, RaycastInteractionSystem, SelectSystem, ToolEquipSystem } from "interaction/systems";
 
 import * as Components from 'interaction/components';

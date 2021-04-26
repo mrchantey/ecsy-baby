@@ -1,6 +1,6 @@
 import { MeshBuilder, Vector3 } from "babylonjs";
 import { coreModule, CoreSystemPriority, Mouse, MouseLook, Player, SceneComp, TransformNodeComp } from "core";
-import { ExtraSystem, ExtraWorld, iModule, registerModules } from "ecsy-extra";
+import { ExtraSystem, ExtraWorld, iModule, registerModules } from "ecsyExtra";
 import { MouseFollow, MouseFollowSystem } from "interaction";
 
 export class MainSystem extends ExtraSystem {

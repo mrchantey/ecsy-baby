@@ -1,6 +1,6 @@
 import { HemisphericLight, Vector3 } from "babylonjs";
 import { HemisphericLightComp, SceneComp } from "core/components";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitLightSystem extends ExtraSystem {
     start() {

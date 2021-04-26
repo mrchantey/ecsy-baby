@@ -11,7 +11,7 @@
 		"prepublishOnly": "./scripts/publish.sh",
 		"auto-index": "node ./scripts/watch-index.js",
 		"generate-babylon-components": "node ./scripts/generate-babylon-components.js",
-		"build": "npm run build-src && npm run build-site",
+		"build": "npm run build-src",
 		"build-src": "tsc --project tsconfig.source.json",
 		"watch-src": "concurrently \"tsc -w --project tsconfig.source.json\" \"node ./scripts/watch-index.js\" ",
 		"example": "node ./scripts/handle-examples.js",

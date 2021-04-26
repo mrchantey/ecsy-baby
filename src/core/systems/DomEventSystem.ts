@@ -1,4 +1,4 @@
-import { Action, ExtraSystem } from '../../ecsy-extra/index';
+import { Action, ExtraSystem } from '../../ecsyExtra/index';
 import { Canvas, CanvasEvents, WindowEvents } from '../components';
 
 function registerWindowEvent<K extends keyof WindowEventMap>(el: Window, name: K, windowEventsBuffer: WindowEvents, disposeActions: Action[]) {

@@ -1,7 +1,7 @@
 import { Engine, EngineOptions, Logger, NullEngine } from "babylonjs";
 import { Canvas, EngineComp, InitEngine } from "core/components";
 import { SystemQueries } from "ecsy";
-import { ExtraSystem } from "ecsy-extra";
+import { ExtraSystem } from "ecsyExtra";
 
 export class InitEngineSystem extends ExtraSystem {
 

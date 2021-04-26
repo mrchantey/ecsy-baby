@@ -1,7 +1,7 @@
 
 import { Engine, Scene, TargetCamera, Node, TransformNode, StandardMaterial, SceneOptions, HemisphericLight } from 'babylonjs'
 import { Component, ComponentConstructor, ComponentSchema, Types } from 'ecsy';
-import { ValueComponent } from '../../ecsy-extra'
+import { ValueComponent } from '../../ecsyExtra'
 
 export class EngineComp extends ValueComponent<EngineComp, Engine> {
     static schema: ComponentSchema = { value: { type: Types.Ref } }

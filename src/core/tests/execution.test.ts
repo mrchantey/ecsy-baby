@@ -1,4 +1,4 @@
-import { ExtraWorld } from "ecsy-extra"
+import { ExtraWorld } from "ecsyExtra"
 
 
 

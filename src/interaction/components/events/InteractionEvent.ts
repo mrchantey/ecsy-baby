@@ -1,5 +1,5 @@
 import { Component, ComponentSchema, Types } from 'ecsy';
-import { ExtraEntity } from 'ecsy-extra';
+import { ExtraEntity } from 'ecsyExtra';
 
 export class InteractionEvent extends Component<InteractionEvent> {
     interactor: ExtraEntity

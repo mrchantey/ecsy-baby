@@ -1,7 +1,7 @@
 import { Vector3 } from "babylonjs"
 import { AdvancedPlane } from "core"
 import { World } from "ecsy"
-import { ExtraWorld } from "ecsy-extra"
+import { ExtraWorld } from "ecsyExtra"
 import { ToolType } from "interaction"
 import { EquipToolEvent, EquipToolInstanceEvent, MoveItemTool, NoTool, ToolEquipper } from "interaction/components"
 import { ToolEquipSystem } from "interaction/systems"
